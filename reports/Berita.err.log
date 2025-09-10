@@ -1,0 +1,132 @@
+Traceback (most recent call last):
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\ven\AppData\Local\Programs\Python\Python313\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+from datetime import datetime
+
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+
+def crawl_detik_harian(tanggal=None, max_page=3, save_csv=True):
+    if tanggal is None:
+        tanggal = datetime.now().strftime("%Y/%m/%d")  # default: hari ini
+
+    base_url = f"https://news.detik.com/indeks?date={tanggal}"
+    print(f"Ambil berita tanggal: {tanggal}")
+
+    berita_list = []
+    idx = 0
+
+    for page in range(1, max_page + 1):
+        url = f"{base_url}&page={page}"
+        try:
+            r = requests.get(url, headers=HEADERS)
+            r.raise_for_status()
+            soup = BeautifulSoup(r.text, "html.parser")
+
+            links = soup.select("article a.media__link")
+            for a in links:
+                idx += 1
+                title = a.get_text(strip=True)
+                link = a.get("href")
+
+                # kategori dari path URL
+                kategori = "-"
+                if link and link.startswith("https://"):
+                    parts = link.split("/")
+                    if len(parts) > 3:
+                        kategori = parts[3]
+
+                # ambil isi berita
+                isi = ""
+                try:
+                    br = requests.get(link, headers=HEADERS, timeout=5)
+                    br.raise_for_status()
+                    bs = BeautifulSoup(br.text, "html.parser")
+                    paragraf = bs.select("div.detail__body-text p")
+                    if not paragraf:
+                        paragraf = bs.select("div.detail__body-text.itp_bodycontent p")
+                    isi = " ".join(p.get_text(" ", strip=True) for p in paragraf[:5])
+                except Exception:
+                    isi = "(gagal ambil isi berita)"
+
+                berita = {
+                    "id": idx,
+                    "judul": title,
+                    "link": link,
+                    "kategori": kategori,
+                    "isi": isi
+                }
+                berita_list.append(berita)
+
+                print(f"\n[{idx}] {title}")
+                print(f"Kategori : {kategori}")
+                print(f"Link     : {link}")
+                print(f"Isi      : {isi[:150]}...")
+
+        except Exception as e:
+            print(f"Error saat akses {url}: {e}")
+            continue
+
+    # simpan ke CSV
+    if save_csv and berita_list:
+        df = pd.DataFrame(berita_list)
+        filename = f"berita_detik_{tanggal.replace('/', '-')}.csv"
+        df.to_csv(filename, index=False, encoding="utf-8")
+        print(f"\n[DONE] Data {len(berita_list)} berita tersimpan di {filename}")
+
+    return berita_list
+
+# Contoh pemakaian: ambil semua berita hari ini
+crawl_detik_harian(max_page=5)
+
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[3][39m[32m, line 3[39m
+[32m      1[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mrequests[39;00m
+[32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mbs4[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m BeautifulSoup
+[32m----> [39m[32m3[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mpd[39;00m
+[32m      4[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mdatetime[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m datetime
+[32m      6[39m HEADERS = {[33m"[39m[33mUser-Agent[39m[33m"[39m: [33m"[39m[33mMozilla/5.0[39m[33m"[39m}
+
+[31mModuleNotFoundError[39m: No module named 'pandas'
+
