@@ -39,82 +39,98 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from datetime import datetime
+import re
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-def crawl_detik_harian(tanggal=None, max_page=3, save_csv=True):
-    if tanggal is None:
-        tanggal = datetime.now().strftime("%Y/%m/%d")  # default: hari ini
+KATEGORI_URLS = {
+    "news": "https://news.detik.com/indeks",
+    "finance": "https://finance.detik.com/indeks",
+    "health": "https://health.detik.com/indeks",
+    "sport": "https://sport.detik.com/indeks",
+    "hot": "https://hot.detik.com/indeks"
+}
 
-    base_url = f"https://news.detik.com/indeks?date={tanggal}"
-    print(f"Ambil berita tanggal: {tanggal}")
-
-    berita_list = []
+def crawl_detik_indeks(max_pages=30, max_berita=200):
+    data = {"id": [], "judul": [], "link": [], "kategori": [], "isi": []}
     idx = 0
 
-    for page in range(1, max_page + 1):
-        url = f"{base_url}&page={page}"
-        try:
-            r = requests.get(url, headers=HEADERS)
-            r.raise_for_status()
+    for kategori_loop, base_url in KATEGORI_URLS.items():
+        print(f"\n=== Ambil kategori: {kategori_loop} ===")
+
+        for page in range(1, max_pages + 1):
+            if idx >= max_berita:
+                break
+
+            url = f"{base_url}?page={page}"
+            try:
+                r = requests.get(url, headers=HEADERS, timeout=10)
+                r.raise_for_status()
+            except Exception as e:
+                print(f"Gagal akses {url}: {e}")
+                continue
+
             soup = BeautifulSoup(r.text, "html.parser")
+            berita_list = soup.select("h3.media__title a")
 
-            links = soup.select("article a.media__link")
-            for a in links:
-                idx += 1
-                title = a.get_text(strip=True)
-                link = a.get("href")
+            if not berita_list:
+                continue
 
-                # kategori dari path URL
-                kategori = "-"
-                if link and link.startswith("https://"):
-                    parts = link.split("/")
-                    if len(parts) > 3:
-                        kategori = parts[3]
+            for berita in berita_list:
+                if idx >= max_berita:
+                    break
+
+                judul = berita.get_text(strip=True)
+                link = berita.get("href")
+
+                if not link or not link.startswith("http"):
+                    continue
 
                 # ambil isi berita
                 isi = ""
                 try:
-                    br = requests.get(link, headers=HEADERS, timeout=5)
-                    br.raise_for_status()
-                    bs = BeautifulSoup(br.text, "html.parser")
-                    paragraf = bs.select("div.detail__body-text p")
+                    res = requests.get(link, headers=HEADERS, timeout=10)
+                    res.raise_for_status()
+                    soup_detail = BeautifulSoup(res.text, "html.parser")
+                    paragraf = soup_detail.select("div.detail__body-text.itp_bodycontent p")
                     if not paragraf:
-                        paragraf = bs.select("div.detail__body-text.itp_bodycontent p")
-                    isi = " ".join(p.get_text(" ", strip=True) for p in paragraf[:5])
+                        paragraf = soup_detail.select("div.detail__body-text p")
+
+                    teks_list = []
+                    for p in paragraf:
+                        teks = p.get_text(" ", strip=True)
+                        teks = re.sub(r"\s+", " ", teks.lower())
+                        if teks:
+                            teks_list.append(teks)
+
+                    isi = " ".join(teks_list)
                 except Exception:
                     isi = "(gagal ambil isi berita)"
 
-                berita = {
-                    "id": idx,
-                    "judul": title,
-                    "link": link,
-                    "kategori": kategori,
-                    "isi": isi
-                }
-                berita_list.append(berita)
+                idx += 1
+                data["id"].append(idx)
+                data["judul"].append(judul)
+                data["link"].append(link)
+                data["kategori"].append(kategori_loop)  # gunakan kategori indeks
+                data["isi"].append(isi)
 
-                print(f"\n[{idx}] {title}")
-                print(f"Kategori : {kategori}")
-                print(f"Link     : {link}")
-                print(f"Isi      : {isi[:150]}...")
+                print(f"[{idx}] {judul} [{kategori_loop}]")
 
-        except Exception as e:
-            print(f"Error saat akses {url}: {e}")
-            continue
+            if idx >= max_berita:
+                break
+
+        if idx >= max_berita:
+            break
 
     # simpan ke CSV
-    if save_csv and berita_list:
-        df = pd.DataFrame(berita_list)
-        filename = f"berita_detik_{tanggal.replace('/', '-')}.csv"
-        df.to_csv(filename, index=False, encoding="utf-8")
-        print(f"\n[DONE] Data {len(berita_list)} berita tersimpan di {filename}")
+    df = pd.DataFrame(data)
+    df.to_csv("berita_detik_categorized.csv", index=False, encoding="utf-8-sig")
+    print(f"\n[DONE] {len(df)} berita tersimpan di berita_detik_categorized.csv")
+    return df
 
-    return berita_list
 
-# Contoh pemakaian: ambil semua berita hari ini
-crawl_detik_harian(max_page=5)
+# jalankan: ambil 200 berita campur kategori sesuai indeks
+crawl_detik_indeks(max_pages=30, max_berita=200)
 
 ------------------
 
@@ -125,7 +141,7 @@ crawl_detik_harian(max_page=5)
 [32m      1[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mrequests[39;00m
 [32m      2[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mbs4[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m BeautifulSoup
 [32m----> [39m[32m3[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mpd[39;00m
-[32m      4[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mdatetime[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m datetime
+[32m      4[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mre[39;00m
 [32m      6[39m HEADERS = {[33m"[39m[33mUser-Agent[39m[33m"[39m: [33m"[39m[33mMozilla/5.0[39m[33m"[39m}
 
 [31mModuleNotFoundError[39m: No module named 'pandas'
