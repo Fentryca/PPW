@@ -1,1958 +1,1584 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": []
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
+# Crawlling PTA Universitas Trunojoyo Madura
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import re, sys, time
+```
+
+
+```python
+BASE_URL = "https://pta.trunojoyo.ac.id/c_search/byprod"
+```
+
+Fungsi
+
+
+```python
+def get_max_page(prodi_id):
+    url = f"{BASE_URL}/{prodi_id}/1"
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, "html.parser")
+
+    # Cari tombol >> (last page)
+    last_page = soup.select_one('ol.pagination a:contains("»")')
+    if last_page and "href" in last_page.attrs:
+        href = last_page["href"]
+        # Pecah URL -> ambil angka terakhir
+        max_page = int(href.split("/")[-1])
+        return max_page
+
+    # fallback kalau pagination tidak ada
+    return 1
+```
+
+
+```python
+# Contoh pemakaian
+print(get_max_page(10))
+```
+
+    172
+    
+
+    /usr/local/lib/python3.12/dist-packages/soupsieve/css_parser.py:876: FutureWarning: The pseudo class ':contains' is deprecated, ':-soup-contains' should be used moving forward.
+      warnings.warn(  # noqa: B028
+    
+
+
+```python
+def print_progress(prodi_id, prodi, current_page, total_pages):
+    percent = (current_page / total_pages) * 100
+    bar_length = 20
+    filled_length = int(bar_length * current_page // total_pages)
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+    sys.stdout.write(f'\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')
+    sys.stdout.flush()
+    if current_page == total_pages:
+        sys.stdout.write('\n')
+```
+
+## Crawlling semua data PTA
+
+
+```python
+def pta_all():
+    start_time = time.time()
+
+    data = {
+        "id": [],
+        "penulis": [],
+        "judul": [],
+        "abstrak_id": [],
+        "abstrak_en": [],
+        "pembimbing_pertama": [],
+        "pembimbing_kedua": [],
+        "prodi": []
     }
-  },
-  "cells": [
-    {
-      "cell_type": "code",
-      "execution_count": null,
-      "metadata": {
-        "id": "Avetm0oJUpct"
-      },
-      "outputs": [],
-      "source": [
-        "import requests\n",
-        "from bs4 import BeautifulSoup\n",
-        "import pandas as pd\n",
-        "import re, sys, time"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "BASE_URL = \"https://pta.trunojoyo.ac.id/c_search/byprod\""
-      ],
-      "metadata": {
-        "id": "6-S0Z8-NUsx_"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "markdown",
-      "source": [
-        "Fungsi"
-      ],
-      "metadata": {
-        "id": "vsn2suRiUzcB"
-      }
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "def get_max_page(prodi_id):\n",
-        "    url = f\"{BASE_URL}/{prodi_id}/1\"\n",
-        "    r = requests.get(url)\n",
-        "    soup = BeautifulSoup(r.content, \"html.parser\")\n",
-        "\n",
-        "    # Cari tombol >> (last page)\n",
-        "    last_page = soup.select_one('ol.pagination a:contains(\"»\")')\n",
-        "    if last_page and \"href\" in last_page.attrs:\n",
-        "        href = last_page[\"href\"]\n",
-        "        # Pecah URL -> ambil angka terakhir\n",
-        "        max_page = int(href.split(\"/\")[-1])\n",
-        "        return max_page\n",
-        "\n",
-        "    # fallback kalau pagination tidak ada\n",
-        "    return 1"
-      ],
-      "metadata": {
-        "id": "bwHL9brwUwRw"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "# Contoh pemakaian\n",
-        "print(get_max_page(10))"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "mfnHYlUvU6sJ",
-        "outputId": "6fcd13b8-8825-48c1-c706-1a7115761039"
-      },
-      "execution_count": null,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "172\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "/usr/local/lib/python3.12/dist-packages/soupsieve/css_parser.py:876: FutureWarning: The pseudo class ':contains' is deprecated, ':-soup-contains' should be used moving forward.\n",
-            "  warnings.warn(  # noqa: B028\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "def print_progress(prodi_id, prodi, current_page, total_pages):\n",
-        "    percent = (current_page / total_pages) * 100\n",
-        "    bar_length = 20\n",
-        "    filled_length = int(bar_length * current_page // total_pages)\n",
-        "    bar = '█' * filled_length + '-' * (bar_length - filled_length)\n",
-        "    sys.stdout.write(f'\\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')\n",
-        "    sys.stdout.flush()\n",
-        "    if current_page == total_pages:\n",
-        "        sys.stdout.write('\\n')"
-      ],
-      "metadata": {
-        "id": "Xq3VcPT0U9iC"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "markdown",
-      "source": [
-        "## Crawlling semua data PTA"
-      ],
-      "metadata": {
-        "id": "T3UspCC1VLLp"
-      }
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "def pta_all():\n",
-        "    start_time = time.time()\n",
-        "\n",
-        "    data = {\n",
-        "        \"id\": [],\n",
-        "        \"penulis\": [],\n",
-        "        \"judul\": [],\n",
-        "        \"abstrak_id\": [],\n",
-        "        \"abstrak_en\": [],\n",
-        "        \"pembimbing_pertama\": [],\n",
-        "        \"pembimbing_kedua\": [],\n",
-        "        \"prodi\": []\n",
-        "    }\n",
-        "\n",
-        "    total_prodi = 1\n",
-        "    total_pages = 0\n",
-        "    max_pages_dict = {}\n",
-        "\n",
-        "    # hitung total halaman (untuk tiap prodi)\n",
-        "    for i in range(1, total_prodi + 1):\n",
-        "        max_page = get_max_page(i)\n",
-        "        max_pages_dict[i] = max_page\n",
-        "        total_pages += max_page\n",
-        "\n",
-        "    for i in range(1, total_prodi + 1):\n",
-        "        max_page = max_pages_dict[i]\n",
-        "        for j in range(1, max_page + 1):\n",
-        "            url = f\"{BASE_URL}/{i}/{j}\"\n",
-        "            r = requests.get(url)\n",
-        "            soup = BeautifulSoup(r.content, \"html.parser\")\n",
-        "            jurnals = soup.select('li[data-cat=\"#luxury\"]')\n",
-        "\n",
-        "            isii = soup.select_one('div#begin')\n",
-        "            if not isii:\n",
-        "                continue\n",
-        "            prodi_full = isii.select_one('h2').text.strip()\n",
-        "            prodi = prodi_full.replace(\"Journal Jurusan \", \"\")\n",
-        "\n",
-        "            for jurnal in jurnals:\n",
-        "                link_keluar = jurnal.select_one('a.gray.button')['href']\n",
-        "\n",
-        "                # ambil ID dari link PTA (angka terakhir di URL)\n",
-        "                id_match = re.search(r\"/detail/(\\d+)\", link_keluar)\n",
-        "                pta_id = id_match.group(1) if id_match else None\n",
-        "\n",
-        "                response = requests.get(link_keluar)\n",
-        "                soup1 = BeautifulSoup(response.content, \"html.parser\")\n",
-        "                isi = soup1.select_one('div#content_journal')\n",
-        "\n",
-        "                judul = isi.select_one('a.title').text.strip()\n",
-        "                penulis = isi.select_one('span:contains(\"Penulis\")').text.split(' : ')[1]\n",
-        "                pembimbing_pertama = isi.select_one('span:contains(\"Dosen Pembimbing I\")').text.split(' : ')[1]\n",
-        "                pembimbing_kedua = isi.select_one('span:contains(\"Dosen Pembimbing II\")').text.split(' :')[1]\n",
-        "\n",
-        "                paragraf = isi.select('p[align=\"justify\"]')\n",
-        "                abstrak_id = paragraf[0].get_text(strip=True) if len(paragraf) > 0 else \"N/A\"\n",
-        "                abstrak_en = paragraf[1].get_text(strip=True) if len(paragraf) > 1 else \"N/A\"\n",
-        "\n",
-        "                data[\"id\"].append(pta_id)\n",
-        "                data[\"penulis\"].append(penulis)\n",
-        "                data[\"judul\"].append(judul)\n",
-        "                data[\"abstrak_id\"].append(abstrak_id)\n",
-        "                data[\"abstrak_en\"].append(abstrak_en)\n",
-        "                data[\"pembimbing_pertama\"].append(pembimbing_pertama)\n",
-        "                data[\"pembimbing_kedua\"].append(pembimbing_kedua)\n",
-        "                data[\"prodi\"].append(prodi)\n",
-        "\n",
-        "            # update progress bar per prodi\n",
-        "            print_progress(i, prodi, j, max_page)\n",
-        "\n",
-        "        sys.stdout.write(\"\\n\")  # pindah baris setelah 1 prodi selesai\n",
-        "\n",
-        "    # simpan ke CSV\n",
-        "    df = pd.DataFrame(data)\n",
-        "    df.to_csv(\"pta_all.csv\", index=False, encoding=\"utf-8-sig\")\n",
-        "\n",
-        "    # hitung durasi\n",
-        "    end_time = time.time()\n",
-        "    elapsed = int(end_time - start_time)\n",
-        "    jam, sisa = divmod(elapsed, 3600)\n",
-        "    menit, detik = divmod(sisa, 60)\n",
-        "\n",
-        "    # summary\n",
-        "    print(\"\\n✅ Seluruh data berhasil dikumpulkan!\")\n",
-        "    print(f\"📊 Total entri: {len(df)}\")\n",
-        "    print(f\"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik\")\n",
-        "\n",
-        "    return df"
-      ],
-      "metadata": {
-        "id": "Mgq0OavOVFzA"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "pta_all()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 1000
-        },
-        "id": "ris62K3wVBg6",
-        "outputId": "691a5ef9-70a5-4650-a2ce-35d3098bbdd6"
-      },
-      "execution_count": null,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "/usr/local/lib/python3.12/dist-packages/soupsieve/css_parser.py:876: FutureWarning: The pseudo class ':contains' is deprecated, ':-soup-contains' should be used moving forward.\n",
-            "  warnings.warn(  # noqa: B028\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "[1] Ilmu Hukum - Page 284/284 [████████████████████] 100.00%\n",
-            "\n",
-            "\n",
-            "✅ Seluruh data berhasil dikumpulkan!\n",
-            "📊 Total entri: 1417\n",
-            "⏱️ Waktu eksekusi: 2 jam 56 menit 29 detik\n"
-          ]
-        },
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": [
-              "                id                           penulis  \\\n",
-              "0     080111100012               Dyah Ayu Citra Seza   \n",
-              "1     080111100002                  Maulina Nurlaily   \n",
-              "2     070111100060               Moh. Samsul Hidayat   \n",
-              "3     090111100077  TOMMY ADITYA PARLINDUNGAN MARBUN   \n",
-              "4     070111200007                RICA YENA IMADHORA   \n",
-              "...            ...                               ...   \n",
-              "1412  150111100130                       DEDY DORES    \n",
-              "1413  150111100258                     Eko Supriadi    \n",
-              "1414  160111100136              Muslimatul Maghfirah   \n",
-              "1415  160111100024                MOH WASIL SYAHRONI   \n",
-              "1416  170111100053                      Moch. Steven   \n",
-              "\n",
-              "                                                  judul  \\\n",
-              "0     Implementasi Fungsi Legislasi Dewan Perwakilan...   \n",
-              "1     Pertanggungjawaban Pidana Direksi BUMN (Perser...   \n",
-              "2     Analisis Terhadap Kekosongan Hukum dalam Penga...   \n",
-              "3     PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...   \n",
-              "4     TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...   \n",
-              "...                                                 ...   \n",
-              "1412  PENGKUALIFIKASIAN CHEATER SEBAGAI TINDAK PIDAN...   \n",
-              "1413  KUALIFIKASI TINDAK PIDANA ATAS PERBUATAN PELAK...   \n",
-              "1414  KEDUDUKAN HUKUM PEKERJA OUTSOURCING DI DINAS P...   \n",
-              "1415  STAGNANSI HUBUNGAN KELEMBAGAAN DAN KEWENANGAN ...   \n",
-              "1416  PERUMUSAN SANKSI PIDANA BAGI MASYARAKAT SEKITA...   \n",
-              "\n",
-              "                                             abstrak_id  \\\n",
-              "0     ABSTRAK\\r\\n\\r\\n       Implementasi Fungsi Legi...   \n",
-              "1     Badan Usaha Milik Negara (BUMN) adalah Badan u...   \n",
-              "2     Kasus narkoba tidak henti-hentinya terdengar d...   \n",
-              "3     Produk elektronik adalah suatu benda bergerak ...   \n",
-              "4                                                         \n",
-              "...                                                 ...   \n",
-              "1412  Abstrak\\n Perbuatan cheater dalam melakukan ch...   \n",
-              "1413  Peminjaman dana sistem online dilakukan oleh m...   \n",
-              "1414  Abstrak\\nTenaga kerja merupakan setiap orang y...   \n",
-              "1415  Skripsi ini bertujuan untuk menganalisis penti...   \n",
-              "1416  ABSTRAK\\nAkhir-akhir ini semakin maraknya penc...   \n",
-              "\n",
-              "                                             abstrak_en  \\\n",
-              "0     ABSTRACT\\r\\n       Implementation of Legislati...   \n",
-              "1     State Owned Enterprises (SOEs) are business en...   \n",
-              "2     Drug cases endlessly heard on television, radi...   \n",
-              "3     Electronic products is an object moves through...   \n",
-              "4                                                         \n",
-              "...                                                 ...   \n",
-              "1412  Abstract\\n The way of cheater did a cheat in o...   \n",
-              "1413  The loan funds by online system are carried ou...   \n",
-              "1414  Abstract\\nLabors are those who can work to pro...   \n",
-              "1415  This thesis aims to analyze the stagnation of ...   \n",
-              "1416  ABSTRACK\\nLately, there has been more and more...   \n",
-              "\n",
-              "                             pembimbing_pertama  \\\n",
-              "0               Yudi Widagdo Harimurti, SH., MH   \n",
-              "1                       Tolib Effendi, SH., MH.   \n",
-              "2                       Tolib Effendi, SH., MH.   \n",
-              "3                     DR. DJULAEKA, S.H., M.HUM   \n",
-              "4                    Dr. DENI SBY, S. H., M. S.   \n",
-              "...                                         ...   \n",
-              "1412                Aris Hardinanto, S.H., M.H.   \n",
-              "1413                Dr. Erma Rusdiana, S.H.,M.H   \n",
-              "1414               Mishbahul Munir, S.H., M.Hum   \n",
-              "1415  Dr. DENI SETYA BAGUS YUHERAWAN, S.H., M.S   \n",
-              "1416              Dr. Wartiningsih, S.H., M.Hum   \n",
-              "\n",
-              "                      pembimbing_kedua       prodi  \n",
-              "0                       Safi', SH., MH  Ilmu Hukum  \n",
-              "1         Dr. Eni Suastuti, SH., Mhum.  Ilmu Hukum  \n",
-              "2              Agus Ramdlany, SH., MH.  Ilmu Hukum  \n",
-              "3     DR.USWATUN HASANAH, S.H., M. HUM  Ilmu Hukum  \n",
-              "4        SAIFUL ABDULLAH, S. H., M. H.  Ilmu Hukum  \n",
-              "...                                ...         ...  \n",
-              "1412                                    Ilmu Hukum  \n",
-              "1413                                    Ilmu Hukum  \n",
-              "1414                                    Ilmu Hukum  \n",
-              "1415                                    Ilmu Hukum  \n",
-              "1416                                    Ilmu Hukum  \n",
-              "\n",
-              "[1417 rows x 8 columns]"
-            ],
-            "text/html": [
-              "\n",
-              "  <div id=\"df-b8208b8e-7b33-4e02-b700-dbb901b2c88f\" class=\"colab-df-container\">\n",
-              "    <div>\n",
-              "<style scoped>\n",
-              "    .dataframe tbody tr th:only-of-type {\n",
-              "        vertical-align: middle;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe tbody tr th {\n",
-              "        vertical-align: top;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe thead th {\n",
-              "        text-align: right;\n",
-              "    }\n",
-              "</style>\n",
-              "<table border=\"1\" class=\"dataframe\">\n",
-              "  <thead>\n",
-              "    <tr style=\"text-align: right;\">\n",
-              "      <th></th>\n",
-              "      <th>id</th>\n",
-              "      <th>penulis</th>\n",
-              "      <th>judul</th>\n",
-              "      <th>abstrak_id</th>\n",
-              "      <th>abstrak_en</th>\n",
-              "      <th>pembimbing_pertama</th>\n",
-              "      <th>pembimbing_kedua</th>\n",
-              "      <th>prodi</th>\n",
-              "    </tr>\n",
-              "  </thead>\n",
-              "  <tbody>\n",
-              "    <tr>\n",
-              "      <th>0</th>\n",
-              "      <td>080111100012</td>\n",
-              "      <td>Dyah Ayu Citra Seza</td>\n",
-              "      <td>Implementasi Fungsi Legislasi Dewan Perwakilan...</td>\n",
-              "      <td>ABSTRAK\\r\\n\\r\\n       Implementasi Fungsi Legi...</td>\n",
-              "      <td>ABSTRACT\\r\\n       Implementation of Legislati...</td>\n",
-              "      <td>Yudi Widagdo Harimurti, SH., MH</td>\n",
-              "      <td>Safi', SH., MH</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1</th>\n",
-              "      <td>080111100002</td>\n",
-              "      <td>Maulina Nurlaily</td>\n",
-              "      <td>Pertanggungjawaban Pidana Direksi BUMN (Perser...</td>\n",
-              "      <td>Badan Usaha Milik Negara (BUMN) adalah Badan u...</td>\n",
-              "      <td>State Owned Enterprises (SOEs) are business en...</td>\n",
-              "      <td>Tolib Effendi, SH., MH.</td>\n",
-              "      <td>Dr. Eni Suastuti, SH., Mhum.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>2</th>\n",
-              "      <td>070111100060</td>\n",
-              "      <td>Moh. Samsul Hidayat</td>\n",
-              "      <td>Analisis Terhadap Kekosongan Hukum dalam Penga...</td>\n",
-              "      <td>Kasus narkoba tidak henti-hentinya terdengar d...</td>\n",
-              "      <td>Drug cases endlessly heard on television, radi...</td>\n",
-              "      <td>Tolib Effendi, SH., MH.</td>\n",
-              "      <td>Agus Ramdlany, SH., MH.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>3</th>\n",
-              "      <td>090111100077</td>\n",
-              "      <td>TOMMY ADITYA PARLINDUNGAN MARBUN</td>\n",
-              "      <td>PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...</td>\n",
-              "      <td>Produk elektronik adalah suatu benda bergerak ...</td>\n",
-              "      <td>Electronic products is an object moves through...</td>\n",
-              "      <td>DR. DJULAEKA, S.H., M.HUM</td>\n",
-              "      <td>DR.USWATUN HASANAH, S.H., M. HUM</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>4</th>\n",
-              "      <td>070111200007</td>\n",
-              "      <td>RICA YENA IMADHORA</td>\n",
-              "      <td>TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...</td>\n",
-              "      <td></td>\n",
-              "      <td></td>\n",
-              "      <td>Dr. DENI SBY, S. H., M. S.</td>\n",
-              "      <td>SAIFUL ABDULLAH, S. H., M. H.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>...</th>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1412</th>\n",
-              "      <td>150111100130</td>\n",
-              "      <td>DEDY DORES</td>\n",
-              "      <td>PENGKUALIFIKASIAN CHEATER SEBAGAI TINDAK PIDAN...</td>\n",
-              "      <td>Abstrak\\n Perbuatan cheater dalam melakukan ch...</td>\n",
-              "      <td>Abstract\\n The way of cheater did a cheat in o...</td>\n",
-              "      <td>Aris Hardinanto, S.H., M.H.</td>\n",
-              "      <td></td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1413</th>\n",
-              "      <td>150111100258</td>\n",
-              "      <td>Eko Supriadi</td>\n",
-              "      <td>KUALIFIKASI TINDAK PIDANA ATAS PERBUATAN PELAK...</td>\n",
-              "      <td>Peminjaman dana sistem online dilakukan oleh m...</td>\n",
-              "      <td>The loan funds by online system are carried ou...</td>\n",
-              "      <td>Dr. Erma Rusdiana, S.H.,M.H</td>\n",
-              "      <td></td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1414</th>\n",
-              "      <td>160111100136</td>\n",
-              "      <td>Muslimatul Maghfirah</td>\n",
-              "      <td>KEDUDUKAN HUKUM PEKERJA OUTSOURCING DI DINAS P...</td>\n",
-              "      <td>Abstrak\\nTenaga kerja merupakan setiap orang y...</td>\n",
-              "      <td>Abstract\\nLabors are those who can work to pro...</td>\n",
-              "      <td>Mishbahul Munir, S.H., M.Hum</td>\n",
-              "      <td></td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1415</th>\n",
-              "      <td>160111100024</td>\n",
-              "      <td>MOH WASIL SYAHRONI</td>\n",
-              "      <td>STAGNANSI HUBUNGAN KELEMBAGAAN DAN KEWENANGAN ...</td>\n",
-              "      <td>Skripsi ini bertujuan untuk menganalisis penti...</td>\n",
-              "      <td>This thesis aims to analyze the stagnation of ...</td>\n",
-              "      <td>Dr. DENI SETYA BAGUS YUHERAWAN, S.H., M.S</td>\n",
-              "      <td></td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1416</th>\n",
-              "      <td>170111100053</td>\n",
-              "      <td>Moch. Steven</td>\n",
-              "      <td>PERUMUSAN SANKSI PIDANA BAGI MASYARAKAT SEKITA...</td>\n",
-              "      <td>ABSTRAK\\nAkhir-akhir ini semakin maraknya penc...</td>\n",
-              "      <td>ABSTRACK\\nLately, there has been more and more...</td>\n",
-              "      <td>Dr. Wartiningsih, S.H., M.Hum</td>\n",
-              "      <td></td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "  </tbody>\n",
-              "</table>\n",
-              "<p>1417 rows × 8 columns</p>\n",
-              "</div>\n",
-              "    <div class=\"colab-df-buttons\">\n",
-              "\n",
-              "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-b8208b8e-7b33-4e02-b700-dbb901b2c88f')\"\n",
-              "            title=\"Convert this dataframe to an interactive table.\"\n",
-              "            style=\"display:none;\">\n",
-              "\n",
-              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
-              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
-              "  </svg>\n",
-              "    </button>\n",
-              "\n",
-              "  <style>\n",
-              "    .colab-df-container {\n",
-              "      display:flex;\n",
-              "      gap: 12px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert {\n",
-              "      background-color: #E8F0FE;\n",
-              "      border: none;\n",
-              "      border-radius: 50%;\n",
-              "      cursor: pointer;\n",
-              "      display: none;\n",
-              "      fill: #1967D2;\n",
-              "      height: 32px;\n",
-              "      padding: 0 0 0 0;\n",
-              "      width: 32px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert:hover {\n",
-              "      background-color: #E2EBFA;\n",
-              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "      fill: #174EA6;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-buttons div {\n",
-              "      margin-bottom: 4px;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert {\n",
-              "      background-color: #3B4455;\n",
-              "      fill: #D2E3FC;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert:hover {\n",
-              "      background-color: #434B5C;\n",
-              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
-              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
-              "      fill: #FFFFFF;\n",
-              "    }\n",
-              "  </style>\n",
-              "\n",
-              "    <script>\n",
-              "      const buttonEl =\n",
-              "        document.querySelector('#df-b8208b8e-7b33-4e02-b700-dbb901b2c88f button.colab-df-convert');\n",
-              "      buttonEl.style.display =\n",
-              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "\n",
-              "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-b8208b8e-7b33-4e02-b700-dbb901b2c88f');\n",
-              "        const dataTable =\n",
-              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
-              "                                                    [key], {});\n",
-              "        if (!dataTable) return;\n",
-              "\n",
-              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
-              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
-              "          + ' to learn more about interactive tables.';\n",
-              "        element.innerHTML = '';\n",
-              "        dataTable['output_type'] = 'display_data';\n",
-              "        await google.colab.output.renderOutput(dataTable, element);\n",
-              "        const docLink = document.createElement('div');\n",
-              "        docLink.innerHTML = docLinkHtml;\n",
-              "        element.appendChild(docLink);\n",
-              "      }\n",
-              "    </script>\n",
-              "  </div>\n",
-              "\n",
-              "\n",
-              "    <div id=\"df-2856a504-90db-458d-abe5-170c722dda4c\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-2856a504-90db-458d-abe5-170c722dda4c')\"\n",
-              "                title=\"Suggest charts\"\n",
-              "                style=\"display:none;\">\n",
-              "\n",
-              "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
-              "     width=\"24px\">\n",
-              "    <g>\n",
-              "        <path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z\"/>\n",
-              "    </g>\n",
-              "</svg>\n",
-              "      </button>\n",
-              "\n",
-              "<style>\n",
-              "  .colab-df-quickchart {\n",
-              "      --bg-color: #E8F0FE;\n",
-              "      --fill-color: #1967D2;\n",
-              "      --hover-bg-color: #E2EBFA;\n",
-              "      --hover-fill-color: #174EA6;\n",
-              "      --disabled-fill-color: #AAA;\n",
-              "      --disabled-bg-color: #DDD;\n",
-              "  }\n",
-              "\n",
-              "  [theme=dark] .colab-df-quickchart {\n",
-              "      --bg-color: #3B4455;\n",
-              "      --fill-color: #D2E3FC;\n",
-              "      --hover-bg-color: #434B5C;\n",
-              "      --hover-fill-color: #FFFFFF;\n",
-              "      --disabled-bg-color: #3B4455;\n",
-              "      --disabled-fill-color: #666;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart {\n",
-              "    background-color: var(--bg-color);\n",
-              "    border: none;\n",
-              "    border-radius: 50%;\n",
-              "    cursor: pointer;\n",
-              "    display: none;\n",
-              "    fill: var(--fill-color);\n",
-              "    height: 32px;\n",
-              "    padding: 0;\n",
-              "    width: 32px;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart:hover {\n",
-              "    background-color: var(--hover-bg-color);\n",
-              "    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "    fill: var(--button-hover-fill-color);\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart-complete:disabled,\n",
-              "  .colab-df-quickchart-complete:disabled:hover {\n",
-              "    background-color: var(--disabled-bg-color);\n",
-              "    fill: var(--disabled-fill-color);\n",
-              "    box-shadow: none;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-spinner {\n",
-              "    border: 2px solid var(--fill-color);\n",
-              "    border-color: transparent;\n",
-              "    border-bottom-color: var(--fill-color);\n",
-              "    animation:\n",
-              "      spin 1s steps(1) infinite;\n",
-              "  }\n",
-              "\n",
-              "  @keyframes spin {\n",
-              "    0% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "      border-left-color: var(--fill-color);\n",
-              "    }\n",
-              "    20% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    30% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    40% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    60% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    80% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "    90% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "  }\n",
-              "</style>\n",
-              "\n",
-              "      <script>\n",
-              "        async function quickchart(key) {\n",
-              "          const quickchartButtonEl =\n",
-              "            document.querySelector('#' + key + ' button');\n",
-              "          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.\n",
-              "          quickchartButtonEl.classList.add('colab-df-spinner');\n",
-              "          try {\n",
-              "            const charts = await google.colab.kernel.invokeFunction(\n",
-              "                'suggestCharts', [key], {});\n",
-              "          } catch (error) {\n",
-              "            console.error('Error during call to suggestCharts:', error);\n",
-              "          }\n",
-              "          quickchartButtonEl.classList.remove('colab-df-spinner');\n",
-              "          quickchartButtonEl.classList.add('colab-df-quickchart-complete');\n",
-              "        }\n",
-              "        (() => {\n",
-              "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-2856a504-90db-458d-abe5-170c722dda4c button');\n",
-              "          quickchartButtonEl.style.display =\n",
-              "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "        })();\n",
-              "      </script>\n",
-              "    </div>\n",
-              "\n",
-              "    </div>\n",
-              "  </div>\n"
-            ],
-            "application/vnd.google.colaboratory.intrinsic+json": {
-              "type": "dataframe",
-              "summary": "{\n  \"name\": \"pta_all()\",\n  \"rows\": 1417,\n  \"fields\": [\n    {\n      \"column\": \"id\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1417,\n        \"samples\": [\n          \"090111100139\",\n          \"120111100276\",\n          \"130111100263\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"penulis\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1410,\n        \"samples\": [\n          \"HENDRAYANTO\",\n          \"UMMI MAHSUNAH\",\n          \"Auliya Mufidah\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"judul\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1417,\n        \"samples\": [\n          \"PELAKSANAAN PERNIKAHAN PEREMPUAN HAMIL DILUAR NIKAH DI DESA GRUJUGAN KECAMATAN LARANGAN DAN DESA LARANGAN SLAMPAR KECAMATAN TLANAKAN KABUPATEN PAMEKASAN MENURUT UNDANG-UNDANG REPUBLIK INDONESIA NOMOR\",\n          \"PENANGGULANGAN BALAP LIAR DI KOTA BANGKALAN\",\n          \"TANGGUNG GUGAT PERUSAHAAN ASURANSI YANG MELAKUKAN TINDAKAN WANPRESTASI DALAM ASURANSI\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"abstrak_id\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1408,\n        \"samples\": [\n          \"Dalam organisasi pemerintah, pelayanan kepada masyarakat adalah tujuan utama yang tidak mungkin dapat dihindari karena sudah merupakan kewajiban menyelenggarakan pelayanan dengan menciptakan pelayanan yang terbaik kepada masyarakat. Tujuan pemberian pelayanan publik adalah pemenuhan kebutuhan hak-hak dasar setiap warga negara dan penduduk atas suatu barang, jasa dan atau pelayanan administratif yang disediakan oleh pemerintah yang terkait dengan kepentingan publik. Salah satu jenis pelayanan publik tersebut adalah pelayanan publik di bidang kependudukan dan pencatatan sipil.  \\r\\nTujuan dalam penulisan skripsi ini adalah untuk mengetahui  secara yuridis Akuntabiltas pelayanan publik dalam pembuatan akte kelahiran beserta untuk mengetahui kewenangan Dinas Kependudukan dan Catatan Sipil Kabupaten Bangkalan dalam hal menerbitkan Akta Kelahiran. Sehingga Metode penelitian yang digunakan adalah menggunakan metode penelitian normatif. Adapun pendekatan masalah yang digunakan untuk menjawab rumusan masalah adalah menggunakan pendekatan peraturan perundang-undangan dan pendekatan fakta. \\r\\nSehingga, kesimpulan dari hasil penelitian ini menunjukkan bahwasannya Dinas Kependudukan dan Catatan Sipil Kabupaten Bangkalan yang merupakan Instansi Pelaksana tekhnis dalam asas otonomi daerah dan tugas pembantuan adalah bagian dari penyelenggara pelayanan publik yang melayani urusan kependudukan dan berdasarkan Peraturan  Daerah  Kabupaten Bangkalan  Nomor 6 Tahun 2014 Tentang Perubahan Kedua atas peraturan Daerah Kabupaten Bangkalan Nomor 20 Tahun 2008 Tentang Penyelenggaraan Administrasi Kependudukan berwenang melaksanakan urusan administrasi kependudukan sebagaimana disebutkan dalam pasal 1B huruf c yaitu mencetak, menerbitkan, dan mendistribusikan dokumen kependudukan serta mendokumentasikan hasil pendaftaran penduduk dan pencatatan sipil serta berwenang untuk  memberikan  keabsahan  identitas dan kepastian hukum atas dokumen penduduk untuk setiap peristiwa penting dan peristiwa kependudukan yang dialami oleh penduduk .\\r\\n\\r\\nKata Kunci : Akuntabilitas, Pelayanan Publik, Akte Kelahiran\",\n          \"Hak angket adalah hak untuk melakukan penyelidikan terhadap penyelenggaraan pemerintahan daerah yang berkaitan dengan kebijakan yang dibuat oleh kepala daerah yang memiliki dampak luas dan strategis. Penyelenggaraan pemerintahan daeraeh terdiri dari pemerintah daerah dan DPRD kabupaten/Kota, keberadaan DPRD Kabupaten/Kota dituntut mampu menjadi pengawas atau \\u201ccontrol\\u201d terhadap kebijakan yang dibuat oleh pemerintah daerah, DPRD Kabupaten/kota dan kepala daerah merupakan bagian dari eksekutif, hal tersebut berbeda dengan DPR-Ri yang berperan sebagai lembaga legislatif dan suda sepatutunya melakukan pengawasan terhadap eksekutif, kedudukan DPRD Kabupaten/kota berbeda dengan DPRD-RI yang berada pada tingkatan pusat, sehingga bentuk pengawasan dengan cara angket menimbulkan sebuah masalah yang mengakibatkan urusan rumah tangga daerah tidak akan berjalan secara efektif mengingat kedunya adalah \\u201cmitra kerja\\u201d dalam membangun daerah. Metode penelitian dalam penulisan ini menggunakan penelitian hukum normatif yaitu penelitian hukum yang mencakup penelitian terhadap sinkronisasi peratran perundang-undangan secara vertical dan horizontal, perbandingan hukum dan sejarah hukum. Penelitian ini bersifat deskriptif analisis dengan mengkaji peraturan perundang-undangan. Hasil yang diperoleh dari penelitian tersebut diperlukan reduksi atau meniadakan pemberlakuan hak angket oleh DPRD Kabupaten/Kota, untuk memberikan keseimbangan, stabilitas, dan mencegah terjadinya impeachment terhada kepala daerah oleh DPRD Kabupaten/Kota, sebagaimana dikaetahui bahwasannya keduanya merupakan \\u201cmitra\\u201d dalam menyelenggarakan Pemerintahan Daerah\\nKata kunci: Pemerintahan Daerah, Pemerintah daerah, DPRD Kabupaten/Kota, pemberlakuan, kedudukan, dan hak angket\",\n          \"Dalam skripsi ini yaitu Dikotomi Pemberian Remisi Terhadap Pelaku Tindak Pidana Korupsi Dengan Upaya Pemberantasan Korupsi, untuk melaksanakan hal tersebut diperlukan juga partisipasi atau keikutsertaan masyarakat, baik dengan mengadakan kerjasama dalam pembinaan maupun sikap bersedia menerima kembali narapidana yang telah selesai menjalankan pidananya. Narapidana korupsi mendapatkan hak-haknya didalam Rutan begitupun juga masyarakat wajib mendapatkan haknya, sebagai contoh pemberian remisi yang diberikan terhadap warga binaan korupsi.\\nRemisi adalah pengurangan masa hukuman yang diberikan kepada narapidana dan anak pidana yang telah berkelakuan baik selam menjalani pidana terkecuali yang dipidana mati atau seumur hidup, pemberian remisi kepada warga binaan korupsi memang wajib diberikan karena menyangkut hak mereka sebagai warga binaan tetapi masyarakat juga memerlukan hak mereka yang dikorupsi oleh koruptor, hak mereka lebih berharga.\\nKata kunci : Remisi, Korupsi, Rutan, pemidanaan\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"abstrak_en\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 1400,\n        \"samples\": [\n          \"Grant is a voluntarily gift. Grant has a social function to bind hospitality.\\nGrants practice may lead to disputes, such as the grant nullification. As a result, the dispute leads to broke the hospitality binding. One of the legal issues in the grant\\n\\n\\n\\n\\n1 \\n\\n\\n\\nnullification stated in the Verdict of Shariah Court of Gorontalo  Number 9 /Pdt.G\\n/ 2013 / PA.Gtlo. It was the case on conditional grant. Therefore, this study purposed to determine whether the reason of negligence deserved to be the lawsuit argumentation and whether the grant nullification is shariah compliance. This study was categorized as legal reseach and applied  the analytical approach and statute approach. The result of this reseach indicated that the negligence reason of the grant receiver cannot be the legal reason for the lawsuit. Islamic jurisprudence explained that the withdrawal or the nullification of the grant was depicted as like a vomiting dog whose eat its own vomit. The majority opinion of classical Islamic scholars said the nullification of the grant is illegal  while the minority scholars stated that s ruled as avoided is unhave argued the ruling makruh. However, the judge of the verdict approve the argument of the lawsuit and null the grant. The verdict is not shariah compliance because the judges were inconsistent on their verdict consideration, section 210 item (1) Islamic Compilation Law of Indonesia in which rules the maximum grant is 1/3 from the grantor\\u2019s property. In addition, the judges were lack of accuracy in checking the plaintif legal position who has no legal standing.\",\n          \"The legal politics of the formation of the Regional Representative Council is the focal point in this skiripsi, the background of the title election on the legal politics of the establishment of the Regional Representative Council according to the author is very reasonable, because until now the existence of the Regional Representative Council as regional representatives is not visible and tend to fade. Many efforts made by the community to support in order that the Regional Representative Council is still held even voiced the need to amend the fifth of the 1945 Constitution. \\nIt is interesting to examine the legal politics of the establishment of the Regional Representatives Council. Why this Regional Representative Council was formed for what purpose? What is the relationship between the authority of the Regional Representative Council and the House of Representatives? The purpose of this study is to determine what considerations are used and the reasons underlying the formation of the Regional Representative Council. The method used for this research is the historical approach and the formation process undertaken by the People's Consultative Assembly at the post-reproduction session of 1999-2002 and the approach of the legislation. The results of this study say that the purpose of establishing the Regional Representative Council for the acceleration of democratization, safeguarding and strengthening regional ties within the Unitary State of the Republic of Indonesia and improving the accommodation of regional interests.\\n\\nKey terms: (The legal politics of the establishment of the Regional Representative Council, the relationship between the authority of the Regional Representative Council and the House of Representatives).\",\n          \"The right to information is one of the human rights guaranteed by the Constitution In Section 28F of the Constitution of the Republic of Indonesia Year 1945 , Thus , as part of the state is obliged to respect human rights , uphold , and protect and ensure the fulfillment of these rights . Nevertheless the Act No. 14 of 2008 on Public Information there are some exempt information means there is some information that the Act is not allowed to be opened and accessible to the public . The exception is one of the most important aspects of the Act No. 14 of 2008 on Public Information because it defines the limits of the right to information . Restrictions on access to information is a limitation on Human Rights as to which is guaranteed in the Constitution of 1945, because of the exclusion must be based on an objective basis and legally valid and can be accessed and applied proportionately . As a result , the philosophy underlying the exceptions to access to information is very important to be understood . This type of research in this paper is normative research , ie research with writing that is based on an analysis of several legal theories and laws are appropriate and related to the issues in this thesis . The method used to approach the problem in this thesis using two (2 ) approaches , ie . Statute Approach approach is the approach by using legislation and regulation as well as Conseptual Approach Approach is approach to examine the views of legal scholars of the country in which this thesis was made . To ensure that the exclusion clause in the Act - Freedom of Information Act is implemented correctly then there should be a study to determine where the boundaries and categorization of information that must be disclosed to the public or otherwise . because of the exclusion must be based on an objective basis and legally valid and can be accessed and applied proportionately and the philosophy underlying the exceptions to access to information is very important to be understood\\r\\nKeywords : Rights , Public Information , Exceptions\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pembimbing_pertama\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 950,\n        \"samples\": [\n          \"Dr. Wartiningsih., SH., Mhum\",\n          \"Tolib Effendi, S.H.,M.H\",\n          \"Dr. Djulaeka, S.H.,M.Hum.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pembimbing_kedua\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 203,\n        \"samples\": [\n          \"GATOET POERNOMO, S.H., M.Hum.\",\n          \"Tolib Effendi, SH. MH.\",\n          \"Dr.Wartiningsih,S.H.,M.Hum\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"prodi\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 1,\n        \"samples\": [\n          \"Ilmu Hukum\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
-            }
-          },
-          "metadata": {},
-          "execution_count": 7
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "def print_progress(prodi_id, prodi, current_page, total_pages):\n",
-        "    percent = (current_page / total_pages) * 100\n",
-        "    bar_length = 20\n",
-        "    filled_length = int(bar_length * current_page // total_pages)\n",
-        "    bar = '█' * filled_length + '-' * (bar_length - filled_length)\n",
-        "    sys.stdout.write(f'\\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')\n",
-        "    sys.stdout.flush()\n",
-        "    if current_page == total_pages:\n",
-        "        sys.stdout.write('\\n\\n')\n",
-        "\n",
-        "def pta():\n",
-        "    start_time = time.time()  # mulai hitung waktu\n",
-        "\n",
-        "    data = {\n",
-        "        \"id\": [],\n",
-        "        \"penulis\": [],\n",
-        "        \"judul\": [],\n",
-        "        \"abstrak id\": [],\n",
-        "        \"abstrak en\": [],\n",
-        "        \"pembimbing_pertama\": [],\n",
-        "        \"pembimbing_kedua\": [],\n",
-        "        \"prodi\": [],\n",
-        "    }\n",
-        "\n",
-        "    for i in range(1, 42):  # jumlah prodi\n",
-        "        total_pages = 3  # jumlah page\n",
-        "        prodi_name = None\n",
-        "\n",
-        "        for j in range(1, total_pages + 1):  # loop page\n",
-        "            url = f\"https://pta.trunojoyo.ac.id/c_search/byprod/{i}/{j}\"\n",
-        "            r = requests.get(url)\n",
-        "            soup = BeautifulSoup(r.content, \"html.parser\")\n",
-        "            jurnals = soup.select('li[data-cat=\"#luxury\"]')\n",
-        "\n",
-        "            isii = soup.select_one('div#begin')\n",
-        "            if not isii:\n",
-        "                continue\n",
-        "            prodi_full = isii.select_one('h2').text.strip()\n",
-        "            prodi = prodi_full.replace(\"Journal Jurusan \", \"\")\n",
-        "            if not prodi_name:\n",
-        "                prodi_name = prodi\n",
-        "\n",
-        "            for jurnal in jurnals:\n",
-        "                link = jurnal.select_one('a.gray.button')['href']\n",
-        "\n",
-        "                # ambil ID dari link PTA\n",
-        "                id_match = re.search(r\"/detail/(\\d+)\", link)\n",
-        "                pta_id = id_match.group(1) if id_match else None\n",
-        "\n",
-        "                response = requests.get(link)\n",
-        "                soup1 = BeautifulSoup(response.content, \"html.parser\")\n",
-        "                isi = soup1.select_one('div#content_journal')\n",
-        "\n",
-        "                # Judul\n",
-        "                judul = isi.select_one('a.title').text\n",
-        "\n",
-        "                # Penulis\n",
-        "                penulis = isi.select_one('span:contains(\"Penulis\")').text.split(' : ')[1]\n",
-        "\n",
-        "                # Pembimbing Pertama\n",
-        "                pembimbing_pertama = isi.select_one('span:contains(\"Dosen Pembimbing I\")').text.split(' : ')[1]\n",
-        "\n",
-        "                # Pembimbing Kedua\n",
-        "                pembimbing_kedua = isi.select_one('span:contains(\"Dosen Pembimbing II\")').text.split(' :')[1]\n",
-        "\n",
-        "                # Abstrak\n",
-        "                paragraf = isi.select('p[align=\"justify\"]')\n",
-        "                abstrak = paragraf[0].get_text(strip=True) if len(paragraf) > 0 else \"N/A\"\n",
-        "                abstract = paragraf[1].get_text(strip=True) if len(paragraf) > 1 else \"N/A\"\n",
-        "\n",
-        "                # simpan data\n",
-        "                data[\"id\"].append(pta_id)\n",
-        "                data[\"penulis\"].append(penulis)\n",
-        "                data[\"judul\"].append(judul)\n",
-        "                data[\"pembimbing_pertama\"].append(pembimbing_pertama)\n",
-        "                data[\"pembimbing_kedua\"].append(pembimbing_kedua)\n",
-        "                data[\"abstrak id\"].append(abstrak)\n",
-        "                data[\"abstrak en\"].append(abstract)\n",
-        "                data[\"prodi\"].append(prodi)\n",
-        "\n",
-        "            # update progress bar\n",
-        "            print_progress(i, prodi_name, j, total_pages)\n",
-        "\n",
-        "    df = pd.DataFrame(data)\n",
-        "    df.to_csv(\"pta.csv\", index=False, encoding=\"utf-8-sig\")\n",
-        "\n",
-        "    end_time = time.time()\n",
-        "    elapsed = int(end_time - start_time)\n",
-        "    jam, sisa = divmod(elapsed, 3600)\n",
-        "    menit, detik = divmod(sisa, 60)\n",
-        "\n",
-        "    # summary\n",
-        "    print(\"\\n✅ Seluruh data berhasil dikumpulkan!\")\n",
-        "    print(f\"📊 Total entri: {len(df)}\")\n",
-        "    print(f\"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik\")\n",
-        "\n",
-        "    return df"
-      ],
-      "metadata": {
-        "id": "aClKruJ4VVwU"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "pta()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 1000
-        },
-        "id": "MJws1nUJVeQq",
-        "outputId": "4ad29e7e-a985-4ea6-c9f0-cf71fb96bead"
-      },
-      "execution_count": null,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "[1] Ilmu Hukum - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[2] Teknologi Industri Pertanian - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[3] Agribisnis - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[4] Agroteknologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[5] Ilmu Kelautan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[6] Ekonomi Pembangunan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[7] Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[8] Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[9] Teknik Industri - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[10] Teknik Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[11] Manajemen Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[12] Sosiologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[13] Ilmu Komunikasi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[14] Psikologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[15] Sastra Inggris - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[16] Ekonomi Syariah - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[17] Hukum Bisnis Syariah - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[18] Pgsd - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[19] Teknik Multimedia Dan Jaringan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[20] Mekatronika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[21] D3 Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[22] Magister Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[23] Teknik Elektro - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[24] Magister Ilmu Hukum - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[25] Magister Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[26] D3 Enterpreneurship - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[27] Pendidikan Bhs Dan Sastra Indonesia - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[28] Pendidikan Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[29] Pendidikan Ipa - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[30] Pgpaud - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[31] Sistem Informasi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[32] Teknik Mesin - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[33] Teknik Mekatronika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[34] Journal Jurusan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[35] Manajemen Sumberdaya Perairan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[36] Magister Ilmu Ekonomi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[37] Magister Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[38] Pendidikan Profesi Guru - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[39] Magister Pendidikan Dasar - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[40] Doktor Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[41] Doktor Ilmu Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "\n",
-            "✅ Seluruh data berhasil dikumpulkan!\n",
-            "📊 Total entri: 481\n",
-            "⏱️ Waktu eksekusi: 0 jam 50 menit 23 detik\n"
-          ]
-        },
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": [
-              "               id                           penulis  \\\n",
-              "0    080111100012               Dyah Ayu Citra Seza   \n",
-              "1    080111100002                  Maulina Nurlaily   \n",
-              "2    070111100060               Moh. Samsul Hidayat   \n",
-              "3    090111100077  TOMMY ADITYA PARLINDUNGAN MARBUN   \n",
-              "4    070111200007                RICA YENA IMADHORA   \n",
-              "..            ...                               ...   \n",
-              "476  160281100013   Lisa Sri rahmatullah, S. Sos. I   \n",
-              "477  160281100002                Indah Ainun Nikmah   \n",
-              "478  170361100010                ahmad syaiful umam   \n",
-              "479  170361100001                      Siti Holifah   \n",
-              "480  170361100003                   Mohammad Maskur   \n",
-              "\n",
-              "                                                 judul  \\\n",
-              "0    Implementasi Fungsi Legislasi Dewan Perwakilan...   \n",
-              "1    Pertanggungjawaban Pidana Direksi BUMN (Perser...   \n",
-              "2    Analisis Terhadap Kekosongan Hukum dalam Penga...   \n",
-              "3    PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...   \n",
-              "4    TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...   \n",
-              "..                                                 ...   \n",
-              "476  Dampak Sosial Ekonomi Pariwisata Religi Makam ...   \n",
-              "477  Peranan Zakat Produktif Dalam Meningkatkan Eko...   \n",
-              "478  KARAKTERISASI DAN KOLEKSI PLASMA NUTFAH UNTUK ...   \n",
-              "479  PENGOLAHAN LIMBAH AIR REBUSAN IKAN TERI MENJAD...   \n",
-              "480  STRATEGI PENGEMBANGAN MAKANAN DAN MINUMAN KHAS...   \n",
-              "\n",
-              "                                            abstrak id  \\\n",
-              "0    ABSTRAK\\r\\n\\r\\n       Implementasi Fungsi Legi...   \n",
-              "1    Badan Usaha Milik Negara (BUMN) adalah Badan u...   \n",
-              "2    Kasus narkoba tidak henti-hentinya terdengar d...   \n",
-              "3    Produk elektronik adalah suatu benda bergerak ...   \n",
-              "4                                                        \n",
-              "..                                                 ...   \n",
-              "476  Penelitian ini bertujuan untuk mengetahui baga...   \n",
-              "477  Peranan Zakat Produktif dalam Meningkatkan Eko...   \n",
-              "478  Madura merupakan salah satu wilayah pemasok ko...   \n",
-              "479  Ikan Teri perlu penanganan serius pasca panen ...   \n",
-              "480  Makanan dan minuman khas merupakan ciri dari k...   \n",
-              "\n",
-              "                                            abstrak en  \\\n",
-              "0    ABSTRACT\\r\\n       Implementation of Legislati...   \n",
-              "1    State Owned Enterprises (SOEs) are business en...   \n",
-              "2    Drug cases endlessly heard on television, radi...   \n",
-              "3    Electronic products is an object moves through...   \n",
-              "4                                                        \n",
-              "..                                                 ...   \n",
-              "476  The purpose of this study is to analyze the so...   \n",
-              "477  The Role of Productive Zakat in Improving Must...   \n",
-              "478  Madura is one of the regions supplying horticu...   \n",
-              "479  Anchovy needs serious handling after harvest b...   \n",
-              "480  Typical food and drinks are characteristic of ...   \n",
-              "\n",
-              "                     pembimbing_pertama  \\\n",
-              "0       Yudi Widagdo Harimurti, SH., MH   \n",
-              "1               Tolib Effendi, SH., MH.   \n",
-              "2               Tolib Effendi, SH., MH.   \n",
-              "3             DR. DJULAEKA, S.H., M.HUM   \n",
-              "4            Dr. DENI SBY, S. H., M. S.   \n",
-              "..                                  ...   \n",
-              "476  Dr. Diah Wahyuningsih, S.E., M.Si.   \n",
-              "477       Dr. Kurniyati Indahsari, M.Si   \n",
-              "478           Dr. Ir. Gita Pawana, M.Si   \n",
-              "479        Dr.Apri Arisandi,S.Pi.,M.Si.   \n",
-              "480         Dr. Akhmad Farid, S.Pi., MT   \n",
-              "\n",
-              "                          pembimbing_kedua  \\\n",
-              "0                           Safi', SH., MH   \n",
-              "1             Dr. Eni Suastuti, SH., Mhum.   \n",
-              "2                  Agus Ramdlany, SH., MH.   \n",
-              "3         DR.USWATUN HASANAH, S.H., M. HUM   \n",
-              "4            SAIFUL ABDULLAH, S. H., M. H.   \n",
-              "..                                     ...   \n",
-              "476  Dr. Eni Sri Rahayuningsih, S.E., M.E.   \n",
-              "477            Dr. Abdur Rahman, S.Ag. MEI   \n",
-              "478         Dr. Ir. Hj. SIti Fatimah, M.Si   \n",
-              "479                      Dr.Ir.H.Asfan,MP.   \n",
-              "480         Dr. Apri Arisandi, S.Pi., M.Si   \n",
-              "\n",
-              "                                     prodi  \n",
-              "0                               Ilmu Hukum  \n",
-              "1                               Ilmu Hukum  \n",
-              "2                               Ilmu Hukum  \n",
-              "3                               Ilmu Hukum  \n",
-              "4                               Ilmu Hukum  \n",
-              "..                                     ...  \n",
-              "476                  Magister Ilmu Ekonomi  \n",
-              "477                  Magister Ilmu Ekonomi  \n",
-              "478  Magister Pengelolaan Sumber Daya Alam  \n",
-              "479  Magister Pengelolaan Sumber Daya Alam  \n",
-              "480  Magister Pengelolaan Sumber Daya Alam  \n",
-              "\n",
-              "[481 rows x 8 columns]"
-            ],
-            "text/html": [
-              "\n",
-              "  <div id=\"df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d\" class=\"colab-df-container\">\n",
-              "    <div>\n",
-              "<style scoped>\n",
-              "    .dataframe tbody tr th:only-of-type {\n",
-              "        vertical-align: middle;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe tbody tr th {\n",
-              "        vertical-align: top;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe thead th {\n",
-              "        text-align: right;\n",
-              "    }\n",
-              "</style>\n",
-              "<table border=\"1\" class=\"dataframe\">\n",
-              "  <thead>\n",
-              "    <tr style=\"text-align: right;\">\n",
-              "      <th></th>\n",
-              "      <th>id</th>\n",
-              "      <th>penulis</th>\n",
-              "      <th>judul</th>\n",
-              "      <th>abstrak id</th>\n",
-              "      <th>abstrak en</th>\n",
-              "      <th>pembimbing_pertama</th>\n",
-              "      <th>pembimbing_kedua</th>\n",
-              "      <th>prodi</th>\n",
-              "    </tr>\n",
-              "  </thead>\n",
-              "  <tbody>\n",
-              "    <tr>\n",
-              "      <th>0</th>\n",
-              "      <td>080111100012</td>\n",
-              "      <td>Dyah Ayu Citra Seza</td>\n",
-              "      <td>Implementasi Fungsi Legislasi Dewan Perwakilan...</td>\n",
-              "      <td>ABSTRAK\\r\\n\\r\\n       Implementasi Fungsi Legi...</td>\n",
-              "      <td>ABSTRACT\\r\\n       Implementation of Legislati...</td>\n",
-              "      <td>Yudi Widagdo Harimurti, SH., MH</td>\n",
-              "      <td>Safi', SH., MH</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1</th>\n",
-              "      <td>080111100002</td>\n",
-              "      <td>Maulina Nurlaily</td>\n",
-              "      <td>Pertanggungjawaban Pidana Direksi BUMN (Perser...</td>\n",
-              "      <td>Badan Usaha Milik Negara (BUMN) adalah Badan u...</td>\n",
-              "      <td>State Owned Enterprises (SOEs) are business en...</td>\n",
-              "      <td>Tolib Effendi, SH., MH.</td>\n",
-              "      <td>Dr. Eni Suastuti, SH., Mhum.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>2</th>\n",
-              "      <td>070111100060</td>\n",
-              "      <td>Moh. Samsul Hidayat</td>\n",
-              "      <td>Analisis Terhadap Kekosongan Hukum dalam Penga...</td>\n",
-              "      <td>Kasus narkoba tidak henti-hentinya terdengar d...</td>\n",
-              "      <td>Drug cases endlessly heard on television, radi...</td>\n",
-              "      <td>Tolib Effendi, SH., MH.</td>\n",
-              "      <td>Agus Ramdlany, SH., MH.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>3</th>\n",
-              "      <td>090111100077</td>\n",
-              "      <td>TOMMY ADITYA PARLINDUNGAN MARBUN</td>\n",
-              "      <td>PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...</td>\n",
-              "      <td>Produk elektronik adalah suatu benda bergerak ...</td>\n",
-              "      <td>Electronic products is an object moves through...</td>\n",
-              "      <td>DR. DJULAEKA, S.H., M.HUM</td>\n",
-              "      <td>DR.USWATUN HASANAH, S.H., M. HUM</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>4</th>\n",
-              "      <td>070111200007</td>\n",
-              "      <td>RICA YENA IMADHORA</td>\n",
-              "      <td>TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...</td>\n",
-              "      <td></td>\n",
-              "      <td></td>\n",
-              "      <td>Dr. DENI SBY, S. H., M. S.</td>\n",
-              "      <td>SAIFUL ABDULLAH, S. H., M. H.</td>\n",
-              "      <td>Ilmu Hukum</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>...</th>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>476</th>\n",
-              "      <td>160281100013</td>\n",
-              "      <td>Lisa Sri rahmatullah, S. Sos. I</td>\n",
-              "      <td>Dampak Sosial Ekonomi Pariwisata Religi Makam ...</td>\n",
-              "      <td>Penelitian ini bertujuan untuk mengetahui baga...</td>\n",
-              "      <td>The purpose of this study is to analyze the so...</td>\n",
-              "      <td>Dr. Diah Wahyuningsih, S.E., M.Si.</td>\n",
-              "      <td>Dr. Eni Sri Rahayuningsih, S.E., M.E.</td>\n",
-              "      <td>Magister Ilmu Ekonomi</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>477</th>\n",
-              "      <td>160281100002</td>\n",
-              "      <td>Indah Ainun Nikmah</td>\n",
-              "      <td>Peranan Zakat Produktif Dalam Meningkatkan Eko...</td>\n",
-              "      <td>Peranan Zakat Produktif dalam Meningkatkan Eko...</td>\n",
-              "      <td>The Role of Productive Zakat in Improving Must...</td>\n",
-              "      <td>Dr. Kurniyati Indahsari, M.Si</td>\n",
-              "      <td>Dr. Abdur Rahman, S.Ag. MEI</td>\n",
-              "      <td>Magister Ilmu Ekonomi</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>478</th>\n",
-              "      <td>170361100010</td>\n",
-              "      <td>ahmad syaiful umam</td>\n",
-              "      <td>KARAKTERISASI DAN KOLEKSI PLASMA NUTFAH UNTUK ...</td>\n",
-              "      <td>Madura merupakan salah satu wilayah pemasok ko...</td>\n",
-              "      <td>Madura is one of the regions supplying horticu...</td>\n",
-              "      <td>Dr. Ir. Gita Pawana, M.Si</td>\n",
-              "      <td>Dr. Ir. Hj. SIti Fatimah, M.Si</td>\n",
-              "      <td>Magister Pengelolaan Sumber Daya Alam</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>479</th>\n",
-              "      <td>170361100001</td>\n",
-              "      <td>Siti Holifah</td>\n",
-              "      <td>PENGOLAHAN LIMBAH AIR REBUSAN IKAN TERI MENJAD...</td>\n",
-              "      <td>Ikan Teri perlu penanganan serius pasca panen ...</td>\n",
-              "      <td>Anchovy needs serious handling after harvest b...</td>\n",
-              "      <td>Dr.Apri Arisandi,S.Pi.,M.Si.</td>\n",
-              "      <td>Dr.Ir.H.Asfan,MP.</td>\n",
-              "      <td>Magister Pengelolaan Sumber Daya Alam</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>480</th>\n",
-              "      <td>170361100003</td>\n",
-              "      <td>Mohammad Maskur</td>\n",
-              "      <td>STRATEGI PENGEMBANGAN MAKANAN DAN MINUMAN KHAS...</td>\n",
-              "      <td>Makanan dan minuman khas merupakan ciri dari k...</td>\n",
-              "      <td>Typical food and drinks are characteristic of ...</td>\n",
-              "      <td>Dr. Akhmad Farid, S.Pi., MT</td>\n",
-              "      <td>Dr. Apri Arisandi, S.Pi., M.Si</td>\n",
-              "      <td>Magister Pengelolaan Sumber Daya Alam</td>\n",
-              "    </tr>\n",
-              "  </tbody>\n",
-              "</table>\n",
-              "<p>481 rows × 8 columns</p>\n",
-              "</div>\n",
-              "    <div class=\"colab-df-buttons\">\n",
-              "\n",
-              "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d')\"\n",
-              "            title=\"Convert this dataframe to an interactive table.\"\n",
-              "            style=\"display:none;\">\n",
-              "\n",
-              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
-              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
-              "  </svg>\n",
-              "    </button>\n",
-              "\n",
-              "  <style>\n",
-              "    .colab-df-container {\n",
-              "      display:flex;\n",
-              "      gap: 12px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert {\n",
-              "      background-color: #E8F0FE;\n",
-              "      border: none;\n",
-              "      border-radius: 50%;\n",
-              "      cursor: pointer;\n",
-              "      display: none;\n",
-              "      fill: #1967D2;\n",
-              "      height: 32px;\n",
-              "      padding: 0 0 0 0;\n",
-              "      width: 32px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert:hover {\n",
-              "      background-color: #E2EBFA;\n",
-              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "      fill: #174EA6;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-buttons div {\n",
-              "      margin-bottom: 4px;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert {\n",
-              "      background-color: #3B4455;\n",
-              "      fill: #D2E3FC;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert:hover {\n",
-              "      background-color: #434B5C;\n",
-              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
-              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
-              "      fill: #FFFFFF;\n",
-              "    }\n",
-              "  </style>\n",
-              "\n",
-              "    <script>\n",
-              "      const buttonEl =\n",
-              "        document.querySelector('#df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d button.colab-df-convert');\n",
-              "      buttonEl.style.display =\n",
-              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "\n",
-              "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d');\n",
-              "        const dataTable =\n",
-              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
-              "                                                    [key], {});\n",
-              "        if (!dataTable) return;\n",
-              "\n",
-              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
-              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
-              "          + ' to learn more about interactive tables.';\n",
-              "        element.innerHTML = '';\n",
-              "        dataTable['output_type'] = 'display_data';\n",
-              "        await google.colab.output.renderOutput(dataTable, element);\n",
-              "        const docLink = document.createElement('div');\n",
-              "        docLink.innerHTML = docLinkHtml;\n",
-              "        element.appendChild(docLink);\n",
-              "      }\n",
-              "    </script>\n",
-              "  </div>\n",
-              "\n",
-              "\n",
-              "    <div id=\"df-d2c27b62-551f-4017-9000-ac4f1ef9c328\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-d2c27b62-551f-4017-9000-ac4f1ef9c328')\"\n",
-              "                title=\"Suggest charts\"\n",
-              "                style=\"display:none;\">\n",
-              "\n",
-              "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
-              "     width=\"24px\">\n",
-              "    <g>\n",
-              "        <path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z\"/>\n",
-              "    </g>\n",
-              "</svg>\n",
-              "      </button>\n",
-              "\n",
-              "<style>\n",
-              "  .colab-df-quickchart {\n",
-              "      --bg-color: #E8F0FE;\n",
-              "      --fill-color: #1967D2;\n",
-              "      --hover-bg-color: #E2EBFA;\n",
-              "      --hover-fill-color: #174EA6;\n",
-              "      --disabled-fill-color: #AAA;\n",
-              "      --disabled-bg-color: #DDD;\n",
-              "  }\n",
-              "\n",
-              "  [theme=dark] .colab-df-quickchart {\n",
-              "      --bg-color: #3B4455;\n",
-              "      --fill-color: #D2E3FC;\n",
-              "      --hover-bg-color: #434B5C;\n",
-              "      --hover-fill-color: #FFFFFF;\n",
-              "      --disabled-bg-color: #3B4455;\n",
-              "      --disabled-fill-color: #666;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart {\n",
-              "    background-color: var(--bg-color);\n",
-              "    border: none;\n",
-              "    border-radius: 50%;\n",
-              "    cursor: pointer;\n",
-              "    display: none;\n",
-              "    fill: var(--fill-color);\n",
-              "    height: 32px;\n",
-              "    padding: 0;\n",
-              "    width: 32px;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart:hover {\n",
-              "    background-color: var(--hover-bg-color);\n",
-              "    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "    fill: var(--button-hover-fill-color);\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart-complete:disabled,\n",
-              "  .colab-df-quickchart-complete:disabled:hover {\n",
-              "    background-color: var(--disabled-bg-color);\n",
-              "    fill: var(--disabled-fill-color);\n",
-              "    box-shadow: none;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-spinner {\n",
-              "    border: 2px solid var(--fill-color);\n",
-              "    border-color: transparent;\n",
-              "    border-bottom-color: var(--fill-color);\n",
-              "    animation:\n",
-              "      spin 1s steps(1) infinite;\n",
-              "  }\n",
-              "\n",
-              "  @keyframes spin {\n",
-              "    0% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "      border-left-color: var(--fill-color);\n",
-              "    }\n",
-              "    20% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    30% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    40% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    60% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    80% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "    90% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "  }\n",
-              "</style>\n",
-              "\n",
-              "      <script>\n",
-              "        async function quickchart(key) {\n",
-              "          const quickchartButtonEl =\n",
-              "            document.querySelector('#' + key + ' button');\n",
-              "          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.\n",
-              "          quickchartButtonEl.classList.add('colab-df-spinner');\n",
-              "          try {\n",
-              "            const charts = await google.colab.kernel.invokeFunction(\n",
-              "                'suggestCharts', [key], {});\n",
-              "          } catch (error) {\n",
-              "            console.error('Error during call to suggestCharts:', error);\n",
-              "          }\n",
-              "          quickchartButtonEl.classList.remove('colab-df-spinner');\n",
-              "          quickchartButtonEl.classList.add('colab-df-quickchart-complete');\n",
-              "        }\n",
-              "        (() => {\n",
-              "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-d2c27b62-551f-4017-9000-ac4f1ef9c328 button');\n",
-              "          quickchartButtonEl.style.display =\n",
-              "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "        })();\n",
-              "      </script>\n",
-              "    </div>\n",
-              "\n",
-              "    </div>\n",
-              "  </div>\n"
-            ],
-            "application/vnd.google.colaboratory.intrinsic+json": {
-              "type": "dataframe",
-              "summary": "{\n  \"name\": \"pta()\",\n  \"rows\": 481,\n  \"fields\": [\n    {\n      \"column\": \"id\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 481,\n        \"samples\": [\n          \"070341100002\",\n          \"130631100103\",\n          \"130621100119\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"penulis\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 479,\n        \"samples\": [\n          \"Muhammad Zakaria Utomo\",\n          \"M. BOY SINGGIH GITAYUDA, S.E.\",\n          \"Dian Anggraini\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"judul\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 481,\n        \"samples\": [\n          \"Analisis konsentrasi gizi dan logam berat pada berbagai jenis organisme perairan kenjeran\",\n          \"PENGEMBANGAN MEDIA PEMBELAJARAN PERAKITAN KOMPUTER BERBASIS AUGMENTED REALITY\",\n          \"MAKNA KONTEKSTUAL PADA JINGLE SLOGAN TELEVISI SWASTA \\nINDONESIA SEBAGAI BENTUK IMPLEMENTASI PELESTARIAN \\nKEBUDAYAAN INDONESIA\\n(KAJIAN SEMANTIK)\\n\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"abstrak id\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 466,\n        \"samples\": [\n          \"Tembakau (Nicotiana tabacum L.) termasuk salah satu komoditi perdagangan dengan nilai ekonomi yang tinggi di Indonesia. Keberhasilan peningkatan produktivitas tembakau tergantung pada banyak faktor antara lain kualitas benih, teknologi budidaya, iklim, tanah dan kemampuan petani dalam mengelolanya. Pulau Madura merupakan salah satu sentra penanaman tembakau di Indonesia. Secara administratife daerah penanaman tembakau di Madura berada di Kabupaten Sampang, Pamekasan dan Sumenep. Kondisi lingkungan juga mempunyai peran terhadap kemampuan ekpresi genetik. Jika kondisi lingkungan dapat terbentuk akibat pemberian pupuk organik maka mutu akan dicapai. Tujuan dari penelitian ini yaitu mengetahui pertumbuhan dan hasil dua varietas tembakau Prancak dan Cangkring akibat pemberian kotoran ternak sapi. Penelitian ini  dilaksanakan di Desa Talang Kecamatan Saronggi Kabupaten Sumenep. Pada bulan Mei 2011 dan berakhir bulan Juli 2011.Penelitian menggunakan rancangan acak kelompok (RAK )Faktorial. Faktor pertama yaitu Varietas Prancak 95(V1),cangkring ( V2). Sedangkan faktor yag kedua yaitu Pupuk Organik 2000 kg/Ha ( O1 ), 4000 kg/Ha ( O2 ), 6000 kg/Ha ( O3 ).Hasil penelitian Pemberian kotoran ternak sapi sebanyak 6000 kg/ha diperoleh jumlah daun yang paling banyak dibanding yang lain\\r\\nKata kunci : Tembakau, pupuk kotoran ternak sapi, pertum\",\n          \"ABSTRAK\\r\\n\\r\\n\\r\\nDinamisnya pembangunan dan eksploitasi kawasan pesisir secara besar-besaran dapat menyebabkan penurunan kondisi fungsi ekosistem perairan. Hal tersebut akan merugikan manusia. Potensi bahaya yang dapat terjadi menuntut adanya sistem kontrol yang baik, salah satunya dengan memantau kualitas perairan pesisir secara berkesinambungan. Teknologi penginderaan jauh adalah metode yang cukup baik dalam memantau kualitas air. Pemanfaatan citra satelit ASTER dengan 14 band, informasi oseanografi yang diperoleh diharapkan akan lebih baik dan akurat. Penelitian ini mencoba menggali potensi aplikasi data citra satelit ASTER untuk menentukan salah satu parameter kualitas air yaitu konsentrasi klorofil-a. Penelitian ini bertujuan merancang dan membuat model algoritma penduga konsentrasi klorofil-a serta menganalisis hubungan data lapang dengan respon spektral citra ASTER. Penyusunan algoritma penduga konsentrasi klorofil-a pada penelitian ini menggunakan kombinasi band (Bandaktif/Bandreference) dan ((Bandaktif -Bandreference)/(Bandaktif+Bandreference)). Data citra yang digunakan yaitu band 1 dan band 2 sensor satelit citra ASTER. Metode dalam penyusunan algoritma penduga konsentrasi klorofil-a menggunakan metode regresi, dimana metode regresi digunakan untuk memanfaatkan persamaan regresi untuk mengubah nilai pada citra menjadi nilai baru yang menggambarkan kecenderungan fenomena tertentu. Selanjutnya dilakukan pengujian nilai konsentrasi klorofil-a dengan menggunakan uji akurasi dengan metode RMSE. Hasil analisis penelitian algoritma penduga konsentrasi klorofil-a di perairan Kwanyar Kabupaten Bangkalan yaitu [Chl-a] = - 76,780 + 66,164 Ln (B1) \\u2013 50,771 Ln (B2) dengan nilai koefisien korelasi dan determinasi (r = 0,591, R = 34,9 %) serta nilai RMSE 2,374. \\r\\n\\r\\nKata kunci: Citra ASTER, Algoritma Penduga Klorofil-a, Metode Regresi.\",\n          \"Perilaku konsumen adalah suatu proses keputusan sebelum pembelian yang meliputi tindakan dalam memperoleh, memakai, mengkonsumsi dan menghabiskan produk. Berkaitan dengan hal tersebut, penelitian ini bertujuan untuk mendeskripsikan karakteristik konsumen yang mengkonsumsi rokok dan menganalisis perilaku konsumen pada mahasiswa perokok. Penelitian dilakukan di Universitas Trunojoyo Madura. Metode pengambilan sampel dilakukan dengan menggunakan teknik accidental sampling, dengan responden sebanyak 60 orang, Sedangkan Metode analisis data yang dipergunakan adalah Analisis Deskriptif Kualitatif. Hasil penelitian menunjukkan bahwa sebagian besar konsumen rokok mulai merokok pada usia antara 15 - 17 tahun yang dipengaruhi dari lingkungan teman dan besar konsumsi rokok berkisar antara 100.000 - 300.000 dengan menghabiskan rokok antara 10 - 20 batang rokok/hari yang dibeli dari uang kiriman antara >300.000 - 600.000. Sedangkan atribut yang mempengaruhi keputusan konsumen untuk membeli rokok adalah atribut rasa.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"abstrak en\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 455,\n        \"samples\": [\n          \"ABSTRACT\\r\\n\\r\\nParamithasari, Indri.2015. Pengaruh Tingkat Inflasi, Kurs Rupiah, dan Tingkat Likuiditas terhadap Return Saham Syariah yang Terdaftar Pada Jakarta Islamic Index Periode 2012-2014.\\r\\n\\r\\nKey words: Inflation, Exchange Rate Rupiah, Liquidity, Stock Return of Syariah\\r\\n\\r\\nThis research aimed to examine the effect of the inflation rate, the rupiah exchange rate, and liquidity levels as independent variables to the stock return of syariah as the dependent variable. This type of research uses eksplanatif by taking the population of all companies listed on the Jakarta Islamic Index 2012-2014 period, a total of 44 companies. In sampling using purposive sampling method, in order to obtain 18 Islamic companies listed on the Jakarta Islamic Index. The analytical method used is multiple regression analysis. Hypothesis testing using t test to determine the effect partially from each independent variable on the dependent variable and F-test to determine the effect simultaneous independent variable on the dependent variable. The results showed that the independent variables are positive and significant impact on stock returns syariah both partially and simultaneously by 23.7%. In the study recommended further extended to include other variables besides inflation, rupiah exchange rate, liquidity (bid-ask spread) this is due to the influence of the three variables in this study is still relatively low.\",\n          \"Pakchoi (Brassica juncea L.). is one kind of a vegetable crop that has high economic value and high nutrition. The technology of hydroponic is one of alternative cultivation using other media than soil substrates and nutrients. The purpose of this research is to determine the effect of media composition and nutrition on growth and yield of  pakchoi crops and find out which treatment is best for plant growth and yield of pakchoi. Research carried out in the garden experiment in a plastic house, Faculty of Agriculture, University of Trunojoyo Madura, at an altitude of \\u00b1 5 m above sea level, temperature 29 \\u00ba C, and \\u00b1 75% RH. The research was conducted in December 2011 to February 2012. The analysis was used non faktorial RAL. Treatment with compose media types (raw rice husk, rice husk charcoal, sand) and nutrients (no nutrients, premium nutrition, nutrition goodplant). There are nine treatment, three replications and three samples of the plant, further tests were analyzed by DMRT 5%. Results showed the treatment composition and nutrient media provide significantly different results at different ages of observations on each variable observation. The best treatment composition contained in the husk charcoal and nutrient media goodplant (M2N2). Evidenced by the average of the highest results on the length of the plant (29.38 cm), number of leaves (22.22 strands), leaf area (3226.79 cm2), wet weight (242.19 g) and dry weight (13, 27 g) total plant pakchoi at age 4 MST.\",\n          \"This article illustrates preparation of your abstract using MS-WORD. Papers should not be numbered. The manuscript should be written in English. The length of manuscript should not exceed 15 pages in this format using B5- double-sided papers. The title page should include the succinct title, the authors, and an abstract of around 200 words at the beginning of the manuscript. The remainder of the paper should be typed in 10pt Times New Roman. Please set your margin before you type your article by looking at the page setup of this template. If you have any question on the format, please send a message to. Algorithm Programming is the material listed on the basic competencies of curriculum 13 and must be given to all students of vocational grade X majoring in Computer Network Engineering. When researchers do observations in SMK Nurul Amanah, the results stated that the learning media used is still less because the teacher is still using printed books. If the learning media in the form of a printed book is not supportive and unable to convey information properly then students will find it difficult to follow and understand the material. This study aims to develop educational game learning media based on Role Playing Game to help the learning process at SMK Nurul Amanah. This research uses analysis model of Analysis, Design, Development, Implementation, Evaluation (ADDIE). The research steps are Analysis (analyzing student needs, formulating learning objectives, formulation of material items, preparation of evaluation instruments), Design (writing media script), Development (making educative game), Implementation (product implementation in SMK Nurul Amanah), Evaluation (Formulating the results of evaluation instruments). The results of the product trials show that media experts obtained an 83% percentage score in the \\\"GOOD\\\" category and Questionnaire material experts scored 86% percentage in the \\\"GOOD\\\" category while the student questionnaire scored 90% percentage in the \\\"EXCELLENT\\\" category. The conclusion of the researcher is educative game learning media can be used.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pembimbing_pertama\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 423,\n        \"samples\": [\n          \"Haryanto S.T., M.T\",\n          \"Dr. Drs. Chairul Anam, M. Kes\",\n          \"Muhtar Wahyudi. S.Sos. MA \"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"pembimbing_kedua\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 351,\n        \"samples\": [\n          \"Aminah Dewi Rahmawati, S.Sos., M.Si\",\n          \"Mohtar Rasyid\",\n          \"Titin Faridatun Nisa\\u2019 S.Pd., M.Pd\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"prodi\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 34,\n        \"samples\": [\n          \"Ekonomi Syariah\",\n          \"Mekatronika\",\n          \"Pendidikan Informatika\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
-            }
-          },
-          "metadata": {},
-          "execution_count": 10
-        }
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "source": [
-        "## Page dan Link Keluar"
-      ],
-      "metadata": {
-        "id": "p-zf9QQOVkTs"
-      }
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "def print_progress(prodi_id, prodi, current_page, total_pages):\n",
-        "    percent = (current_page / total_pages) * 100\n",
-        "    bar_length = 20\n",
-        "    filled_length = int(bar_length * current_page // total_pages)\n",
-        "    bar = '█' * filled_length + '-' * (bar_length - filled_length)\n",
-        "    sys.stdout.write(f'\\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')\n",
-        "    sys.stdout.flush()\n",
-        "    if current_page == total_pages:\n",
-        "        sys.stdout.write('\\n\\n')\n",
-        "\n",
-        "def pta_links():\n",
-        "    start_time = time.time()  # mulai hitung waktu\n",
-        "\n",
-        "    data = {\n",
-        "        \"no\": [],\n",
-        "        \"page\": [],\n",
-        "        \"link_keluar\": []\n",
-        "    }\n",
-        "\n",
-        "    no = 1  # nomor urut\n",
-        "\n",
-        "    for i in range(1, 42):  # jumlah prodi\n",
-        "        total_pages = 3  # jumlah page\n",
-        "        prodi_name = None\n",
-        "\n",
-        "        for j in range(1, total_pages + 1):  # loop page\n",
-        "            url = f\"https://pta.trunojoyo.ac.id/c_search/byprod/{i}/{j}\"\n",
-        "            r = requests.get(url)\n",
-        "            soup = BeautifulSoup(r.content, \"html.parser\")\n",
-        "            jurnals = soup.select('li[data-cat=\"#luxury\"]')\n",
-        "\n",
-        "            isii = soup.select_one('div#begin')\n",
-        "            if not isii:\n",
-        "                continue\n",
-        "            prodi_full = isii.select_one('h2').text.strip()\n",
-        "            prodi = prodi_full.replace(\"Journal Jurusan \", \"\")\n",
-        "            if not prodi_name:\n",
-        "                prodi_name = prodi\n",
-        "\n",
-        "            for jurnal in jurnals:\n",
-        "                link = jurnal.select_one('a.gray.button')['href']\n",
-        "\n",
-        "                data[\"no\"].append(no)\n",
-        "                data[\"page\"].append(url)          # link page\n",
-        "                data[\"link_keluar\"].append(link)  # link detail\n",
-        "                no += 1\n",
-        "\n",
-        "            # update progress bar\n",
-        "            print_progress(i, prodi_name, j, total_pages)\n",
-        "\n",
-        "    df = pd.DataFrame(data)\n",
-        "    df.to_csv(\"pta_links.csv\", index=False)\n",
-        "\n",
-        "    end_time = time.time()\n",
-        "    elapsed = int(end_time - start_time)\n",
-        "    jam, sisa = divmod(elapsed, 3600)\n",
-        "    menit, detik = divmod(sisa, 60)\n",
-        "\n",
-        "    # summary\n",
-        "    print(\"\\n✅ Seluruh link berhasil dikumpulkan!\")\n",
-        "    print(f\"📊 Total entri: {len(df)}\")\n",
-        "    print(f\"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik\")\n",
-        "\n",
-        "    return df"
-      ],
-      "metadata": {
-        "id": "e8ZKBT2xVokk"
-      },
-      "execution_count": null,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "pta_links()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 1000
-        },
-        "id": "scvhtCt2VsL9",
-        "outputId": "3c24f36c-1380-46d0-c8a8-a147387dda5c"
-      },
-      "execution_count": null,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "[1] Ilmu Hukum - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[2] Teknologi Industri Pertanian - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[3] Agribisnis - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[4] Agroteknologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[5] Ilmu Kelautan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[6] Ekonomi Pembangunan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[7] Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[8] Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[9] Teknik Industri - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[10] Teknik Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[11] Manajemen Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[12] Sosiologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[13] Ilmu Komunikasi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[14] Psikologi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[15] Sastra Inggris - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[16] Ekonomi Syariah - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[17] Hukum Bisnis Syariah - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[18] Pgsd - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[19] Teknik Multimedia Dan Jaringan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[20] Mekatronika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[21] D3 Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[22] Magister Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[23] Teknik Elektro - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[24] Magister Ilmu Hukum - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[25] Magister Akuntansi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[26] D3 Enterpreneurship - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[27] Pendidikan Bhs Dan Sastra Indonesia - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[28] Pendidikan Informatika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[29] Pendidikan Ipa - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[30] Pgpaud - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[31] Sistem Informasi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[32] Teknik Mesin - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[33] Teknik Mekatronika - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[34] Journal Jurusan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[35] Manajemen Sumberdaya Perairan - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[36] Magister Ilmu Ekonomi - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[37] Magister Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[38] Pendidikan Profesi Guru - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[39] Magister Pendidikan Dasar - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[40] Doktor Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "[41] Doktor Ilmu Manajemen - Page 3/3 [████████████████████] 100.00%\n",
-            "\n",
-            "\n",
-            "✅ Seluruh link berhasil dikumpulkan!\n",
-            "📊 Total entri: 481\n",
-            "⏱️ Waktu eksekusi: 0 jam 10 menit 32 detik\n"
-          ]
-        },
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": [
-              "      no                                              page  \\\n",
-              "0      1   https://pta.trunojoyo.ac.id/c_search/byprod/1/1   \n",
-              "1      2   https://pta.trunojoyo.ac.id/c_search/byprod/1/1   \n",
-              "2      3   https://pta.trunojoyo.ac.id/c_search/byprod/1/1   \n",
-              "3      4   https://pta.trunojoyo.ac.id/c_search/byprod/1/1   \n",
-              "4      5   https://pta.trunojoyo.ac.id/c_search/byprod/1/1   \n",
-              "..   ...                                               ...   \n",
-              "476  477  https://pta.trunojoyo.ac.id/c_search/byprod/36/2   \n",
-              "477  478  https://pta.trunojoyo.ac.id/c_search/byprod/36/2   \n",
-              "478  479  https://pta.trunojoyo.ac.id/c_search/byprod/37/1   \n",
-              "479  480  https://pta.trunojoyo.ac.id/c_search/byprod/37/1   \n",
-              "480  481  https://pta.trunojoyo.ac.id/c_search/byprod/37/1   \n",
-              "\n",
-              "                                           link_keluar  \n",
-              "0    https://pta.trunojoyo.ac.id/welcome/detail/080...  \n",
-              "1    https://pta.trunojoyo.ac.id/welcome/detail/080...  \n",
-              "2    https://pta.trunojoyo.ac.id/welcome/detail/070...  \n",
-              "3    https://pta.trunojoyo.ac.id/welcome/detail/090...  \n",
-              "4    https://pta.trunojoyo.ac.id/welcome/detail/070...  \n",
-              "..                                                 ...  \n",
-              "476  https://pta.trunojoyo.ac.id/welcome/detail/160...  \n",
-              "477  https://pta.trunojoyo.ac.id/welcome/detail/160...  \n",
-              "478  https://pta.trunojoyo.ac.id/welcome/detail/170...  \n",
-              "479  https://pta.trunojoyo.ac.id/welcome/detail/170...  \n",
-              "480  https://pta.trunojoyo.ac.id/welcome/detail/170...  \n",
-              "\n",
-              "[481 rows x 3 columns]"
-            ],
-            "text/html": [
-              "\n",
-              "  <div id=\"df-84b9f737-427d-4697-b8f1-438d1314d759\" class=\"colab-df-container\">\n",
-              "    <div>\n",
-              "<style scoped>\n",
-              "    .dataframe tbody tr th:only-of-type {\n",
-              "        vertical-align: middle;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe tbody tr th {\n",
-              "        vertical-align: top;\n",
-              "    }\n",
-              "\n",
-              "    .dataframe thead th {\n",
-              "        text-align: right;\n",
-              "    }\n",
-              "</style>\n",
-              "<table border=\"1\" class=\"dataframe\">\n",
-              "  <thead>\n",
-              "    <tr style=\"text-align: right;\">\n",
-              "      <th></th>\n",
-              "      <th>no</th>\n",
-              "      <th>page</th>\n",
-              "      <th>link_keluar</th>\n",
-              "    </tr>\n",
-              "  </thead>\n",
-              "  <tbody>\n",
-              "    <tr>\n",
-              "      <th>0</th>\n",
-              "      <td>1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/080...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>1</th>\n",
-              "      <td>2</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/080...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>2</th>\n",
-              "      <td>3</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/070...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>3</th>\n",
-              "      <td>4</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/090...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>4</th>\n",
-              "      <td>5</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/070...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>...</th>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "      <td>...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>476</th>\n",
-              "      <td>477</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/36/2</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/160...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>477</th>\n",
-              "      <td>478</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/36/2</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/160...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>478</th>\n",
-              "      <td>479</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>479</th>\n",
-              "      <td>480</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>\n",
-              "    </tr>\n",
-              "    <tr>\n",
-              "      <th>480</th>\n",
-              "      <td>481</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>\n",
-              "      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>\n",
-              "    </tr>\n",
-              "  </tbody>\n",
-              "</table>\n",
-              "<p>481 rows × 3 columns</p>\n",
-              "</div>\n",
-              "    <div class=\"colab-df-buttons\">\n",
-              "\n",
-              "  <div class=\"colab-df-container\">\n",
-              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-84b9f737-427d-4697-b8f1-438d1314d759')\"\n",
-              "            title=\"Convert this dataframe to an interactive table.\"\n",
-              "            style=\"display:none;\">\n",
-              "\n",
-              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
-              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
-              "  </svg>\n",
-              "    </button>\n",
-              "\n",
-              "  <style>\n",
-              "    .colab-df-container {\n",
-              "      display:flex;\n",
-              "      gap: 12px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert {\n",
-              "      background-color: #E8F0FE;\n",
-              "      border: none;\n",
-              "      border-radius: 50%;\n",
-              "      cursor: pointer;\n",
-              "      display: none;\n",
-              "      fill: #1967D2;\n",
-              "      height: 32px;\n",
-              "      padding: 0 0 0 0;\n",
-              "      width: 32px;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-convert:hover {\n",
-              "      background-color: #E2EBFA;\n",
-              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "      fill: #174EA6;\n",
-              "    }\n",
-              "\n",
-              "    .colab-df-buttons div {\n",
-              "      margin-bottom: 4px;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert {\n",
-              "      background-color: #3B4455;\n",
-              "      fill: #D2E3FC;\n",
-              "    }\n",
-              "\n",
-              "    [theme=dark] .colab-df-convert:hover {\n",
-              "      background-color: #434B5C;\n",
-              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
-              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
-              "      fill: #FFFFFF;\n",
-              "    }\n",
-              "  </style>\n",
-              "\n",
-              "    <script>\n",
-              "      const buttonEl =\n",
-              "        document.querySelector('#df-84b9f737-427d-4697-b8f1-438d1314d759 button.colab-df-convert');\n",
-              "      buttonEl.style.display =\n",
-              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "\n",
-              "      async function convertToInteractive(key) {\n",
-              "        const element = document.querySelector('#df-84b9f737-427d-4697-b8f1-438d1314d759');\n",
-              "        const dataTable =\n",
-              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
-              "                                                    [key], {});\n",
-              "        if (!dataTable) return;\n",
-              "\n",
-              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
-              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
-              "          + ' to learn more about interactive tables.';\n",
-              "        element.innerHTML = '';\n",
-              "        dataTable['output_type'] = 'display_data';\n",
-              "        await google.colab.output.renderOutput(dataTable, element);\n",
-              "        const docLink = document.createElement('div');\n",
-              "        docLink.innerHTML = docLinkHtml;\n",
-              "        element.appendChild(docLink);\n",
-              "      }\n",
-              "    </script>\n",
-              "  </div>\n",
-              "\n",
-              "\n",
-              "    <div id=\"df-f7ddf469-6e13-4062-b836-2ec8084999e8\">\n",
-              "      <button class=\"colab-df-quickchart\" onclick=\"quickchart('df-f7ddf469-6e13-4062-b836-2ec8084999e8')\"\n",
-              "                title=\"Suggest charts\"\n",
-              "                style=\"display:none;\">\n",
-              "\n",
-              "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
-              "     width=\"24px\">\n",
-              "    <g>\n",
-              "        <path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z\"/>\n",
-              "    </g>\n",
-              "</svg>\n",
-              "      </button>\n",
-              "\n",
-              "<style>\n",
-              "  .colab-df-quickchart {\n",
-              "      --bg-color: #E8F0FE;\n",
-              "      --fill-color: #1967D2;\n",
-              "      --hover-bg-color: #E2EBFA;\n",
-              "      --hover-fill-color: #174EA6;\n",
-              "      --disabled-fill-color: #AAA;\n",
-              "      --disabled-bg-color: #DDD;\n",
-              "  }\n",
-              "\n",
-              "  [theme=dark] .colab-df-quickchart {\n",
-              "      --bg-color: #3B4455;\n",
-              "      --fill-color: #D2E3FC;\n",
-              "      --hover-bg-color: #434B5C;\n",
-              "      --hover-fill-color: #FFFFFF;\n",
-              "      --disabled-bg-color: #3B4455;\n",
-              "      --disabled-fill-color: #666;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart {\n",
-              "    background-color: var(--bg-color);\n",
-              "    border: none;\n",
-              "    border-radius: 50%;\n",
-              "    cursor: pointer;\n",
-              "    display: none;\n",
-              "    fill: var(--fill-color);\n",
-              "    height: 32px;\n",
-              "    padding: 0;\n",
-              "    width: 32px;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart:hover {\n",
-              "    background-color: var(--hover-bg-color);\n",
-              "    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
-              "    fill: var(--button-hover-fill-color);\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-quickchart-complete:disabled,\n",
-              "  .colab-df-quickchart-complete:disabled:hover {\n",
-              "    background-color: var(--disabled-bg-color);\n",
-              "    fill: var(--disabled-fill-color);\n",
-              "    box-shadow: none;\n",
-              "  }\n",
-              "\n",
-              "  .colab-df-spinner {\n",
-              "    border: 2px solid var(--fill-color);\n",
-              "    border-color: transparent;\n",
-              "    border-bottom-color: var(--fill-color);\n",
-              "    animation:\n",
-              "      spin 1s steps(1) infinite;\n",
-              "  }\n",
-              "\n",
-              "  @keyframes spin {\n",
-              "    0% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "      border-left-color: var(--fill-color);\n",
-              "    }\n",
-              "    20% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    30% {\n",
-              "      border-color: transparent;\n",
-              "      border-left-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    40% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-top-color: var(--fill-color);\n",
-              "    }\n",
-              "    60% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "    }\n",
-              "    80% {\n",
-              "      border-color: transparent;\n",
-              "      border-right-color: var(--fill-color);\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "    90% {\n",
-              "      border-color: transparent;\n",
-              "      border-bottom-color: var(--fill-color);\n",
-              "    }\n",
-              "  }\n",
-              "</style>\n",
-              "\n",
-              "      <script>\n",
-              "        async function quickchart(key) {\n",
-              "          const quickchartButtonEl =\n",
-              "            document.querySelector('#' + key + ' button');\n",
-              "          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.\n",
-              "          quickchartButtonEl.classList.add('colab-df-spinner');\n",
-              "          try {\n",
-              "            const charts = await google.colab.kernel.invokeFunction(\n",
-              "                'suggestCharts', [key], {});\n",
-              "          } catch (error) {\n",
-              "            console.error('Error during call to suggestCharts:', error);\n",
-              "          }\n",
-              "          quickchartButtonEl.classList.remove('colab-df-spinner');\n",
-              "          quickchartButtonEl.classList.add('colab-df-quickchart-complete');\n",
-              "        }\n",
-              "        (() => {\n",
-              "          let quickchartButtonEl =\n",
-              "            document.querySelector('#df-f7ddf469-6e13-4062-b836-2ec8084999e8 button');\n",
-              "          quickchartButtonEl.style.display =\n",
-              "            google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
-              "        })();\n",
-              "      </script>\n",
-              "    </div>\n",
-              "\n",
-              "    </div>\n",
-              "  </div>\n"
-            ],
-            "application/vnd.google.colaboratory.intrinsic+json": {
-              "type": "dataframe",
-              "summary": "{\n  \"name\": \"pta_links()\",\n  \"rows\": 481,\n  \"fields\": [\n    {\n      \"column\": \"no\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 138,\n        \"min\": 1,\n        \"max\": 481,\n        \"num_unique_values\": 481,\n        \"samples\": [\n          74,\n          416,\n          393\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"page\",\n      \"properties\": {\n        \"dtype\": \"category\",\n        \"num_unique_values\": 98,\n        \"samples\": [\n          \"https://pta.trunojoyo.ac.id/c_search/byprod/21/3\",\n          \"https://pta.trunojoyo.ac.id/c_search/byprod/14/2\",\n          \"https://pta.trunojoyo.ac.id/c_search/byprod/35/2\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"link_keluar\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 481,\n        \"samples\": [\n          \"https://pta.trunojoyo.ac.id/welcome/detail/070341100002\",\n          \"https://pta.trunojoyo.ac.id/welcome/detail/130631100103\",\n          \"https://pta.trunojoyo.ac.id/welcome/detail/130621100119\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
-            }
-          },
-          "metadata": {},
-          "execution_count": 12
-        }
-      ]
+
+    total_prodi = 1
+    total_pages = 0
+    max_pages_dict = {}
+
+    # hitung total halaman (untuk tiap prodi)
+    for i in range(1, total_prodi + 1):
+        max_page = get_max_page(i)
+        max_pages_dict[i] = max_page
+        total_pages += max_page
+
+    for i in range(1, total_prodi + 1):
+        max_page = max_pages_dict[i]
+        for j in range(1, max_page + 1):
+            url = f"{BASE_URL}/{i}/{j}"
+            r = requests.get(url)
+            soup = BeautifulSoup(r.content, "html.parser")
+            jurnals = soup.select('li[data-cat="#luxury"]')
+
+            isii = soup.select_one('div#begin')
+            if not isii:
+                continue
+            prodi_full = isii.select_one('h2').text.strip()
+            prodi = prodi_full.replace("Journal Jurusan ", "")
+
+            for jurnal in jurnals:
+                link_keluar = jurnal.select_one('a.gray.button')['href']
+
+                # ambil ID dari link PTA (angka terakhir di URL)
+                id_match = re.search(r"/detail/(\d+)", link_keluar)
+                pta_id = id_match.group(1) if id_match else None
+
+                response = requests.get(link_keluar)
+                soup1 = BeautifulSoup(response.content, "html.parser")
+                isi = soup1.select_one('div#content_journal')
+
+                judul = isi.select_one('a.title').text.strip()
+                penulis = isi.select_one('span:contains("Penulis")').text.split(' : ')[1]
+                pembimbing_pertama = isi.select_one('span:contains("Dosen Pembimbing I")').text.split(' : ')[1]
+                pembimbing_kedua = isi.select_one('span:contains("Dosen Pembimbing II")').text.split(' :')[1]
+
+                paragraf = isi.select('p[align="justify"]')
+                abstrak_id = paragraf[0].get_text(strip=True) if len(paragraf) > 0 else "N/A"
+                abstrak_en = paragraf[1].get_text(strip=True) if len(paragraf) > 1 else "N/A"
+
+                data["id"].append(pta_id)
+                data["penulis"].append(penulis)
+                data["judul"].append(judul)
+                data["abstrak_id"].append(abstrak_id)
+                data["abstrak_en"].append(abstrak_en)
+                data["pembimbing_pertama"].append(pembimbing_pertama)
+                data["pembimbing_kedua"].append(pembimbing_kedua)
+                data["prodi"].append(prodi)
+
+            # update progress bar per prodi
+            print_progress(i, prodi, j, max_page)
+
+        sys.stdout.write("\n")  # pindah baris setelah 1 prodi selesai
+
+    # simpan ke CSV
+    df = pd.DataFrame(data)
+    df.to_csv("pta_all.csv", index=False, encoding="utf-8-sig")
+
+    # hitung durasi
+    end_time = time.time()
+    elapsed = int(end_time - start_time)
+    jam, sisa = divmod(elapsed, 3600)
+    menit, detik = divmod(sisa, 60)
+
+    # summary
+    print("\n✅ Seluruh data berhasil dikumpulkan!")
+    print(f"📊 Total entri: {len(df)}")
+    print(f"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik")
+
+    return df
+```
+
+
+```python
+pta_all()
+```
+
+    /usr/local/lib/python3.12/dist-packages/soupsieve/css_parser.py:876: FutureWarning: The pseudo class ':contains' is deprecated, ':-soup-contains' should be used moving forward.
+      warnings.warn(  # noqa: B028
+    
+
+    [1] Ilmu Hukum - Page 284/284 [████████████████████] 100.00%
+    
+    
+    ✅ Seluruh data berhasil dikumpulkan!
+    📊 Total entri: 1417
+    ⏱️ Waktu eksekusi: 2 jam 56 menit 29 detik
+    
+
+
+
+
+
+  <div id="df-b8208b8e-7b33-4e02-b700-dbb901b2c88f" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
-  ]
-}
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>penulis</th>
+      <th>judul</th>
+      <th>abstrak_id</th>
+      <th>abstrak_en</th>
+      <th>pembimbing_pertama</th>
+      <th>pembimbing_kedua</th>
+      <th>prodi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>080111100012</td>
+      <td>Dyah Ayu Citra Seza</td>
+      <td>Implementasi Fungsi Legislasi Dewan Perwakilan...</td>
+      <td>ABSTRAK\r\n\r\n       Implementasi Fungsi Legi...</td>
+      <td>ABSTRACT\r\n       Implementation of Legislati...</td>
+      <td>Yudi Widagdo Harimurti, SH., MH</td>
+      <td>Safi', SH., MH</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>080111100002</td>
+      <td>Maulina Nurlaily</td>
+      <td>Pertanggungjawaban Pidana Direksi BUMN (Perser...</td>
+      <td>Badan Usaha Milik Negara (BUMN) adalah Badan u...</td>
+      <td>State Owned Enterprises (SOEs) are business en...</td>
+      <td>Tolib Effendi, SH., MH.</td>
+      <td>Dr. Eni Suastuti, SH., Mhum.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>070111100060</td>
+      <td>Moh. Samsul Hidayat</td>
+      <td>Analisis Terhadap Kekosongan Hukum dalam Penga...</td>
+      <td>Kasus narkoba tidak henti-hentinya terdengar d...</td>
+      <td>Drug cases endlessly heard on television, radi...</td>
+      <td>Tolib Effendi, SH., MH.</td>
+      <td>Agus Ramdlany, SH., MH.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>090111100077</td>
+      <td>TOMMY ADITYA PARLINDUNGAN MARBUN</td>
+      <td>PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...</td>
+      <td>Produk elektronik adalah suatu benda bergerak ...</td>
+      <td>Electronic products is an object moves through...</td>
+      <td>DR. DJULAEKA, S.H., M.HUM</td>
+      <td>DR.USWATUN HASANAH, S.H., M. HUM</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>070111200007</td>
+      <td>RICA YENA IMADHORA</td>
+      <td>TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...</td>
+      <td></td>
+      <td></td>
+      <td>Dr. DENI SBY, S. H., M. S.</td>
+      <td>SAIFUL ABDULLAH, S. H., M. H.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1412</th>
+      <td>150111100130</td>
+      <td>DEDY DORES</td>
+      <td>PENGKUALIFIKASIAN CHEATER SEBAGAI TINDAK PIDAN...</td>
+      <td>Abstrak\n Perbuatan cheater dalam melakukan ch...</td>
+      <td>Abstract\n The way of cheater did a cheat in o...</td>
+      <td>Aris Hardinanto, S.H., M.H.</td>
+      <td></td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1413</th>
+      <td>150111100258</td>
+      <td>Eko Supriadi</td>
+      <td>KUALIFIKASI TINDAK PIDANA ATAS PERBUATAN PELAK...</td>
+      <td>Peminjaman dana sistem online dilakukan oleh m...</td>
+      <td>The loan funds by online system are carried ou...</td>
+      <td>Dr. Erma Rusdiana, S.H.,M.H</td>
+      <td></td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1414</th>
+      <td>160111100136</td>
+      <td>Muslimatul Maghfirah</td>
+      <td>KEDUDUKAN HUKUM PEKERJA OUTSOURCING DI DINAS P...</td>
+      <td>Abstrak\nTenaga kerja merupakan setiap orang y...</td>
+      <td>Abstract\nLabors are those who can work to pro...</td>
+      <td>Mishbahul Munir, S.H., M.Hum</td>
+      <td></td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1415</th>
+      <td>160111100024</td>
+      <td>MOH WASIL SYAHRONI</td>
+      <td>STAGNANSI HUBUNGAN KELEMBAGAAN DAN KEWENANGAN ...</td>
+      <td>Skripsi ini bertujuan untuk menganalisis penti...</td>
+      <td>This thesis aims to analyze the stagnation of ...</td>
+      <td>Dr. DENI SETYA BAGUS YUHERAWAN, S.H., M.S</td>
+      <td></td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1416</th>
+      <td>170111100053</td>
+      <td>Moch. Steven</td>
+      <td>PERUMUSAN SANKSI PIDANA BAGI MASYARAKAT SEKITA...</td>
+      <td>ABSTRAK\nAkhir-akhir ini semakin maraknya penc...</td>
+      <td>ABSTRACK\nLately, there has been more and more...</td>
+      <td>Dr. Wartiningsih, S.H., M.Hum</td>
+      <td></td>
+      <td>Ilmu Hukum</td>
+    </tr>
+  </tbody>
+</table>
+<p>1417 rows × 8 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-b8208b8e-7b33-4e02-b700-dbb901b2c88f')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-b8208b8e-7b33-4e02-b700-dbb901b2c88f button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-b8208b8e-7b33-4e02-b700-dbb901b2c88f');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-2856a504-90db-458d-abe5-170c722dda4c">
+      <button class="colab-df-quickchart" onclick="quickchart('df-2856a504-90db-458d-abe5-170c722dda4c')"
+                title="Suggest charts"
+                style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-2856a504-90db-458d-abe5-170c722dda4c button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+    </div>
+  </div>
+
+
+
+
+
+```python
+def print_progress(prodi_id, prodi, current_page, total_pages):
+    percent = (current_page / total_pages) * 100
+    bar_length = 20
+    filled_length = int(bar_length * current_page // total_pages)
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+    sys.stdout.write(f'\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')
+    sys.stdout.flush()
+    if current_page == total_pages:
+        sys.stdout.write('\n\n')
+
+def pta():
+    start_time = time.time()  # mulai hitung waktu
+
+    data = {
+        "id": [],
+        "penulis": [],
+        "judul": [],
+        "abstrak id": [],
+        "abstrak en": [],
+        "pembimbing_pertama": [],
+        "pembimbing_kedua": [],
+        "prodi": [],
+    }
+
+    for i in range(1, 42):  # jumlah prodi
+        total_pages = 3  # jumlah page
+        prodi_name = None
+
+        for j in range(1, total_pages + 1):  # loop page
+            url = f"https://pta.trunojoyo.ac.id/c_search/byprod/{i}/{j}"
+            r = requests.get(url)
+            soup = BeautifulSoup(r.content, "html.parser")
+            jurnals = soup.select('li[data-cat="#luxury"]')
+
+            isii = soup.select_one('div#begin')
+            if not isii:
+                continue
+            prodi_full = isii.select_one('h2').text.strip()
+            prodi = prodi_full.replace("Journal Jurusan ", "")
+            if not prodi_name:
+                prodi_name = prodi
+
+            for jurnal in jurnals:
+                link = jurnal.select_one('a.gray.button')['href']
+
+                # ambil ID dari link PTA
+                id_match = re.search(r"/detail/(\d+)", link)
+                pta_id = id_match.group(1) if id_match else None
+
+                response = requests.get(link)
+                soup1 = BeautifulSoup(response.content, "html.parser")
+                isi = soup1.select_one('div#content_journal')
+
+                # Judul
+                judul = isi.select_one('a.title').text
+
+                # Penulis
+                penulis = isi.select_one('span:contains("Penulis")').text.split(' : ')[1]
+
+                # Pembimbing Pertama
+                pembimbing_pertama = isi.select_one('span:contains("Dosen Pembimbing I")').text.split(' : ')[1]
+
+                # Pembimbing Kedua
+                pembimbing_kedua = isi.select_one('span:contains("Dosen Pembimbing II")').text.split(' :')[1]
+
+                # Abstrak
+                paragraf = isi.select('p[align="justify"]')
+                abstrak = paragraf[0].get_text(strip=True) if len(paragraf) > 0 else "N/A"
+                abstract = paragraf[1].get_text(strip=True) if len(paragraf) > 1 else "N/A"
+
+                # simpan data
+                data["id"].append(pta_id)
+                data["penulis"].append(penulis)
+                data["judul"].append(judul)
+                data["pembimbing_pertama"].append(pembimbing_pertama)
+                data["pembimbing_kedua"].append(pembimbing_kedua)
+                data["abstrak id"].append(abstrak)
+                data["abstrak en"].append(abstract)
+                data["prodi"].append(prodi)
+
+            # update progress bar
+            print_progress(i, prodi_name, j, total_pages)
+
+    df = pd.DataFrame(data)
+    df.to_csv("pta.csv", index=False, encoding="utf-8-sig")
+
+    end_time = time.time()
+    elapsed = int(end_time - start_time)
+    jam, sisa = divmod(elapsed, 3600)
+    menit, detik = divmod(sisa, 60)
+
+    # summary
+    print("\n✅ Seluruh data berhasil dikumpulkan!")
+    print(f"📊 Total entri: {len(df)}")
+    print(f"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik")
+
+    return df
+```
+
+
+```python
+pta()
+```
+
+    [1] Ilmu Hukum - Page 3/3 [████████████████████] 100.00%
+    
+    [2] Teknologi Industri Pertanian - Page 3/3 [████████████████████] 100.00%
+    
+    [3] Agribisnis - Page 3/3 [████████████████████] 100.00%
+    
+    [4] Agroteknologi - Page 3/3 [████████████████████] 100.00%
+    
+    [5] Ilmu Kelautan - Page 3/3 [████████████████████] 100.00%
+    
+    [6] Ekonomi Pembangunan - Page 3/3 [████████████████████] 100.00%
+    
+    [7] Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    [8] Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [9] Teknik Industri - Page 3/3 [████████████████████] 100.00%
+    
+    [10] Teknik Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [11] Manajemen Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [12] Sosiologi - Page 3/3 [████████████████████] 100.00%
+    
+    [13] Ilmu Komunikasi - Page 3/3 [████████████████████] 100.00%
+    
+    [14] Psikologi - Page 3/3 [████████████████████] 100.00%
+    
+    [15] Sastra Inggris - Page 3/3 [████████████████████] 100.00%
+    
+    [16] Ekonomi Syariah - Page 3/3 [████████████████████] 100.00%
+    
+    [17] Hukum Bisnis Syariah - Page 3/3 [████████████████████] 100.00%
+    
+    [18] Pgsd - Page 3/3 [████████████████████] 100.00%
+    
+    [19] Teknik Multimedia Dan Jaringan - Page 3/3 [████████████████████] 100.00%
+    
+    [20] Mekatronika - Page 3/3 [████████████████████] 100.00%
+    
+    [21] D3 Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [22] Magister Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    [23] Teknik Elektro - Page 3/3 [████████████████████] 100.00%
+    
+    [24] Magister Ilmu Hukum - Page 3/3 [████████████████████] 100.00%
+    
+    [25] Magister Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [26] D3 Enterpreneurship - Page 3/3 [████████████████████] 100.00%
+    
+    [27] Pendidikan Bhs Dan Sastra Indonesia - Page 3/3 [████████████████████] 100.00%
+    
+    [28] Pendidikan Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [29] Pendidikan Ipa - Page 3/3 [████████████████████] 100.00%
+    
+    [30] Pgpaud - Page 3/3 [████████████████████] 100.00%
+    
+    [31] Sistem Informasi - Page 3/3 [████████████████████] 100.00%
+    
+    [32] Teknik Mesin - Page 3/3 [████████████████████] 100.00%
+    
+    [33] Teknik Mekatronika - Page 3/3 [████████████████████] 100.00%
+    
+    [34] Journal Jurusan - Page 3/3 [████████████████████] 100.00%
+    
+    [35] Manajemen Sumberdaya Perairan - Page 3/3 [████████████████████] 100.00%
+    
+    [36] Magister Ilmu Ekonomi - Page 3/3 [████████████████████] 100.00%
+    
+    [37] Magister Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%
+    
+    [38] Pendidikan Profesi Guru - Page 3/3 [████████████████████] 100.00%
+    
+    [39] Magister Pendidikan Dasar - Page 3/3 [████████████████████] 100.00%
+    
+    [40] Doktor Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%
+    
+    [41] Doktor Ilmu Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    
+    ✅ Seluruh data berhasil dikumpulkan!
+    📊 Total entri: 481
+    ⏱️ Waktu eksekusi: 0 jam 50 menit 23 detik
+    
+
+
+
+
+
+  <div id="df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>penulis</th>
+      <th>judul</th>
+      <th>abstrak id</th>
+      <th>abstrak en</th>
+      <th>pembimbing_pertama</th>
+      <th>pembimbing_kedua</th>
+      <th>prodi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>080111100012</td>
+      <td>Dyah Ayu Citra Seza</td>
+      <td>Implementasi Fungsi Legislasi Dewan Perwakilan...</td>
+      <td>ABSTRAK\r\n\r\n       Implementasi Fungsi Legi...</td>
+      <td>ABSTRACT\r\n       Implementation of Legislati...</td>
+      <td>Yudi Widagdo Harimurti, SH., MH</td>
+      <td>Safi', SH., MH</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>080111100002</td>
+      <td>Maulina Nurlaily</td>
+      <td>Pertanggungjawaban Pidana Direksi BUMN (Perser...</td>
+      <td>Badan Usaha Milik Negara (BUMN) adalah Badan u...</td>
+      <td>State Owned Enterprises (SOEs) are business en...</td>
+      <td>Tolib Effendi, SH., MH.</td>
+      <td>Dr. Eni Suastuti, SH., Mhum.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>070111100060</td>
+      <td>Moh. Samsul Hidayat</td>
+      <td>Analisis Terhadap Kekosongan Hukum dalam Penga...</td>
+      <td>Kasus narkoba tidak henti-hentinya terdengar d...</td>
+      <td>Drug cases endlessly heard on television, radi...</td>
+      <td>Tolib Effendi, SH., MH.</td>
+      <td>Agus Ramdlany, SH., MH.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>090111100077</td>
+      <td>TOMMY ADITYA PARLINDUNGAN MARBUN</td>
+      <td>PERLINDUNGAN HUKUM BAGI KONSUMEN ATAS PRODUK E...</td>
+      <td>Produk elektronik adalah suatu benda bergerak ...</td>
+      <td>Electronic products is an object moves through...</td>
+      <td>DR. DJULAEKA, S.H., M.HUM</td>
+      <td>DR.USWATUN HASANAH, S.H., M. HUM</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>070111200007</td>
+      <td>RICA YENA IMADHORA</td>
+      <td>TELAAH  KRITIS TENTANG ALASAN HUKUM YANG DIGUN...</td>
+      <td></td>
+      <td></td>
+      <td>Dr. DENI SBY, S. H., M. S.</td>
+      <td>SAIFUL ABDULLAH, S. H., M. H.</td>
+      <td>Ilmu Hukum</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>476</th>
+      <td>160281100013</td>
+      <td>Lisa Sri rahmatullah, S. Sos. I</td>
+      <td>Dampak Sosial Ekonomi Pariwisata Religi Makam ...</td>
+      <td>Penelitian ini bertujuan untuk mengetahui baga...</td>
+      <td>The purpose of this study is to analyze the so...</td>
+      <td>Dr. Diah Wahyuningsih, S.E., M.Si.</td>
+      <td>Dr. Eni Sri Rahayuningsih, S.E., M.E.</td>
+      <td>Magister Ilmu Ekonomi</td>
+    </tr>
+    <tr>
+      <th>477</th>
+      <td>160281100002</td>
+      <td>Indah Ainun Nikmah</td>
+      <td>Peranan Zakat Produktif Dalam Meningkatkan Eko...</td>
+      <td>Peranan Zakat Produktif dalam Meningkatkan Eko...</td>
+      <td>The Role of Productive Zakat in Improving Must...</td>
+      <td>Dr. Kurniyati Indahsari, M.Si</td>
+      <td>Dr. Abdur Rahman, S.Ag. MEI</td>
+      <td>Magister Ilmu Ekonomi</td>
+    </tr>
+    <tr>
+      <th>478</th>
+      <td>170361100010</td>
+      <td>ahmad syaiful umam</td>
+      <td>KARAKTERISASI DAN KOLEKSI PLASMA NUTFAH UNTUK ...</td>
+      <td>Madura merupakan salah satu wilayah pemasok ko...</td>
+      <td>Madura is one of the regions supplying horticu...</td>
+      <td>Dr. Ir. Gita Pawana, M.Si</td>
+      <td>Dr. Ir. Hj. SIti Fatimah, M.Si</td>
+      <td>Magister Pengelolaan Sumber Daya Alam</td>
+    </tr>
+    <tr>
+      <th>479</th>
+      <td>170361100001</td>
+      <td>Siti Holifah</td>
+      <td>PENGOLAHAN LIMBAH AIR REBUSAN IKAN TERI MENJAD...</td>
+      <td>Ikan Teri perlu penanganan serius pasca panen ...</td>
+      <td>Anchovy needs serious handling after harvest b...</td>
+      <td>Dr.Apri Arisandi,S.Pi.,M.Si.</td>
+      <td>Dr.Ir.H.Asfan,MP.</td>
+      <td>Magister Pengelolaan Sumber Daya Alam</td>
+    </tr>
+    <tr>
+      <th>480</th>
+      <td>170361100003</td>
+      <td>Mohammad Maskur</td>
+      <td>STRATEGI PENGEMBANGAN MAKANAN DAN MINUMAN KHAS...</td>
+      <td>Makanan dan minuman khas merupakan ciri dari k...</td>
+      <td>Typical food and drinks are characteristic of ...</td>
+      <td>Dr. Akhmad Farid, S.Pi., MT</td>
+      <td>Dr. Apri Arisandi, S.Pi., M.Si</td>
+      <td>Magister Pengelolaan Sumber Daya Alam</td>
+    </tr>
+  </tbody>
+</table>
+<p>481 rows × 8 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-fcd42ca4-e724-42bc-a692-d1e58d9c8d0d');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-d2c27b62-551f-4017-9000-ac4f1ef9c328">
+      <button class="colab-df-quickchart" onclick="quickchart('df-d2c27b62-551f-4017-9000-ac4f1ef9c328')"
+                title="Suggest charts"
+                style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-d2c27b62-551f-4017-9000-ac4f1ef9c328 button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+    </div>
+  </div>
+
+
+
+
+## Page dan Link Keluar
+
+
+```python
+def print_progress(prodi_id, prodi, current_page, total_pages):
+    percent = (current_page / total_pages) * 100
+    bar_length = 20
+    filled_length = int(bar_length * current_page // total_pages)
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+    sys.stdout.write(f'\r[{prodi_id}] {prodi} - Page {current_page}/{total_pages} [{bar}] {percent:.2f}%')
+    sys.stdout.flush()
+    if current_page == total_pages:
+        sys.stdout.write('\n\n')
+
+def pta_links():
+    start_time = time.time()  # mulai hitung waktu
+
+    data = {
+        "no": [],
+        "page": [],
+        "link_keluar": []
+    }
+
+    no = 1  # nomor urut
+
+    for i in range(1, 42):  # jumlah prodi
+        total_pages = 3  # jumlah page
+        prodi_name = None
+
+        for j in range(1, total_pages + 1):  # loop page
+            url = f"https://pta.trunojoyo.ac.id/c_search/byprod/{i}/{j}"
+            r = requests.get(url)
+            soup = BeautifulSoup(r.content, "html.parser")
+            jurnals = soup.select('li[data-cat="#luxury"]')
+
+            isii = soup.select_one('div#begin')
+            if not isii:
+                continue
+            prodi_full = isii.select_one('h2').text.strip()
+            prodi = prodi_full.replace("Journal Jurusan ", "")
+            if not prodi_name:
+                prodi_name = prodi
+
+            for jurnal in jurnals:
+                link = jurnal.select_one('a.gray.button')['href']
+
+                data["no"].append(no)
+                data["page"].append(url)          # link page
+                data["link_keluar"].append(link)  # link detail
+                no += 1
+
+            # update progress bar
+            print_progress(i, prodi_name, j, total_pages)
+
+    df = pd.DataFrame(data)
+    df.to_csv("pta_links.csv", index=False)
+
+    end_time = time.time()
+    elapsed = int(end_time - start_time)
+    jam, sisa = divmod(elapsed, 3600)
+    menit, detik = divmod(sisa, 60)
+
+    # summary
+    print("\n✅ Seluruh link berhasil dikumpulkan!")
+    print(f"📊 Total entri: {len(df)}")
+    print(f"⏱️ Waktu eksekusi: {jam} jam {menit} menit {detik} detik")
+
+    return df
+```
+
+
+```python
+pta_links()
+```
+
+    [1] Ilmu Hukum - Page 3/3 [████████████████████] 100.00%
+    
+    [2] Teknologi Industri Pertanian - Page 3/3 [████████████████████] 100.00%
+    
+    [3] Agribisnis - Page 3/3 [████████████████████] 100.00%
+    
+    [4] Agroteknologi - Page 3/3 [████████████████████] 100.00%
+    
+    [5] Ilmu Kelautan - Page 3/3 [████████████████████] 100.00%
+    
+    [6] Ekonomi Pembangunan - Page 3/3 [████████████████████] 100.00%
+    
+    [7] Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    [8] Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [9] Teknik Industri - Page 3/3 [████████████████████] 100.00%
+    
+    [10] Teknik Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [11] Manajemen Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [12] Sosiologi - Page 3/3 [████████████████████] 100.00%
+    
+    [13] Ilmu Komunikasi - Page 3/3 [████████████████████] 100.00%
+    
+    [14] Psikologi - Page 3/3 [████████████████████] 100.00%
+    
+    [15] Sastra Inggris - Page 3/3 [████████████████████] 100.00%
+    
+    [16] Ekonomi Syariah - Page 3/3 [████████████████████] 100.00%
+    
+    [17] Hukum Bisnis Syariah - Page 3/3 [████████████████████] 100.00%
+    
+    [18] Pgsd - Page 3/3 [████████████████████] 100.00%
+    
+    [19] Teknik Multimedia Dan Jaringan - Page 3/3 [████████████████████] 100.00%
+    
+    [20] Mekatronika - Page 3/3 [████████████████████] 100.00%
+    
+    [21] D3 Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [22] Magister Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    [23] Teknik Elektro - Page 3/3 [████████████████████] 100.00%
+    
+    [24] Magister Ilmu Hukum - Page 3/3 [████████████████████] 100.00%
+    
+    [25] Magister Akuntansi - Page 3/3 [████████████████████] 100.00%
+    
+    [26] D3 Enterpreneurship - Page 3/3 [████████████████████] 100.00%
+    
+    [27] Pendidikan Bhs Dan Sastra Indonesia - Page 3/3 [████████████████████] 100.00%
+    
+    [28] Pendidikan Informatika - Page 3/3 [████████████████████] 100.00%
+    
+    [29] Pendidikan Ipa - Page 3/3 [████████████████████] 100.00%
+    
+    [30] Pgpaud - Page 3/3 [████████████████████] 100.00%
+    
+    [31] Sistem Informasi - Page 3/3 [████████████████████] 100.00%
+    
+    [32] Teknik Mesin - Page 3/3 [████████████████████] 100.00%
+    
+    [33] Teknik Mekatronika - Page 3/3 [████████████████████] 100.00%
+    
+    [34] Journal Jurusan - Page 3/3 [████████████████████] 100.00%
+    
+    [35] Manajemen Sumberdaya Perairan - Page 3/3 [████████████████████] 100.00%
+    
+    [36] Magister Ilmu Ekonomi - Page 3/3 [████████████████████] 100.00%
+    
+    [37] Magister Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%
+    
+    [38] Pendidikan Profesi Guru - Page 3/3 [████████████████████] 100.00%
+    
+    [39] Magister Pendidikan Dasar - Page 3/3 [████████████████████] 100.00%
+    
+    [40] Doktor Pengelolaan Sumber Daya Alam - Page 3/3 [████████████████████] 100.00%
+    
+    [41] Doktor Ilmu Manajemen - Page 3/3 [████████████████████] 100.00%
+    
+    
+    ✅ Seluruh link berhasil dikumpulkan!
+    📊 Total entri: 481
+    ⏱️ Waktu eksekusi: 0 jam 10 menit 32 detik
+    
+
+
+
+
+
+  <div id="df-84b9f737-427d-4697-b8f1-438d1314d759" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>no</th>
+      <th>page</th>
+      <th>link_keluar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/080...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/080...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/070...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/090...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/1/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/070...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>476</th>
+      <td>477</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/36/2</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/160...</td>
+    </tr>
+    <tr>
+      <th>477</th>
+      <td>478</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/36/2</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/160...</td>
+    </tr>
+    <tr>
+      <th>478</th>
+      <td>479</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>
+    </tr>
+    <tr>
+      <th>479</th>
+      <td>480</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>
+    </tr>
+    <tr>
+      <th>480</th>
+      <td>481</td>
+      <td>https://pta.trunojoyo.ac.id/c_search/byprod/37/1</td>
+      <td>https://pta.trunojoyo.ac.id/welcome/detail/170...</td>
+    </tr>
+  </tbody>
+</table>
+<p>481 rows × 3 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-84b9f737-427d-4697-b8f1-438d1314d759')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-84b9f737-427d-4697-b8f1-438d1314d759 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-84b9f737-427d-4697-b8f1-438d1314d759');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+    <div id="df-f7ddf469-6e13-4062-b836-2ec8084999e8">
+      <button class="colab-df-quickchart" onclick="quickchart('df-f7ddf469-6e13-4062-b836-2ec8084999e8')"
+                title="Suggest charts"
+                style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+      </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+      <script>
+        async function quickchart(key) {
+          const quickchartButtonEl =
+            document.querySelector('#' + key + ' button');
+          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+          quickchartButtonEl.classList.add('colab-df-spinner');
+          try {
+            const charts = await google.colab.kernel.invokeFunction(
+                'suggestCharts', [key], {});
+          } catch (error) {
+            console.error('Error during call to suggestCharts:', error);
+          }
+          quickchartButtonEl.classList.remove('colab-df-spinner');
+          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+        }
+        (() => {
+          let quickchartButtonEl =
+            document.querySelector('#df-f7ddf469-6e13-4062-b836-2ec8084999e8 button');
+          quickchartButtonEl.style.display =
+            google.colab.kernel.accessAllowed ? 'block' : 'none';
+        })();
+      </script>
+    </div>
+
+    </div>
+  </div>
+
+
+

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; PPW</title>
+    <title>UTS soal 2 &#8212; PPW</title>
   
   
   
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'UTS_analisa_clutering_';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="Berita_UTS.html" />
+    <link rel="next" title="UTS soal 1" href="Berita_UTS.html" />
     <link rel="prev" title="Load the dataset" href="Tugas_6.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -179,18 +179,19 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Pengantar.html">Pengantar Web Mining</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Crawlling.html"><strong>Web Crawlling</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crawlling_Berita.html">Crawlling Berita dari detik.com</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Crawlling_PTA.html">Crawlling semua data PTA</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="Crawlling_PTA.html">Crawlling PTA Universitas Trunojoyo Madura</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Data%20Prepocessing.html">Data Prepocessing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Prepocesing_PTA.html"><strong>Prepocessing</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Prepocessing_Berita_fiks.html"><strong>Prepocessing</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocesing_PTA.html">Prepocessing PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocessing_Berita_fiks.html">Prepocessing_Berita</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="TF_IDF_dan_Word_Embedding_Berita.html"><strong>TF-IDF dan Word Embeding</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas_6.html"><strong>Load the dataset</strong></a></li>
 
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>UTS soal 2</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Berita_UTS.html"><strong>UTS soal 1</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supervised%20Learning.html">Supervised Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Web%20Content%20Mining.html">Web Content Mining</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Web%20Usage%20Mining.html">Web Usage Mining</a></li>
@@ -296,7 +297,7 @@
       
       
       
-      <li><a href="_sources/UTS_analisa_clutering_.ipynb" target="_blank"
+      <li><a href="_sources/UTS_analisa_clutering_.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -380,7 +381,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>UTS soal 2</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -389,9 +390,9 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisa-clutering"><strong>Analisa Clutering</strong></a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -402,56 +403,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p>#<strong>UTS soal 2</strong>
-#<strong>Analisa Clutering</strong></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="uts-soal-2">
+<h1><strong>UTS soal 2</strong><a class="headerlink" href="#uts-soal-2" title="Link to this heading">#</a></h1>
+<section id="analisa-clutering">
+<h2><strong>Analisa Clutering</strong><a class="headerlink" href="#analisa-clutering" title="Link to this heading">#</a></h2>
 <p><strong>Import Library</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sastrawi</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sastrawi</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting sastrawi
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Collecting sastrawi
   Downloading Sastrawi-1.0.1-py2.py3-none-any.whl.metadata (909 bytes)
 Downloading Sastrawi-1.0.1-py2.py3-none-any.whl (209 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">209.7/209.7 kB</span> <span class=" -Color -Color-Red">4.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hInstalling collected packages: sastrawi
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m209.7/209.7 kB[0m [31m4.0 MB/s[0m eta [36m0:00:00[0m
+[?25hInstalling collected packages: sastrawi
 Successfully installed sastrawi-1.0.1
 </pre></div>
 </div>
-</div>
-</div>
 <p><strong>Input Data</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Menampilkan Data</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Menampilkan Data</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Baca file yang sudah diunggah</span>
@@ -466,9 +445,7 @@ Successfully installed sastrawi-1.0.1
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nama-nama kolom:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Nama-nama kolom:
 Index([&#39;id&#39;, &#39;Text&#39;, &#39;Unnamed: 2&#39;, &#39;Unnamed: 3&#39;, &#39;Unnamed: 4&#39;], dtype=&#39;object&#39;)
 
 Contoh 100 baris pertama:
@@ -487,32 +464,20 @@ Contoh 100 baris pertama:
 4        NaN        NaN  
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;id&#39;, &#39;Text&#39;, &#39;Unnamed: 2&#39;, &#39;Unnamed: 3&#39;, &#39;Unnamed: 4&#39;], dtype=&#39;object&#39;)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Index([&#39;id&#39;, &#39;Text&#39;, &#39;Unnamed: 2&#39;, &#39;Unnamed: 3&#39;, &#39;Unnamed: 4&#39;], dtype=&#39;object&#39;)
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kolom_teks</span> <span class="o">=</span> <span class="s1">&#39;Text&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kolom_teks</span> <span class="o">=</span> <span class="s1">&#39;Text&#39;</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">kolom_teks</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
 </pre></div>
-</div>
-</div>
 </div>
 <p><strong>Prepocessing</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stopword lokal</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stopword lokal</span>
 <span class="n">stopword_indonesia</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
     <span class="s2">&quot;yang&quot;</span><span class="p">,</span> <span class="s2">&quot;dan&quot;</span><span class="p">,</span> <span class="s2">&quot;di&quot;</span><span class="p">,</span> <span class="s2">&quot;ke&quot;</span><span class="p">,</span> <span class="s2">&quot;dari&quot;</span><span class="p">,</span> <span class="s2">&quot;ini&quot;</span><span class="p">,</span> <span class="s2">&quot;itu&quot;</span><span class="p">,</span> <span class="s2">&quot;untuk&quot;</span><span class="p">,</span> <span class="s2">&quot;dengan&quot;</span><span class="p">,</span> <span class="s2">&quot;karena&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ada&quot;</span><span class="p">,</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;kami&quot;</span><span class="p">,</span> <span class="s2">&quot;kita&quot;</span><span class="p">,</span> <span class="s2">&quot;mereka&quot;</span><span class="p">,</span> <span class="s2">&quot;pada&quot;</span><span class="p">,</span> <span class="s2">&quot;adalah&quot;</span><span class="p">,</span> <span class="s2">&quot;juga&quot;</span><span class="p">,</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span>
@@ -545,11 +510,7 @@ Contoh 100 baris pertama:
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;preprocessed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocess</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
 
@@ -603,25 +564,24 @@ Contoh 100 baris pertama:
 <span class="c1"># Tampilkan hasil</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
 <span class="n">display</span><span class="p">(</span><span class="n">tahapan_df</span><span class="p">)</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -685,17 +645,14 @@ Contoh 100 baris pertama:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -736,47 +693,46 @@ Contoh 100 baris pertama:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-9b0347c6-a6d2-452f-802e-47d5e4d5eea6');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-2fc24c22-50fb-474f-bff9-9090dc29618c">
-      <button class="colab-df-quickchart" onclick="quickchart('df-2fc24c22-50fb-474f-bff9-9090dc29618c')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-2fc24c22-50fb-474f-bff9-9090dc29618c&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-2fc24c22-50fb-474f-bff9-9090dc29618c&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -866,31 +822,31 @@ Contoh 100 baris pertama:
     }
   }
 </style>
-
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-2fc24c22-50fb-474f-bff9-9090dc29618c button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-2fc24c22-50fb-474f-bff9-9090dc29618c button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+</pre></div>
+</div>
   <div id="id_8288e88f-da51-4419-8311-49e76b9cfd1e">
     <style>
       .colab-df-generate {
@@ -904,63 +860,58 @@ Contoh 100 baris pertama:
         padding: 0 0 0 0;
         width: 32px;
       }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  .colab-df-generate:hover {
+    background-color: #E2EBFA;
+    box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: #174EA6;
+  }
 
-      .colab-df-generate:hover {
-        background-color: #E2EBFA;
-        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-        fill: #174EA6;
-      }
+  [theme=dark] .colab-df-generate {
+    background-color: #3B4455;
+    fill: #D2E3FC;
+  }
 
-      [theme=dark] .colab-df-generate {
-        background-color: #3B4455;
-        fill: #D2E3FC;
-      }
-
-      [theme=dark] .colab-df-generate:hover {
-        background-color: #434B5C;
-        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-        fill: #FFFFFF;
-      }
-    </style>
-    <button class="colab-df-generate" onclick="generateWithVariable('tahapan_df')"
-            title="Generate code using this dataframe."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-       width="24px">
-    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
-  </svg>
-    </button>
-    <script>
-      (() => {
-      const buttonEl =
-        document.querySelector('#id_8288e88f-da51-4419-8311-49e76b9cfd1e button.colab-df-generate');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      buttonEl.onclick = () => {
-        google.colab.notebook.generateWithVariable('tahapan_df');
-      }
-      })();
-    </script>
-  </div>
-
-    </div>
-  </div>
-</div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text_col</span> <span class="o">=</span> <span class="s1">&#39;v2&#39;</span> <span class="k">if</span> <span class="s1">&#39;v2&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">sample_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">text_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+  [theme=dark] .colab-df-generate:hover {
+    background-color: #434B5C;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+    fill: #FFFFFF;
+  }
+&lt;/style&gt;
+&lt;button class=&quot;colab-df-generate&quot; onclick=&quot;generateWithVariable(&#39;tahapan_df&#39;)&quot;
+        title=&quot;Generate code using this dataframe.&quot;
+        style=&quot;display:none;&quot;&gt;
 </pre></div>
 </div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
+</svg>
+</button>
+<script>
+(() =&gt; {
+const buttonEl =
+document.querySelector(‘#id_8288e88f-da51-4419-8311-49e76b9cfd1e button.colab-df-generate’);
+buttonEl.style.display =
+google.colab.kernel.accessAllowed ? ‘block’ : ‘none’;</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  buttonEl.onclick = () =&gt; {
+    google.colab.notebook.generateWithVariable(&#39;tahapan_df&#39;);
+  }
+  })();
+&lt;/script&gt;
+</pre></div>
 </div>
+  </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">text_col</span> <span class="o">=</span> <span class="s1">&#39;v2&#39;</span> <span class="k">if</span> <span class="s1">&#39;v2&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sample_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">text_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.StopWordRemover.StopWordRemoverFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StopWordRemoverFactory</span>
@@ -1038,66 +989,49 @@ Contoh 100 baris pertama:
 <span class="n">tahapan_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ File hasil preprocessing disimpan di: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kolom dalam dataset: Index([&#39;id&#39;, &#39;Text&#39;, &#39;Unnamed: 2&#39;, &#39;Unnamed: 3&#39;, &#39;Unnamed: 4&#39;], dtype=&#39;object&#39;)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Kolom dalam dataset: Index([&#39;id&#39;, &#39;Text&#39;, &#39;Unnamed: 2&#39;, &#39;Unnamed: 3&#39;, &#39;Unnamed: 4&#39;], dtype=&#39;object&#39;)
 ✅ File hasil preprocessing disimpan di: hasil_preprocessing_Berita.csv
 </pre></div>
 </div>
-</div>
-</div>
 <p><strong>TF-IDF</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>scikit-learn
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-learn in /usr/local/lib/python3.12/dist-packages (1.6.1)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-learn in /usr/local/lib/python3.12/dist-packages (1.6.1)
 Requirement already satisfied: numpy&gt;=1.19.5 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (2.0.2)
 Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.16.2)
 Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.5.2)
 Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (3.6.0)
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;hasil_preprocessing_spam.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1161,17 +1095,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -1212,47 +1143,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-4eb0d245-e084-4e8e-ad1b-8b62126c8ca5');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f">
-      <button class="colab-df-quickchart" onclick="quickchart('df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -1342,52 +1272,43 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-19516b2f-c04b-4c21-a7d5-a04f49aaae2f button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt;
 [&#39;until&#39;, &#39;jurong&#39;, &#39;point&#39;, &#39;crazy&#39;, &#39;available&#39;, &#39;only&#39;, &#39;bugis&#39;, &#39;great&#39;, &#39;world&#39;, &#39;buffet&#39;, &#39;cine&#39;, &#39;there&#39;, &#39;got&#39;, &#39;amore&#39;, &#39;wat&#39;]
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span>
 
@@ -1395,23 +1316,21 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">,</span> <span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-dc353479-5760-4493-b0fe-62e238944ab6" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1451,17 +1370,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-dc353479-5760-4493-b0fe-62e238944ab6')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -1502,47 +1418,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-dc353479-5760-4493-b0fe-62e238944ab6 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-dc353479-5760-4493-b0fe-62e238944ab6 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-dc353479-5760-4493-b0fe-62e238944ab6&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-dc353479-5760-4493-b0fe-62e238944ab6');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-340f52e0-4145-4345-a359-c459c4b5f369">
-      <button class="colab-df-quickchart" onclick="quickchart('df-340f52e0-4145-4345-a359-c459c4b5f369')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-340f52e0-4145-4345-a359-c459c4b5f369&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-340f52e0-4145-4345-a359-c459c4b5f369&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -1632,38 +1547,35 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-340f52e0-4145-4345-a359-c459c4b5f369 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-340f52e0-4145-4345-a359-c459c4b5f369 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># --- 1️⃣ TF-IDF Vectorization ---</span>
@@ -1693,28 +1605,27 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔹 Kata TF-IDF tertinggi per dokumen:&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df_top_terms</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🔹 DataFrame TF-IDF:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>🔹 DataFrame TF-IDF:
 </pre></div>
 </div>
-<div class="output text_html">
   <div id="df-de59262d-ce3a-4e31-9f14-95a3af84bec0" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1869,17 +1780,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
 <p>5 rows × 1000 columns</p>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-de59262d-ce3a-4e31-9f14-95a3af84bec0')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -1920,47 +1828,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-de59262d-ce3a-4e31-9f14-95a3af84bec0 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-de59262d-ce3a-4e31-9f14-95a3af84bec0 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-de59262d-ce3a-4e31-9f14-95a3af84bec0&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-de59262d-ce3a-4e31-9f14-95a3af84bec0');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-1146a69e-9d8b-4097-82b3-f12b38c4246b">
-      <button class="colab-df-quickchart" onclick="quickchart('df-1146a69e-9d8b-4097-82b3-f12b38c4246b')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-1146a69e-9d8b-4097-82b3-f12b38c4246b&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-1146a69e-9d8b-4097-82b3-f12b38c4246b&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -2050,34 +1957,35 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-1146a69e-9d8b-4097-82b3-f12b38c4246b button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-1146a69e-9d8b-4097-82b3-f12b38c4246b button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
+&lt;/div&gt;
+</pre></div>
+</div>
   </div>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🔹 10 Kata dengan rata-rata TF-IDF tertinggi:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>🔹 10 Kata dengan rata-rata TF-IDF tertinggi:
 you     0.058917
 the     0.038309
 and     0.028837
@@ -2093,21 +2001,21 @@ dtype: float64
 🔹 Kata TF-IDF tertinggi per dokumen:
 </pre></div>
 </div>
-<div class="output text_html">
   <div id="df-e4dfd7ab-8532-419b-9b32-92632e1dd29b" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -2147,17 +2055,14 @@ dtype: float64
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-e4dfd7ab-8532-419b-9b32-92632e1dd29b')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -2198,47 +2103,46 @@ dtype: float64
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-e4dfd7ab-8532-419b-9b32-92632e1dd29b button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-e4dfd7ab-8532-419b-9b32-92632e1dd29b button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-e4dfd7ab-8532-419b-9b32-92632e1dd29b&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-e4dfd7ab-8532-419b-9b32-92632e1dd29b');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-4589292c-6222-4b60-836d-78f8a2787378">
-      <button class="colab-df-quickchart" onclick="quickchart('df-4589292c-6222-4b60-836d-78f8a2787378')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-4589292c-6222-4b60-836d-78f8a2787378&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-4589292c-6222-4b60-836d-78f8a2787378&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -2328,69 +2232,59 @@ dtype: float64
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-4589292c-6222-4b60-836d-78f8a2787378 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-4589292c-6222-4b60-836d-78f8a2787378 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
-</div>
-<p><strong>Analisis Clustering</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+&lt;/div&gt;
 </pre></div>
 </div>
+  </div>
+<p><strong>Analisis Clustering</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+
+</pre></div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_clusters</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_clusters</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">num_clusters</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tfidf_df</span><span class="p">)</span>
 
 <span class="c1"># Simpan hasil cluster ke DataFrame asli</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah dokumen per cluster:&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah dokumen per cluster:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 
 <span class="c1"># Contoh dokumen per cluster</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_clusters</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cluster&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">][[</span><span class="s1">&#39;Tokenisasi Akhir_joined&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah dokumen per cluster:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Jumlah dokumen per cluster:
 Cluster
 2    3100
 4     956
@@ -2402,21 +2296,21 @@ Name: count, dtype: int64
 Cluster 0:
 </pre></div>
 </div>
-<div class="output text_html">
   <div id="df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -2442,17 +2336,14 @@ Cluster 0:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -2493,47 +2384,46 @@ Cluster 0:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-a883ae99-fdfe-4f32-87e0-e2dc6b8525d8');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93">
-      <button class="colab-df-quickchart" onclick="quickchart('df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -2623,51 +2513,52 @@ Cluster 0:
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-002060e9-13a9-4be8-ba5f-e8d2dbcc8b93 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 1:
+&lt;/div&gt;
 </pre></div>
 </div>
-<div class="output text_html">
+  </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cluster 1:
+</pre></div>
+</div>
   <div id="df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -2693,17 +2584,14 @@ Cluster 0:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -2744,47 +2632,46 @@ Cluster 0:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-3cf4aede-ff69-46b7-9d8a-edf3816b74a6');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-503d2089-783c-4bfe-b7a8-7b5de59145de">
-      <button class="colab-df-quickchart" onclick="quickchart('df-503d2089-783c-4bfe-b7a8-7b5de59145de')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-503d2089-783c-4bfe-b7a8-7b5de59145de&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-503d2089-783c-4bfe-b7a8-7b5de59145de&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -2874,51 +2761,52 @@ Cluster 0:
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-503d2089-783c-4bfe-b7a8-7b5de59145de button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-503d2089-783c-4bfe-b7a8-7b5de59145de button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 2:
+&lt;/div&gt;
 </pre></div>
 </div>
-<div class="output text_html">
+  </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cluster 2:
+</pre></div>
+</div>
   <div id="df-7f98d51c-4449-4a58-a18a-55f735a1acd7" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -2944,17 +2832,14 @@ Cluster 0:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-7f98d51c-4449-4a58-a18a-55f735a1acd7')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -2995,47 +2880,46 @@ Cluster 0:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-7f98d51c-4449-4a58-a18a-55f735a1acd7 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-7f98d51c-4449-4a58-a18a-55f735a1acd7 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-7f98d51c-4449-4a58-a18a-55f735a1acd7&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-7f98d51c-4449-4a58-a18a-55f735a1acd7');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-7a08d69a-8fa1-4974-920b-7b8db63ad51d">
-      <button class="colab-df-quickchart" onclick="quickchart('df-7a08d69a-8fa1-4974-920b-7b8db63ad51d')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-7a08d69a-8fa1-4974-920b-7b8db63ad51d&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-7a08d69a-8fa1-4974-920b-7b8db63ad51d&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -3125,51 +3009,52 @@ Cluster 0:
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-7a08d69a-8fa1-4974-920b-7b8db63ad51d button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-7a08d69a-8fa1-4974-920b-7b8db63ad51d button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 3:
+&lt;/div&gt;
 </pre></div>
 </div>
-<div class="output text_html">
+  </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cluster 3:
+</pre></div>
+</div>
   <div id="df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -3195,17 +3080,14 @@ Cluster 0:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -3246,47 +3128,46 @@ Cluster 0:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-b097cb3c-f445-4860-8fd3-6cdacebc4b1d');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-cf6d7679-b49f-425d-8c27-e339767e1a1a">
-      <button class="colab-df-quickchart" onclick="quickchart('df-cf6d7679-b49f-425d-8c27-e339767e1a1a')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-cf6d7679-b49f-425d-8c27-e339767e1a1a&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-cf6d7679-b49f-425d-8c27-e339767e1a1a&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -3376,51 +3257,52 @@ Cluster 0:
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-cf6d7679-b49f-425d-8c27-e339767e1a1a button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-cf6d7679-b49f-425d-8c27-e339767e1a1a button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 4:
+&lt;/div&gt;
 </pre></div>
 </div>
-<div class="output text_html">
+  </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Cluster 4:
+</pre></div>
+</div>
   <div id="df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -3446,17 +3328,14 @@ Cluster 0:
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -3497,47 +3376,46 @@ Cluster 0:
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-ffc5d93e-11d2-4ee1-a8de-36b3d8307ead');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-8a93fa35-dce8-41fb-8f7d-a62260139f92">
-      <button class="colab-df-quickchart" onclick="quickchart('df-8a93fa35-dce8-41fb-8f7d-a62260139f92')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-8a93fa35-dce8-41fb-8f7d-a62260139f92&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-8a93fa35-dce8-41fb-8f7d-a62260139f92&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -3627,38 +3505,35 @@ Cluster 0:
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-8a93fa35-dce8-41fb-8f7d-a62260139f92 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-8a93fa35-dce8-41fb-8f7d-a62260139f92 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -3686,16 +3561,11 @@ Cluster 0:
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;PCA 1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PCA 2&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/3780921324be1c04f113980b0ea380bd8444cb66586746f8573cc3b26bb30334.png" src="_images/3780921324be1c04f113980b0ea380bd8444cb66586746f8573cc3b26bb30334.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+<p><img alt="png" src="_images/UTS_analisa_clutering__24_0.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
 <span class="n">terms</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_clusters</span><span class="p">):</span>
@@ -3703,19 +3573,18 @@ Cluster 0:
     <span class="n">sorted_indices</span> <span class="o">=</span> <span class="n">cluster_centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span>
     <span class="n">top_terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">terms</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sorted_indices</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_terms</span><span class="p">))</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🧩 Cluster 0 Top Terms:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>🧩 Cluster 0 Top Terms:
 you, are, the, and, have, that, how, your, when, can
 
 🧩 Cluster 1 Top Terms:
 the, and, for, now, call, your, not, that, but, have
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -3761,7 +3630,7 @@ the, and, for, now, call, your, not, that, but, have
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title"><strong>UTS soal 1</strong></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -3780,9 +3649,9 @@ the, and, for, now, call, your, not, that, but, have
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisa-clutering"><strong>Analisa Clutering</strong></a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
