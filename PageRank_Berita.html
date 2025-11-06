@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; PPW</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PageRank_Berita';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="PageRankPTA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/foto.png" class="logo__image only-light" alt="PPW - Home"/>
+    <script>document.write(`<img src="_static/foto.png" class="logo__image only-dark" alt="PPW - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Pencarian & Penambangan Web
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Pengantar.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crawlling_Berita.html">Crawlling Berita dari detik.com</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crawlling_PTA.html">Crawlling PTA Universitas Trunojoyo Madura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data%20Prepocessing.html">Data Prepocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocesing_PTA.html">Prepocessing PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocessing_Berita_fiks.html">Prepocessing_Berita</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="TF_IDF_dan_Word_Embedding_Berita.html"><strong>TF-IDF dan Word Embeding</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tugas_6.html"><strong>Load the dataset</strong></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="UTS_analisa_clutering_.html"><strong>UTS soal 2</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Berita_UTS.html"><strong>UTS soal 1</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Supervised%20Learning.html">Supervised Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Web%20Content%20Mining.html">Web Content Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Web%20Usage%20Mining.html">Web Usage Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Web%20Structure%20Mining.html">Web Structure Mining</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPageRank_Berita.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PageRank_Berita.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+
+<span class="c1"># 1️⃣ Mount Google Drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2️⃣ Tentukan path file di Google Drive</span>
+<span class="c1"># ⚠️ Ganti path berikut dengan lokasi file kamu di Drive</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/berita_detik.csv&#39;</span>
+
+<span class="c1"># 3️⃣ Baca file (abaikan baris komentar)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FromNodeId&quot;</span><span class="p">,</span> <span class="s2">&quot;ToNodeId&quot;</span><span class="p">])</span>
+
+<span class="c1"># 4️⃣ Tampilkan sebagian data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 10 Data Teratas ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># tampilkan 10 baris pertama</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== 10 Data Terakhir ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># tampilkan 10 baris terakhir</span>
+
+<span class="c1"># 5️⃣ Tampilkan info jumlah data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah baris (edges):&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah kolom:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran dataset:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># 1️⃣ Mount Google Drive</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;google.colab&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>Sastrawi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting Sastrawi
+  Downloading Sastrawi-1.0.1-py2.py3-none-any.whl.metadata (909 bytes)
+Downloading Sastrawi-1.0.1-py2.py3-none-any.whl (209 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/209.7 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">209.7/209.7 kB</span> <span class=" -Color -Color-Red">7.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hInstalling collected packages: Sastrawi
+Successfully installed Sastrawi-1.0.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.StopWordRemover.StopWordRemoverFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StopWordRemoverFactory</span>
+
+<span class="c1"># 1️⃣ Hubungkan ke Google Drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2️⃣ Baca dataset berita</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/berita_detik.csv&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Contoh Data ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># 3️⃣ Ambil kolom teks (ganti jika nama kolom berbeda)</span>
+<span class="n">text_column</span> <span class="o">=</span> <span class="s2">&quot;isi&quot;</span>   <span class="c1"># pastikan sesuai nama kolom di CSV</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">text_column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="c1"># 4️⃣ Gunakan stopwords Bahasa Indonesia dari Sastrawi</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StopWordRemoverFactory</span><span class="p">()</span>
+<span class="n">stopwords</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_stop_words</span><span class="p">()</span>
+
+<span class="c1"># 5️⃣ TF-IDF dan cosine similarity</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔄 Menghitung kemiripan antar berita...&quot;</span><span class="p">)</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">stop_words</span><span class="o">=</span><span class="n">stopwords</span><span class="p">)</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+<span class="n">similarity_matrix</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="p">)</span>
+
+<span class="c1"># 6️⃣ Buat graph dari similarity (threshold = 0.2 biar tidak terlalu padat)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">similarity_matrix</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">similarity_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah node: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah edge: </span><span class="si">{</span><span class="n">G</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 7️⃣ Hitung PageRank</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚙️ Menghitung PageRank...&quot;</span><span class="p">)</span>
+<span class="n">pagerank_scores</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">pagerank</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+
+<span class="c1"># 8️⃣ Ambil 10 berita dengan skor tertinggi</span>
+<span class="n">top_nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pagerank_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🏆 Top 10 Berita dengan PageRank Tertinggi:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top_nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">titles</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s2"> — Skor: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&quot;/content/drive&quot;, force_remount=True).
+=== Contoh Data ===
+   id                                              judul  \
+0   1  Alfamart Gelar Donor Darah Serentak di 34 Kota...   
+1   2  Yusril: Presiden Tak Akan Bentuk Tim Investiga...   
+2   3  Bobby Nasution Wajibkan OPD di Sumut Beri Kete...   
+
+                                                link kategori  \
+0  https://news.detik.com/berita/d-8117096/alfama...     news   
+1  https://news.detik.com/berita/d-8117082/yusril...     news   
+2  https://news.detik.com/berita/d-8117080/bobby-...     news   
+
+                                                 isi  
+0  alfamart kembali menggelar aksi donor darah se...  
+1  menteri koordinator bidang hukum, ham, imigras...  
+2  gubernur sumatera utara (sumut) bobby nasution...  
+
+🔄 Menghitung kemiripan antar berita...
+
+Jumlah node: 155
+Jumlah edge: 400
+
+⚙️ Menghitung PageRank...
+
+🏆 Top 10 Berita dengan PageRank Tertinggi:
+1. Prabowo Resmi Lantik 11 Pejabat: Menko Polkam Djamari Chaniago, Menpora Erick Thohir — Skor: 0.011556
+2. Terungkap Pacar Bunuh Mahasiswi di Kos Ciracas Dipicu Rasa Cemburu — Skor: 0.011150
+3. Sejumlah Ojol Tetap Narik Saat Massa Demo Potongan Aplikator 10 % di DPR — Skor: 0.011014
+4. Erick Thohir Digeser ke Menpora, Kursi Menteri BUMN Kosong — Skor: 0.010877
+5. MK Tak Terima 4 Gugatan UU TNI, Tersisa 1 Perkara Lagi — Skor: 0.010309
+6. Lengkap! Daftar Nama Menteri Kabinet Prabowo-Gibran Usai Pelantikan Hari Ini — Skor: 0.010270
+7. Ahmad Dofiri Jadi Penasihat Khusus Presiden Bidang Kamtibmas-Reformasi Polri — Skor: 0.009627
+8. Digeser ke Menpora, Erick Thohir Sebut Bakal Ada Plt Menteri BUMN — Skor: 0.009546
+9. MK Tolak Gugatan YLBHI-KontraS soal UU TNI — Skor: 0.009481
+10. Tinjau Proyek Pengendalian Banjir, AHY Ungkap 3 Faktor Banjir di Bengkulu — Skor: 0.009400
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+
+<span class="c1"># 1️⃣ Hubungkan Google Drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2️⃣ Tentukan path file di Drive</span>
+<span class="c1"># ⚠️ Ganti path ini sesuai lokasi file kamu di Google Drive</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/berita_detik.csv&#39;</span>
+
+<span class="c1"># 3️⃣ Baca dataset (abaikan baris komentar)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FromNodeId&quot;</span><span class="p">,</span> <span class="s2">&quot;ToNodeId&quot;</span><span class="p">])</span>
+
+<span class="c1"># 4️⃣ Ambil sampel data kecil agar bisa divisualisasikan (contoh: 300 edges pertama)</span>
+<span class="n">sample_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># 5️⃣ Buat graf berarah</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;FromNodeId&quot;</span><span class="p">],</span> <span class="n">sample_df</span><span class="p">[</span><span class="s2">&quot;ToNodeId&quot;</span><span class="p">]))</span>
+
+<span class="c1"># 6️⃣ Visualisasikan graf</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># posisi node agar rapi</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+    <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span>
+    <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">font_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">arrowsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Visualisasi Sampel Graf web-Google (300 edges pertama)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&quot;/content/drive&quot;, force_remount=True).
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.12/dist-packages/IPython/core/pylabtools.py:151: UserWarning: Glyph 128 (\x80) missing from font(s) DejaVu Sans.
+  fig.canvas.print_figure(bytes_io, **kw)
+/usr/local/lib/python3.12/dist-packages/IPython/core/pylabtools.py:151: UserWarning: Glyph 147 (\x93) missing from font(s) DejaVu Sans.
+  fig.canvas.print_figure(bytes_io, **kw)
+/usr/local/lib/python3.12/dist-packages/IPython/core/pylabtools.py:151: UserWarning: Glyph 129 (\x81) missing from font(s) DejaVu Sans.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
+</div>
+<img alt="_images/72e6d0905700dd4b8fa26e8e6387f79ab82f7472ef8c005bfadb9469e29ac31a.png" src="_images/72e6d0905700dd4b8fa26e8e6387f79ab82f7472ef8c005bfadb9469e29ac31a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+
+<span class="c1"># 1️⃣ Hubungkan ke Google Drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2️⃣ Tentukan path file di Drive</span>
+<span class="c1"># ⚠️ Ganti path ini sesuai lokasi file kamu di Google Drive</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/berita_detik.csv&#39;</span>
+
+<span class="c1"># 3️⃣ Baca dataset (abaikan baris komentar)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FromNodeId&quot;</span><span class="p">,</span> <span class="s2">&quot;ToNodeId&quot;</span><span class="p">])</span>
+
+<span class="c1"># 4️⃣ Gabungkan semua node (asal &amp; tujuan), lalu ambil yang unik</span>
+<span class="n">unique_ids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;FromNodeId&#39;</span><span class="p">,</span> <span class="s1">&#39;ToNodeId&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">))</span>
+
+<span class="c1"># 5️⃣ Tampilkan sebagian ID biar tidak terlalu panjang</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 20 Node ID pertama ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unique_ids</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
+
+<span class="c1"># 6️⃣ Tampilkan jumlah total ID unik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah total node unik:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_ids</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&quot;/content/drive&quot;, force_remount=True).
+=== 20 Node ID pertama ===
+[&#39;id,judul,link,kategori,isi&#39;
+ &#39;1,&quot;Alfamart Gelar Donor Darah Serentak di 34 Kota, Target 26 Ribu Kantong&quot;,https://news.detik.com/berita/d-8117096/alfamart-gelar-donor-darah-serentak-di-34-kota-target-26-ribu-kantong,news,&quot;alfamart kembali menggelar aksi donor darah serentak di 34 kota/kabupaten selama satu minggu di september 2025 dalam program sehati \&#39;setetes darah untuk pertiwi\&#39;. dari kegiatan sosial ini, alfamart menargetkan terkumpul 26.000 kantong darah untuk membantu memenuhi stok palang merah indonesia (pmi). &quot;&quot;ini adalah salah satu kontribusi alfamart untuk membantu pasien yang membutuhkan transfusi darah. dengan menggandeng pmi di 34 daerah, kami berharap 26 ribu kantong darah dapat tercapai dan tersalurkan kepada yang membutuhkan,&quot;&quot; kata corporate affairs director alfamart solihin, dalam keterangan tertulis, rabu (17/9/2025). scroll to continue with content kegiatan donor darah kali ini menjadi bagian dari rangkaian semarak ulang tahun alfamart (sua) ke-26. target 26.000 kantong darah dipilih sebagai refleksi usia alfamart yang telah 26 tahun melayani masyarakat indonesia. solihin menambahkan, donor darah telah menjadi kegiatan rutin alfamart. tahun ini, program juga mendapat dukungan sejumlah mitra, seperti bear brand, milo, aquviva, ichitan, dan paper bag. &quot;&quot;program ini menjadi bagian dari tanggung jawab sosial perusahaan. dengan terkumpulnya darah dalam jumlah besar, semakin banyak pasien yang bisa terbantu,&quot;&quot; ujar solihin. selain donor darah, kegiatan turut diisi dengan talkshow kesehatan bersama direktur rumah sakit islam sari asih ar-rahmah, dr irhami. pada kesempatan itu, dr irhami menekankan pentingnya persiapan sebelum mendonorkan darah. &quot;&quot;selain memastikan kondisi tubuh sehat, calon pendonor perlu menjaga pola tidur yang cukup serta pola makan teratur agar proses donor darah berjalan lancar,&quot;&quot; ujar dr irhami. apresiasi khusus juga diberikan melalui blood heroes bagi pendonor yang telah menyumbangkan darah lebih dari 90 kali. penghargaan ini diserahkan langsung oleh solihin bersama wakil ketua pmi provinsi banten, jaenudin. sementara itu, jaenudin menyampaikan apresiasinya terhadap program donor darah yang dijalankan alfamart dengan mengumpulkan 26.000 kantong darah terkumpul selama september 2025. &quot;&quot;alfamart dapat menjadi contoh bagi perusahaan lain. donor darah bukan hanya bermanfaat bagi kesehatan, tetapi juga wujud nyata kepedulian kepada sesama,&quot;&quot; ujar jaenudin. &quot;&quot;26.000 kantong darah yang terkumpul akan sangat berarti bagi kehidupan orang lain yang bergantung kepada stok darah di pmi,&quot;&quot; sambungnya. para peserta donor darah mendapat paket makanan bergizi dan goodie bag sebagai tambahan nutrisi. seperti susu murni bear brand yang 100% susu sapi steril murni, milo biskuit, air mineral aquviva yang telah melalui 7 tahap nano purifikasi untuk memastikan kemurnian dan keseimbangan mineral, ichitan serta pelbagai nutrisi tambahan. salah seorang pendonor yang baru pertama kali melakukan donor darah, rico, mengaku awalnya sempat takut. &quot;&quot;sedikit takut awalnya dengan jarum, tapi saya beranikan diri dan berharap darah ini bisa bermanfaat,&quot;&quot; kata rico. pendonor lainnya, dimas, justru rutin mengikuti kegiatan ini. &quot;&quot;manfaatnya saya rasakan langsung, apalagi untuk membantu yang membutuhkan. alfamart juga konsisten mengadakannya,&quot;&quot; ujar dimas. kegiatan donor darah alfamart ini menjadi bagian dari upaya mendukung ketersediaan darah di pmi yang sangat dibutuhkan pasien, termasuk pengidap thalassemia seperti intan (27) yang turut memberikan ceritanya di acara tersebut. intan harus rutin menjalani transfusi darah sejak usia 10 tahun. bagi intan, setiap tetes darah yang tersedia di pmi adalah penopang kehidupannya. &quot;&quot;kalau tidak transfusi, badan saya lemas sekali, rasanya tidak sanggup berdiri. dengan donor darah seperti ini, saya bisa tetap melanjutkan aktivitas sehari-hari,&quot;&quot; tutur intan. kisah intan menjadi bukti nyata bahwa donor darah tidak sekadar angka, tetapi tentang harapan yang menyelamatkan hidup.&quot;&#39;
+ &#39;2,Yusril: Presiden Tak Akan Bentuk Tim Investigasi Independen Usut Demo Ricuh,https://news.detik.com/berita/d-8117082/yusril-presiden-tak-akan-bentuk-tim-investigasi-independen-usut-demo-ricuh,news,&quot;menteri koordinator bidang hukum, ham, imigrasi, dan pemasyarakatan (menko kumham imipas) yusril ihza mahendra mengungkap presiden prabowo subianto tak akan membentuk tim investigasi independen terkait kericuhan. tim tersebut sebelumnya diusulkan gerakan nurani bangsa beberapa waktu lalu. &quot;&quot;saya sudah mendapat penegasan dari bapak presiden barusan bahwa usulan untuk membentuk tim gabungan, tim pengumpulan fakta terhadap kasus-kasus demonstrasi yang berujung kerusuhan akhir agustus lalu tidak perlu dibentuk,&quot;&quot; kata yusril kepada wartawan di kompleks istana kepresidenan, jakarta, rabu (17/9/2025). scroll to continue with content yusril mengungkap respons prabowo sejak awal memang tidak menegaskan akan membentuk tim investigasi independen terkait demo ricuh. prabowo, saat itu kata yusril, akan mempertimbangkan lebih dulu. &quot;&quot;seperti yang diketahui bahwa pak lukman pada waktu itu mengusulkan kepada beliau lewat gerakan nurani bangsa, supaya membentuk tpgf. waktu itu beliau mengatakan itu adalah usul yang bagus, masuk akal, dan perlu dipertimbangkan. tapi tadi saya sudah mendapatkan penegasan dari beliau (presiden) bahwa pemerintah tidak perlu membentuk tgpf itu,&quot;&quot; ujarnya. yusril mengatakan prabowo menyerahkan sepenuhnya investigasi kepada tim independen lembaga nasional ham (ln ham) yang dibentuk komnas ham dan lima lembaga lain. pemerintah menghormati pembentukan tim tersebut. &quot;&quot;dan oleh karena enam lembaga negara ham yang dipimpin komnas ham sudah membentuk tim penyelidik non-yudisial independen, maka presiden mengatakan bahwa silakan komnas ham dan enam lembaga negara ham itu bekerja untuk melakukan penyelidikan, menemukan fakta tentang apa yang terjadi di balik demonstrasi itu,&quot;&quot; ujarnya. &quot;&quot;jadi persoalan ini sudah jelas sekiranya hari ini. kalau ada yang menanyakan apa perlu dibentuk atau tidak, presiden mengatakan tidak perlu dibentuk,&quot;&quot; lanjut yusril. sebelumnya, gerakan nurani bangsa menyampaikan sejumlah tuntutan kepada presiden prabowo subianto saat bertemu di istana negara, salah satunya pembentukan tim independen untuk mengusut kasus kericuhan di sejumlah titik. prabowo disebut menyetujui usulan itu. hal ini disampaikan salah satu tokoh yang tergabung dalam gerakan nurani bangsa, lukman hakim saifuddin, seusai pertemuan di kompleks istana kepresidenan, jakarta, kamis (11/9/2025). lukman mengatakan detail terkait pembentukan tim tersebut akan ditindaklanjuti oleh pemerintah. &quot;&quot;yang kedua adalah saya ingin sampaikan di sini bahwa salah satu tuntutan masyarakat sipil yang juga menjadi aspirasi kami dari gnb adalah perlunya dibentuk komisi investigasi independen terkait dengan kejadian prahara agustus beberapa waktu yang lalu, yang menimbulkan jumlah korban jiwa, korban kekerasan, luka-luka, dan seterusnya yang cukup banyak. presiden menyetujui pembentukan itu. dan detailnya tentu nanti pihak istana akan menyampaikan bagaimana formatnya,&quot;&quot; ujarnya.&quot;&#39;
+ &#39;3,Bobby Nasution Wajibkan OPD di Sumut Beri Keterangan Pers Setiap Hari,https://news.detik.com/berita/d-8117080/bobby-nasution-wajibkan-opd-di-sumut-beri-keterangan-pers-setiap-hari,news,&quot;gubernur sumatera utara (sumut) bobby nasution menekankan pada organisasi perangkat daerah (opd) pemerintah provinsi (pemprov) sumut untuk rutin menyampaikan program-programnya kepada publik di antaranya melalui temu pers. bobby ingin masyarakat luas dapat informasi dalam mendukung suksesnya program pembangunan. sehingga update informasi kepada media harus bisa dilakukan setiap hari. &quot;&quot;jangan hanya kegiatan gubernur yang mereka (wartawan) ikut, tapi kalau bisa kegiatan opd juga bisa ikut di lapangan,&quot;&quot; kata bobby dalam keterangan tertulis, rabu (18/9/2025). scroll to continue with content hal tersebut disampaikannya saat silaturahmi dengan wartawan beberapa waktu lalu, di aula tengku rizal nurdin, rumah dinas gubernur, jalan sudirman, medan saat itu, menurut bobby, temu pers rutin bertujuan untuk transparansi sekaligus sosialisasi program pemprov sumut kepada publik. bobby menegaskan pembangunan tidak bisa berjalan sendiri. oleh sebab itu, media merupakan salah satu unsur penting dalam kesuksesan pembangunan. sementara itu, kepala dinas kominfo erwin harahap berharap temu pers rutin ini dapat jadi sarana menyampaikan program pemerintah. &quot;&quot;jumpa pers tiap hari dengan opd di pemprovsu ini adalah perintah langsung pak gubsu, dengan harapan, program kerja para opd terus di-update progresnya kepada rekan media,&quot;&quot; kata erwin. menindaklanjuti hal itu, temu pers pertama dilakukan di kantor gubernur, jalan diponegoro 30, medan, rabu (17/9/2025). temu pers pertama ini dilakukan bersama narasumber kepala badan perencanaan pembangunan penelitian dan pengembangan sumut dikky anugerah, kepala dinas kesehatan faisal hasrimi, kepala badan keuangan dan aset daerah (bkad) timur tumanggor, dan dirut rsu haji medan sri suriani purnamawati melalui fasilitas dinas komunikasi dan informatika. tema yang diusung mengenai program hasil terbaik cepat (phtc). namun berfokus pada pendidikan dan kesehatan. mengenai program kesehatan, pemprov sumut akan meluncurkan program berobat gratis (probis) dalam waktu dekat. dengan program ini masyarakat sumut akan bisa berobat hanya dengan ktp saja. &quot;&quot;kita bukan hanya sekadar universal health coverage (uhc) ecek-ecek, kita mau uhc betul-betul, kita punya komitmen betul-betul,&quot;&quot; kata faisal. tidak hanya itu, faisal juga mengungkapkan saat ini pemprov sumut telah memberikan beasiswa program pendidikan dokter spesialis (ppds) pada tujuh orang putra/putri dari kepulauan nias. nantinya para penerima beasiswa ini akan mengabdikan dirinya di kepulauan nias, sebagai dokter spesialis. selain kesehatan, dipaparkan juga beberapa phtc. salah satunya adalah program unggulan bersekolah gratis (pubg). dengan program ini siswa/siswi sma/smk/slb di sumut akan bersekolah dengan gratis. program ini akan dimulai pada tahun 2026. &quot;&quot;mulai (2026) dari kepulauan nias, ini daerah yang masih jadi perhatian lebih, supaya bisa mengakselerasi pembangunan. pubg ini akan memberikan pembebasan uang sekolah, kemudian 2027 masuk kepada kawasan pantai barat, kemudian di 2028 menyasar pada dataran tinggi dan seterusnya,&quot;&quot; kata dikky.&quot;&#39;
+ &#39;4,&quot;Jelang Muktamar X, DPC PPP Se-Jateng Deklarasi Dukung Mardiono&quot;,https://news.detik.com/berita/d-8117078/jelang-muktamar-x-dpc-ppp-se-jateng-deklarasi-dukung-mardiono,news,&quot;dukungan untuk plt ketua umum partai persatuan pembangunan (ppp), muhamad mardiono terus mengalir dan bertambah jelang muktamar x. deklarasi dukungan tersebut disampaikan langsung oleh para ketua dan sekretaris dpc dari kabupaten magelang, kota magelang, purbalingga, purworejo, banjarnegara, dan kebumen. sekretaris dpc kabupaten magelang, khamid nasrulloh, menyatakan muktamar x ppp yang digelar pada 27-29 september 2025 mendatang harus menjadi momentum kebangkitan partai. &quot;&quot;kami dpc ppp kabupaten/kota provinsi jateng menyatakan mendukung bapak h muhamad mardiono sebagai ketum dpp ppp periode 2025-2030. kami meminta agar muktamar diselenggarakan dengan baik, kondusif, dan penuh semangat silaturahim. ini kesempatan bagi ppp untuk reborn dan rebound menuju sukses pemilu 2029,&quot;&quot; ujar khamid dalam keterangan tertulis, rabu (17/9/2025). scroll to continue with content ia menambahkan, ppp di bawah kepemimpinan mardiono diharapkan dapat bersinergi dengan program pemerintahan presiden prabowo subianto. sementara itu, sekretaris dpw ppp jawa tengah, suyono berharap muktamar x berlangsung damai dan melahirkan kepemimpinan yang solid demi masa depan partai. &quot;&quot;kami berdoa semoga muktamar berjalan lancar dan damai. harapan kami, ppp ke depan lebih kuat, bisa kembali ke senayan, dan ikut membangun negara melalui kader-kader yang ada di legislatif tahun 2029,&quot;&quot; terangnya. menurutnya, perbedaan pandangan dalam politik adalah hal wajar, namun ia menegaskan seluruh kader harus tetap bersatu untuk memenangkan ppp di pemilu mendatang. &quot;&quot;harapan dari teman-teman dpc ppp jateng tadi pak mardiono untuk maju kembali dan ketika maju harus jadi. pak mardiono harus mampu membawa ppp ke depan lebih baik, yang lalu biar lah berlalu, sekarang kita perbaiki apa yang kurang untuk masa depan yang lebih baik lagi,&quot;&quot; ungkapnya. &quot;&quot;kalau kita tarung, harus yakin. serahkan doa kepada allah swt, tapi langkah kita harus mantap,&quot;&quot; pungkasnya.&quot;&#39;
+ &#39;5,&quot;Ada Diskon Tiket Whoosh untuk Keberangkatan 22-24 September, Cek Infonya!&quot;,https://news.detik.com/berita/d-8117031/ada-diskon-tiket-whoosh-untuk-keberangkatan-22-24-september-cek-infonya,news,&quot;bagi pengguna whoosh rute jakarta-bandung atau sebaliknya, ada promo &quot;&quot;savetember ceria bersama whoosh&quot;&quot; dengan potongan harga spesial hingga rp 50.000 di bulan september ini. promo berlaku untuk keberangkatan tanggal 22-24 september 2025. berikut informasi selengkapnya. scroll to continue with content mengutip dari akun instagram resmi whoosh (@keretacepat_id), ada dua cara untuk menikmati promo ini, yaitu: 1. promo reguler 2. promo flash sale ini ketentuan yang berlaku. berikut tahapan refund tiket kereta cepat whoosh. 1. lewat aplikasi - registrasi nomor rekening - pembatalan tiket whoosh 2. lewat website - registrasi nomor rekening - pembatalan tiket whoosh 3. lewat loket&quot;&#39;
+ &#39;6,&quot;Video: Profil Djamari Chaniago, Jenderal Tempur yang Kini Jadi Menko Polkam&quot;,https://20.detik.com/detikupdate/20250917-250917157/video-profil-djamari-chaniago-jenderal-tempur-yang-kini-jadi-menko-polkam,news,&#39;
+ &#39;7,&quot;Jadi Kepala Badan Komunikasi Pemerintah, Angga Raka Tetap Wamen Komdigi&quot;,https://news.detik.com/berita/d-8117067/jadi-kepala-badan-komunikasi-pemerintah-angga-raka-tetap-wamen-komdigi,news,&quot;presiden prabowo subianto melantik angga raka prabowo menjadi kepala badan komunikasi pemerintah. meski begitu, angga tetap menjabat sebagai wakil menteri komunikasi dan digital (komdigi). &quot;&quot;di wamen komdigi, karena fungsi di wamen komdigi, komdigi bagian komunikasi publik kan, dan ada juga di bawahnya kita mengkoordinasikan lembaga-lembaga penyiaran, lembaga-lembaga komunikasi publik. jadi intinya itu perkuatan di bidang komunikasi,&quot;&quot; kata angga kepada wartawan di istana negara, jakarta, rabu (17/9/2025). scroll to continue with content angga mengatakan, dengan penambahan tugas ini, dirinya diminta untuk memperkuat koordinasi komunikasi antara pemerintah dan kementerian/lembaga. tugas tersebut pun, menurut dia, masih sejalan dengan posisinya di wamen komdigi. &quot;&quot;jadi kita perkuat komunikasi agar semua program-program bapak presiden tersampaikan, program pemerintah tersampaikan dengan baik kepada publik dan kita juga sebagai jembatan suara-suara publik yang ada di media,&quot;&quot; ujarnya. &quot;&quot;kita juga bisa mendengarkan dan yang terpenting adalah bagaimana semua yang menjadi kebijakan atau yang menjadi arahan bapak presiden, program-program unggulan beliau itu bisa dikoordinasikan, diselaraskan, disinkronisasikan di antara kementerian dan lembaga juga bersama dengan teman-teman media semua,&quot;&quot; lanjutnya. angga menepis tumpang tindih antara badan yang dipimpinnya dengan pco. ia menegaskan badan komunikasi pemerintah untuk memperkuat komunikasi antarkementerian/lembaga. &quot;&quot;mungkin lebih fungsi, ada fungsi jubir kemudian ada fungsi juga kita mensinkronkan, mengkoordinasikan antar kl tentang kebijakan-kebijakan pemerintah agar tersampaikan dengan utuh, dengan baik. jadi tidak ada tumpang tindih, tidak ada salah narasi, seperti itu. jadi intinya hanya perkuatan di bidang komunikasi,&quot;&quot; ujarnya.&quot;&#39;
+ &#39;8,Eropa Percepat Sanksi Energi Rusia di Tengah Tekanan Politik,https://news.detik.com/dw/d-8117066/eropa-percepat-sanksi-energi-rusia-di-tengah-tekanan-politik,news,&quot;presiden komisi eropa ursula von der leyen menyatakan uni eropa (ue) akan mempercepat langkah menghentikan seluruh impor minyak dan gas rusia. ia menekankan bahwa pendapatan moskow dari menjual energi fosil menjadi penopang utama ekonomi perang rusia. von der leyen juga mengungkapkan bahwa dia telah berbicara dengan presiden amerika serikat (as) donald trump, yang mengaitkan sanksi tambahan as terhadap rusia dengan syarat eropa menghentikan pembelian minyak rusia serta menaikkan tarif impor dari cina. rencana yang ada saat ini menargetkan penghentian penuh impor minyak rusia pada 2027 dan gas pada 2028. namun, ursula von der leyen mengatakan komisi eropa akan segera mengajukan paket sanksi ke-19 yang mencakup sektor kripto, perbankan, dan energi. scroll to continue with content di saat yang sama, ribuan warga slovakia turun ke jalan untuk memprotes kebijakan ekonomi dan sikap pro-rusia perdana menteri robert fico. aksi itu berlangsung ketika fico melakukan perjalanan ke cina untuk bertemu presiden rusia vladimir putin. ini merupakan pertemuan ketiganya sejak invasi penuh rusia ke ukraina dimulai. para pengkritik menilai fico mengikuti jejak perdana menteri hungaria viktor orban, yang dikenal kerap menghambat upaya sanksi uni eropa terhadap moskow. sementara itu, sekjen pbb antonio guterres menyampaikan pandangannya terkait situasi di ukraina dalam sebuah konferensi pers di new york. &quot;&quot;saya tidak terlalu optimistis soal kemajuan upaya perdamaian dalam waktu dekat di ukraina,&quot;&quot; kata sekjen pbb antonio guterres. guterres menambahkan bahwa perang antara rusia dan ukraina kemungkinan akan berlangsung &quot;&quot;setidaknya untuk beberapa waktu,&quot;&quot; menunjukkan bahwa konflik ini belum menunjukkan tanda-tanda akan segera berakhir meski ada berbagai upaya diplomasi. pernyataan ini muncul di tengah harapan yang sempat timbul setelah pertemuan presiden as donald trump dengan presiden rusia vladimir putin pada agustus 2025, yang sempat dinilai bisa membuka jalan untuk negosiasi perdamaian, tapi hingga kini belum membuahkan hasil konkret. artikel ini pertama kali terbit dalam bahasa inggris. diadaptasi oleh pratama indra dan muhammad hanafi editor: tezar aditya rahman&quot;&#39;
+ &#39;9,Warga Segel Rumah Dapur MBG di Bandung karena Bau dan Beroperasi 24 Jam,https://news.detik.com/berita/d-8117060/warga-segel-rumah-dapur-mbg-di-bandung-karena-bau-dan-beroperasi-24-jam,news,&quot;warga menyegel sebuah rumah di kecamatan lengkong, kota bandung yang digunakan sebagai dapur untuk makan bergizi gratis (mbg). warga mengeluhkan bau tak sedap dan aktivitas 24 jam di rumah itu. pantauan detikjabar, rumah bercat putih berkelir biru langit itu di jalan kinanti, kelurahan turangga, itu telah dipasangi stiker penyegelan warna merah oleh warga. meski terdapat motor yang terparkir, namun tidak nampak aktivitas setelah penyegelan itu dilakukan. &quot;&quot;sebetulnya, ini kan program pemerintah. saya setuju soal programnya, setuju banget. cuma karena kerjaannya hampir 24 jam, warga enggak ngizinin. ditambah bau juga enggak sedap,&quot;&quot; kata warga sekitar, adam harun saat ditemui, seperti dilansir detikjabar, rabu (17/9/2025). scroll to continue with content adam mengungkapkan, sebelumnya, sempat ada pihak yang berencana menggunakan rumah itu sebagai dapur mbg pada pertengahan agustus 2025. namun karena menimbulkan masalah, warga lalu menolak rencana itu. setelah situasinya mereda, ternyata, rumah itu kembali digunakan sebagai dapur mbg sekitar awal september 2025. warga pun langsung melayangkan keberatan karena kekhawatiran mereka ternyata memang kejadian. &quot;&quot;apalagi ini kan untuk 3-4 ribu porsi lah per hari, jadi pasti mengganggu. terus masalah bau juga. nah yang ini nih tiba-tiba aja bikin setelah yang pertama kita tolak,&quot;&quot; ungkap adam. usai sempat beroperasi, warga mendatangi rumah tersebut untuk menolak aktivitas dapur mbg. meski mendapat penolakan, aktivitas dapur tersebut ternyata terus berjalan hingga menimbulkan keluhan dari warga sekitar. ditambah, warga sempat dibuat jengkel karena ada aktivitas truk pengangkut sampah yang langsung membawa tumpukan sisa dari dapur mbg di depan rumah. warga keberatan karena aktivitas itu menimbulkan bau tak sedap. warga kemudian melaporkan kondisi ini ke polsek setempat. setelah dimediasi, pada minggu (14/9), rumah yang digunakan sebagai dapur mbg itu pun disegel oleh warga. ketua rw setempat, gama s menambahkan bahwa penyegelan rumah yang difungsikan sebagai dapur mbg itu sudah sesuai dengan kesepakatan warga. warga menolak karena memang tidak mau terganggu aktivitasnya. &quot;&quot;ya, warga menolak. isinya itu saja, tidak ada yang lain. inti utamanya, dari awal ketika mereka itu masuk ke wilayah rw 9 ini sudah diingatkan bahwa ini wilayah pemukiman. wilayah pemukiman itu tidak boleh ada kegiatan komersial,&quot;&quot; ucap gama. baca selengkapnya di sini&quot;&#39;
+ &#39;10,Dunia Hari Ini: Perjanjian Militer Antara Papua Nugini dan Australia Gagal Tercapai,https://news.detik.com/abc-australia/d-8117056/dunia-hari-ini-perjanjian-militer-antara-papua-nugini-dan-australia-gagal-tercapai,news,&quot;enggak sempat mengikuti perkembangan berita hari ini? abc indonesia sudah merangkum berita-berita yang terjadi dalam 24 jam terakhir dalam dunia hari ini. edisi rabu, 17 september 2025 kita awali dari papua nugini. scroll to continue with content perjanjian militer antara australia dan papua nugini gagal tercapai, sehingga kedua negara terpaksa menandatangani komunike, bukan dokumen asli. kabinet papua nugini belum menyetujui perjanjian tersebut, padahal australia sudah berharap untuk mencapai kesepakatan militer bisa tercapai pada pekan ini. perjanjian militer bernama perjanjian pukpuk mengakui serangan bersenjata ke australia atau papua nugini akan membahayakan perdamaian dan keamanan kedua negara. &quot;&quot;perjanjian pukpuk akan meningkatkan hubungan pertahanan antara papua nugini dan australia menjadi sebuah aliansi,&quot;&quot; demikian pernyataan bersama pm anthony albanese dan pm papua nugini james marape. jepang tidak akan mengakui negara palestina untuk saat ini, menurut laporan surat kabar asahi. laporan tersebut juga mencatat bagaimana perdana menteri jepang shigeru ishiba akan melewatkan pertemuan penting selama sidang umum pbb bulan ini. sikap jepang akan bertentangan dengan langkah untuk mengakui negara palestina dari prancis, inggris, dan kanada. tapi sikap jepang sejalan dengan amerika serikat, sekutu terdekat israel, yang menolak gagasan untuk mengakui negara palestina. sementara itu dalam g7, para pejabat jerman dan italia menyebut pengakuan langsung atas palestina &quot;&quot;kontraproduktif.&quot;&quot; pria yang diduga menembak mati aktivis politik sayap kanan charlie kirk didakwa dengan pasal pembunuhan berat. tyler james robinson dituduh menembak charlie di kampus universitas utah valley di orem pada 10 september. ia juga didakwa melepaskan tembakan senjata api, serta beberapa dakwaan menghalangi keadilan, pemalsuan kesaksian, dan melakukan tindakan kekerasan di hadapan anak-anak. jaksa wilayah utah, jeff gray, mengatakan jaksa penuntut akan menuntut hukuman mati. tyler diduga memberi tahu teman sekamarnya, yang diidentifikasi sebagai pasangannya, bahwa ia membunuh charlie karena sudah &quot;&quot;muak dengan kebenciannya&quot;&quot; dan &quot;&quot;ada kebencian yang tidak bisa dinegosiasikan.&quot;&quot; sejumlah warga di timor-leste mengatakan mereka untuk terus berunjuk rasa hingga rencana pembelian mobil baru untuk anggota parlemen dibatalkan. sementara para demonstran bentrok dengan polisi di jalanan kota dili. perdana menteri timor-leste mengimbau pengunjuk rasa untuk tidak menggunakan kekerasan, setelah melihat aksi para demonstran membakar ban, kendaraan pemerintah di dekat gedung dpr, dan melemparkan batu ke arah petugas polisi, yang dibalas dengan gas air mata. sekitar 2.000 pengunjuk rasa berkumpul di dekat parlemen nasional untuk menentang rencana pengadaan suv toyota prado bagi masing-masing dari 65 anggota parlemen.&quot;&#39;
+ &#39;11,Video: Massa Demo Ojol di Depan DPR Bubar,https://20.detik.com/detikupdate/20250917-250917158/video-massa-demo-ojol-di-depan-dpr-bubar,news,&#39;
+ &#39;12,SNBP 2026: Jadwal hingga Ketentuan Umum-Khusus,https://news.detik.com/berita/d-8117029/snbp-2026-jadwal-hingga-ketentuan-umum-khusus,news,&quot;seleksi nasional berdasarkan prestasi (snbp) adalah salah satu jalur masuk perguruan tinggi dalam snpmb 2026 . peserta snbp 2026 adalah siswa sma/smk/ma kelas terakhir pada tahun 2026 yang memiliki prestasi unggul. berikut sederet hal yang perlu diketahui terkait snbp 2026. scroll to continue with content mengutip dari konferensi pers peluncuran snpmb 2026 yang disiarkan dalam akun youtube snpmb, setiap tahapan snbp dibuka dan ditutup pada pukul 15.00 wib. ini tanggal-tanggal penting dalam snbp 2026. berikut ketentuan umum dan ketentuan khusus dalam pelaksanaan snbp 2026. 1. ketentuan umum 2. ketentuan khusus persyaratan sekolah pemeringkatan siswa pengisian data pdss pilihan program studi dan portofolio jenis portofolio snbp 2026 seleksi jalur snbp dilakukan berdasarkan komponen sebagai berikut. *persentase komponen pertama dan kedua ditetapkan oleh masing-masing ptn. untuk seleksi dilakukan dengan tahapan sebagai berikut. sanksi dalam snbp 2026 dikenakan pada:&quot;&#39;
+ &#39;13,&quot;Protes Aktivis Ditahan, Admin Gejayan Memanggil Mogok Makan di Rutan Polda&quot;,https://news.detik.com/berita/d-8117039/protes-aktivis-ditahan-admin-gejayan-memanggil-mogok-makan-di-rutan-polda,news,&quot;admin gejayan memanggil , syahdan husein, melakukan aksi mogok makan di dalam tahanan rutan polda metro jaya. aksi itu dilakukan sebagai protes lantaran aktivis ditahan saat kericuhan terjadi beberapa waktu lalu. &quot;&quot;sejak 11 september, syahdan sudah mogok makan. berarti, per hari ini, sudah seminggu. ini sebagai bentuk protesnya dia atas penangkapan-penangkapan seluruh aktivis,&quot;&quot; kata kakak syahdan, sizigia pikhansa, di polda metro jaya , rabu (17/9/2025). sizigia mengatakan aksi mogok makan itu akan terus dilakukan hingga tahanan politik dibebaskan. &quot;&quot;dia mengatakan akan mogok makan sampai seluruh tahanan politik dibebaskan,&quot;&quot; imbuhnya. scroll to continue with content dia mengatakan pihak keluarga tidak dihubungi polisi sejak syahdan ditangkap. dia juga menyebut saat ini pihak keluarga dan pendamping hukum kesulitan untuk mengunjungi syahdan hingga berdampak pada psikisnya. delpiero hegelian juga datang ke polda metro jaya untuk menjenguk adiknya, direktur lokataru foundation delpedro marhaen rismansyah, yang juga ditahan. dia menyebut berat badan adiknya turun. &quot;&quot;kondisi delpedro di dalam, untuk fisik dia sehat, tapi ada penurunan berat badan selama dia ditahan kurang lebih dua minggu di dalam polda metro jaya,&quot;&quot; kata delpiero. dia meyakini adiknya tidak bersalah dalam kasus tersebut. dia juga meminta adiknya segera dibebaskan. &quot;&quot;delpedro dan kawan-kawan tidak bersalah, tapi kami tidak ingin mengemis permohonan ampun dari pemerintah. kami siap menjalani proses hukumnya. namun, jika memang tidak bersalah, tolong segera dilepaskan, harus segera dilepaskan, karena mereka memiliki hak asasi manusia kawan-kawan yang ada di dalam,&quot;&quot; tuturnya. diketahui, sebanyak 68 orang masih ditahan di polda metro jaya dan polres jajaran buntut kericuhan yang terjadi di jakarta beberapa waktu lalu. para tersangka dibagi menjadi beberapa klaster, mulai penghasutan hingga perusakan dan pembakaran fasilitas umum (fasum). total ada enam tersangka penghasut yang diduga memicu anarki dan kerusuhan semasa unjuk rasa di wilayah dki jakarta pada 25 dan 28 agustus 2025. mereka yakni direktur lokataru delpedro marhaen rismansyah (dmr), ms, admin gejayan memanggil syahdan husein, ka, rap, dan tiktoker figha lesmana (fl) yang menyebarkan hasutan melalui platform media sosial (medsos) untuk mendorong pelajar dan anak-anak melakukan kerusuhan di lokasi unjuk rasa. &quot;&quot;keenam pelaku ini ditangkap setelah satgas gakkum anti anarkis melakukan penyelidikan sejak senin (25/8) dan menemukan sejumlah bukti serta keterangan yang membuat kami melakukan penetapan tersangka,&quot;&quot; kata kabid humas polda metro jaya kombes ade ary.&quot;&#39;
+ &#39;14,Rapat Baleg DPR Memanas Saat Dua Pimpinan Debat soal RUU Pemilu,https://news.detik.com/berita/d-8117033/rapat-baleg-dpr-memanas-saat-dua-pimpinan-debat-soal-ruu-pemilu,news,&quot;rapat badan legislasi (baleg) dpr ri memanas saat terjadi perdebatan dua pimpinan alat kelengkapan dewan (akd), yakni wakil ketua baleg dpr ri ahmad doli kurnia dan wakil ketua komisi ii dpr ri aria bima. keduanya berdebat mengenai pembagian tupoksi untuk membahas ruu pemilu , partai politik, dan pilkada. momen itu terjadi saat rapat baleg dpr bersama komisi-komisi dpr membahas perkembangan ruu prolegnas di kompleks parlemen, senayan, jakarta, rabu (17/9/2025). mulanya, doli menjawab alasan revisi uu pemilu dan uu pilkada diinisiasi oleh baleg dpr alih-alih komisi ii dpr yang membidangi pemilu. kemudian, aria bima pun langsung memotongnya. aria bima meminta penjelasan doli terkait pengambilalihan pembahasan ruu pemilu dan ruu pilkada. scroll to continue with content &quot;&quot;ini sekaligus menjelaskan pak aria bima waktu itu kan mengatakan kenapa uu pemilu dan uu pilkada itu diambil inisiatif oleh baleg,&quot;&quot; kata doli. &quot;&quot;ini penting, tolong dijelaskan, pak ketua, ini mempermalukan komisi ii, kompetensi komisi ii, pengawasan anggaran, semua di komisi ii. tanggung jawab apa ke publik, tolong jelaskan kenapa tidak di komisi ii,&quot;&quot; kata aria bima. dia mendesak baleg segera menjawab terkait pengambilalihan itu. menurutnya, hal itu telah memalukan komisi ii sebagai mitra kpu dan bawaslu, yang merupakan penyelenggara pemilu. &quot;&quot;penting, kami harus jawab apa, tidak mampu komisi ii? ini kompetensi komisi ii, sampai tidak, memangnya baleg lebih kompeten untuk bicara pemilu?&quot;&quot; ujar aria bima. &quot;&quot;mohon maaf, nih, saya sudah kesulitan menjawab ke publik. setiap kita rapat dengan kpu dengan bawaslu dengan kemendagri, kalau kita bicara transformasi dpr, kita kan bicara substansi dan prosedur,&quot;&quot; sambung dia. menjawab hal itu, doli mengatakan saat dirinya masih menjabat ketua komisi ii periode 2019-2024, pihaknya telah mengusulkan revisi uu pemilu, uu pilkada masuk ke prolegnas 2019-2024. dia mengatakan hal itu juga telah diusulkan komisi ii untuk masuk ke prolegnas 2024-2029. &quot;&quot;jadi kami di komisi ii sudah mengusulkan undang-undang yang sekarang diusulkan ini, itu 2019, jadi sejak 6 tahun lalu ini uu penting,&quot;&quot; kata doli. &quot;&quot;makanya di ujung saya kirim lagi di awal periode, baleg juga kirim surat ke pimpinan komisi ii minta lagi mana uu yang perlu dibahas untuk 2024-2029, nanti tolong sekretariat baleg untuk ditunjukkan suratnya ke pimpinan komisi ii, waktu itu pimpinan komisi ii mengulangi surat yang saya buat di akhir itu, sama uu pemilu, pilkada, partai politik, pertahanan, dan sebagainya,&quot;&quot; sambungnya. namun, kata dia, 1 jam sebelum rapat, komisi ii mengubah surat tersebut. dia mengatakan komisi ii justru malah mengusulkan revisi uu asn untuk masuk ke prolegnas prioritas 2025. &quot;&quot;saya secara pribadi mantan ketua komisi ii yang merasa penting dan bertanggung jawab, sistem pemilu ini penting, saya yang mengusulkan waktu itu, memang daripada hilang di dalam susunan prolegnas baik 2024-2029 dan list 2025, saya sampaikan waktu itu dan serta-merta waktu itu menteri dalam negeri menyampaikan \&#39;oh iya, betul\&#39;,&quot;&quot; papar doli. doli mengatakan pihaknya telah meminta pendapat pemerintah mengenai usulan revisi uu pemilu, parpol, dan pilkada ini. saat itu, kemendagri pun menyetujuinya. &quot;&quot;jadi, bapak-bapak komisi ii, kalau waktu itu tidak kami masukkan, undang-undang yang bapak usulkan sekarang nggak masuk, pak,&quot;&quot; katanya. doli mengaku bingung lantaran komisi ii saat itu malah mengusulkan revisi uu asn untuk masuk prolegnas prioritas tahun 2025. padahal, uu asn baru selesai direvisi pada 2023. &quot;&quot;saya waktu itu terus terang saja saya bingung, kenapa tiba-tiba yang diusulkan adalah uu asn, yang saya waktu itu ikut menyelesaikan uu ini selama 3 tahun,&quot;&quot; kata doli. &quot;&quot;uu asn ini selesainya 2023 diselesaikan selama 3 tahun, kenapa kok selesainya 2023 diusulkan lagi di 2025 untuk dibahas?&quot;&quot; sambung dia. lebih lanjut, doli berbicara mengenai metode yang akan dipakai dalam membahas ketiga uu tersebut. dia mengatakan dpr memiliki dua metode yang bisa dipilih, yakni omnibus law dan kodifikasi. &quot;&quot;saya sekali lagi mengulang dalam uu nomor 59 tahun 2024 tentang rpjmp, di situ dijelaskan bahwa pembahasan uu pemilu, pilkada, dan partai politik itu diselesaikan secara kodifikasi itu perintah undang-undang,&quot;&quot; katanya. dia pun mendengar informasi ketua komisi ii menginginkan ketiga uu itu dibahas menggunakan metode omnibus law . menurutnya, jika dengan omnibus law , bisa ditambah dengan uu lainnya. &quot;&quot;tapi kalau mau mengikuti uu 59, cuma tiga yang dikodifikasi, pemilu, pilkada, parpol. walaupun dalam putusan mahkamah konstitusi rezim pemilu dan rezim pilkada itu tidak dibedakan, jadi harus ada satu, uu pemilu saja,&quot;&quot; kata doli. &quot;&quot;ini menjelaskan, pak ketua, kenapa teman-teman ini mengusulkan banyak dan memang harus dikerjakan secara sekaligus mudah-mudahan clear ,&quot;&quot; imbuhnya. doli pun menegaskan pihaknya tidak berupaya merebut tupoksi komisi ii untuk membahas ruu pemilu, pilkada, dan parpol. dia pun mendukung ketiga uu tersebut masuk ke prolegnas prioritas 2026. &quot;&quot;jadi tidak ada lagi persepsi baleg mau intercept . baleg bukan tukang cari kerjaan, pak, kami tuh nggak minta-minta uu mana yang kami kerjakan, itu semua diputuskan pimpinan dan dirapatkan di badan musyawarah,&quot;&quot; pungkasnya.&quot;&#39;
+ &#39;15,&quot;Ditemukan di Malang, Bima Sedang Jualan Mainan di Klenteng&quot;,https://news.detik.com/berita/d-8117028/ditemukan-di-malang-bima-sedang-jualan-mainan-di-klenteng,news,&quot;bima permana putra (bpp) , pria yang dilaporkan hilang oleh kontras saat kericuhan di jakarta, kini telah ditemukan. bima ditemukan sedang berjualan mainan di sebuah kelenteng di malang, jawa timur. &quot;&quot;yang bersangkutan kami temukan di kelenteng sedang jualan mainan barongsai,&quot;&quot; kata kabid humas polda metro jaya brigjen ade ary syam indradi kepada wartawan, rabu (17/9/2025). bima ditemukan oleh tim subdit resmob ditreskrimum polda metro jaya di klenteng eng an kiong, jalan re martadinata kota lima, kecamatan kedung kandang, kota malang, pada pukul 13.55 wib tadi. scroll to continue with content pencarian dilakukan setelah timsus polda metro jaya menyelidiki informasi laporan orang hilang yang disampaikan oleh kontras dalam sebuah pernyataan pers. &quot;&quot;berdasarkan informasi (dari kontras) itu, kemudian tim melakukan pencarian dan menemukannya di malang,&quot;&quot; kata dia. ade ary menyampaikan bima adalah salah satu nondemonstran yang dilaporkan hilang pada saat kericuhan terjadi di kwitang, jakarta pusat, pada 29-31 agustus 2025. &quot;&quot;bpp ini tidak sedang demo, tetapi jualan asongan,&quot;&quot; imbuh dia. pada 1 september 2025, bima pergi ke tegal menggunakan motor aerox. setiba di tegal, dia menginap di hotel dan langsung menjual motornya melalui sistem cod di depan hotel. &quot;&quot;dia menjual motor rp 5 juta melalui akun facebook shiba taiju,&quot;&quot; katanya. setelah itu, dia pergi ke stasiun tegal dan melanjutkan perjalanannya ke malang dengan menggunakan kereta. setiba di malang, dia memesan hotel selama dua hari. &quot;&quot;kemudian tanggal 5 september setelah check out dari hotel, dpp pergi ke kelenteng dan menjual mainan barongsai yang dia beli dari akun tiktok shop seharga rp 400 ribu,&quot;&quot; jelasnya. sejak 5 september hingga ditemukan siang tadi, bima beraktivitas jualan mainan barongsai. setelah berjualan, dia beristirahat di pom bensin mergosono. &quot;&quot;kemudian pada tanggal 17 september, yang bersangkutan diamankan oleh anggota resmob di lokasi tempatnya jualan, yaitu di kelenteng, en ang kiong,&quot;&quot; pungkasnya. sebelumnya, melalui akun instagram @kontras_update, kontras yang membuka posko pengaduan orang hilang menyebutkan ada tiga orang yang masih hilang sejak demo pada 30-31 agustus 2025. kontras menyebut satu orang merupakan nondemonstran, sedangkan dua lainnya adalah demonstran. berikut 3 identitas orang tersebut: 1. bima permana putra (nondemonstran) - hilang sejak 31 agustus 2025 - lokasi terakhir di glodok, jakarta barat 2. m farhan hamid (demonstran) - hilang sejak 31 agustus 2025 - lokasi terakhir di brimob kwitang, jakarta pusat 3. reno syahputradewo (demonstran) - hilang sejak 30 agustus 2025 - lokasi terakhir di brimob kwitang, jakarta pusat&quot;&#39;
+ &#39;16,SNPMB 2026 Kapan Dibuka? Ini Jadwal Registrasi Akun,https://news.detik.com/berita/d-8117026/snpmb-2026-kapan-dibuka-ini-jadwal-registrasi-akun,news,&quot;informasi seputar seleksi nasional penerimaan mahasiswa baru (snpmb) tahun 2026 sudah diumumkan kemarin. hal ini penting untuk diketahui oleh calon mahasiswa atau siswa-siswi yang berada di kelas 12 agar bisa mempersiapkan diri untuk jenjang perkuliahan. berikut ulasannya. scroll to continue with content seleksi nasional penerimaan mahasiswa baru (snpmb) tahun 2026 adalah sistem seleksi masuk perguruan tinggi tahun 2026. ini untuk program sarjana, diploma empat/sarjana terapan, dan diploma tiga. berdasarkan konferensi pers peluncuran snpmb 2026 yang disiarkan dalam akun youtube snpmb, ada tiga jalur masuk perguruan tinggi dalam snpmb 2026, yaitu: berikut ini kuota seleksi snpmb 2026 untuk jalur snbp, snbt, dan mandiri. 1. seleksi nasional berdasarkan prestasi (snbp) 2. seleksi nasional berdasarkan tes (snbt) 3. seleksi mandiri (tergantung pada mekanisme di ptn masing-masing dan dapat menggunakan nilai utbk 2026) registrasi akun snpmb dilakukan melalui portal snpmb ( https://portal.snpmb.id ). berikut jadwalnya. informasi penggunaan akun snpmb: pelaksanaan snpmb mempunyai beberapa tujuan, seperti:&quot;&#39;
+ &#39;17,Legislator Gerindra Desak Tinjau Ulang Izin Hutan Tanaman Industri di Babel,https://news.detik.com/berita/d-8117025/legislator-gerindra-desak-tinjau-ulang-izin-hutan-tanaman-industri-di-babel,news,&quot;anggota komisi xiii dpr fraksi gerindra, melati erzaldi, mendesak pemerintah meninjau kembali izin pengelolaan hutan tanaman industri (hti) di kabupaten bangka selatan. anak buah ketum gerindra prabowo subianto ini menegaskan suara penolakan masyarakat harus menjadi perhatian serius. &quot;&quot;mayoritas masyarakat menolak keberadaan hti ini. aspirasi mereka harus diperhatikan pemerintah dengan mengkaji ulang, bahkan bila perlu mencabut izinnya, melalui pemerintah provinsi,&quot;&quot; kata melati dalam keterangannya, rabu (17/9/2025). melati menyebutkan penolakan warga datang dari sejumlah wilayah, antara lain kecamatan pulau besar, kecamatan payung, kecamatan tukak sadai, desa sebagin, dan desa bedengung. sorotan terbesar tertuju pada pt hutan lestari raya (hlr), yang memegang konsesi sekitar 31 ribu hektare lahan hti di bangka selatan. scroll to continue with content melati mengingatkan bahwa pemerintah pernah mengambil langkah serupa. pada 2022, kementerian lingkungan hidup dan kehutanan (klhk) mencabut izin pt bangkanesia karena tidak menunjukkan progres lapangan. melati menilai pengalaman itu bisa menjadi rujukan untuk memastikan pengelolaan hutan berjalan sesuai aturan serta berpihak pada masyarakat. selain minim perkembangan, melati menyebut izin hti kerap tumpang tindih dengan aktivitas warga yang sudah lama mengelola lahan untuk berkebun. &quot;&quot;masyarakat merasa resah karena lahan yang mereka kelola justru masuk kawasan hti. jika aspirasi mayoritas adalah pencabutan izin, saya mendukung penuh,&quot;&quot; tegasnya.&quot;&#39;
+ &#39;18,Mensesneg Ungkap Plt Menteri BUMN Bakal Diisi Wamen,https://news.detik.com/berita/d-8117013/mensesneg-ungkap-plt-menteri-bumn-bakal-diisi-wamen,news,&quot;menteri sekretaris negara (mensesneg) prasetyo hadi mengungkap presiden prabowo subianto belum menunjuk plt menteri bumn setelah erick thohir digeser menjadi menteri pemuda dan olahraga (menpora). prasetyo menyebut istana masih mencari sosok yang pas untuk mengisi plt menteri bumn . &quot;&quot;menteri bumn definitif memang belum ditunjuk karena kita masih mencari sosok dengan berpindahnya tugas kepada bapak erick thohir ke kementerian pemuda dan olahraga,&quot;&quot; kata pras kepada wartawan di istana negara, jakarta, rabu (17/9/2025). pras berharap erick thohir dapat memperbaiki sistem olahraga ke depan. tidak hanya terkait sepakbola, tapi juga cabang olahraga lain yang diharapkan menuju kelas dunia. scroll to continue with content &quot;&quot;memang kita berharap tidak hanya sepakbola. ini kan kita semua paham bahwa pak erick thohir punya sejarah prestasi yang panjang dalam hal olahraga, dan itu yang kita inginkan tidak hanya sepakbola. beban yang kita berikan kepada pak erick thohir sangat berat. untuk semua olahraga, kita pengin ya menuju kelas dunia,&quot;&quot; katanya. pras menepis wacana peleburan bumn ke badan pengelola investasi (bpi) danantara. namun ia mengungkap akan adanya evaluasi atau perubahan di kementerian. &quot;&quot;belum, kan sekarang sedang proses ya danantara juga sedang proses membenahi manajemen dan operasional di bumn-bumn kita. nah, kalau kemudian nanti dalam perjalanannya itu kita perlu melakukan perubahan terhadap kementeriannya, nanti kita lihat,&quot;&quot; ujarnya. terkait posisi plt menteri bumn, pras menyebut kemungkinan akan diisi wamen. sejauh ini belum ditunjuk siapa wamen yang akan mengisi posisi tersebut. &quot;&quot;kemungkinan dari wamen,&quot;&quot; ujarnya. &quot;&quot;belum, saya belum tanda tangan ad interim -nya,&quot;&quot; lanjut pras. diketahui, kementerian bumn memiliki tiga wakil menteri. mereka adalah kartika wirjoatmodjo, aminuddin ma\&#39;ruf, dan dony oskaria.&quot;&#39;
+ &#39;19,Pertamina Perbarui Website Layanan Informasi Jadi Ramah Disabilitas,https://news.detik.com/berita/d-8117011/pertamina-perbarui-website-layanan-informasi-jadi-ramah-disabilitas,news,&quot;pt pertamina (persero) meluncurkan wajah baru sistem layanan informasi berbasis website yang ramah disabilitas. pertamina memastikan seluruh masyarakat termasuk disabilitas dapat memperoleh informasi mengenai layanan, program, dan kegiatan pertamina. vice president corporate communication pertamina fadjar djoko santoso mengatakan pertamina komitmen terhadap transparansi informasi sebagai bagian dari prinsip tata kelola perusahaan yang baik dengan memberikan kemudahan akses informasi kepada masyarakat, termasuk kepada disabilitas. &quot;&quot;pertamina terus memperkuat komitmen layanan informasi yang inklusif dilengkapi dengan accessibility fitur pada website layanan informasi,&quot;&quot; jelas fadjar dalam keterangan tertulis, rabu, (17/9/2025). scroll to continue with content fadjar menambahkan momentum ini merupakan semangat baru untuk memberikan layanan informasi yang inklusif kepada masyarakat. &quot;&quot;tampilan wajah desain baru pada website layanan informasi merupakan spirit dan energi baru untuk informasi yang inklusif,&quot;&quot; terang fadjar. lebih rinci, fadjar memaparkan layanan informasi dengan fitur aksesibilitas ini dilengkapi dengan pilihan penyesuaian tampilan website seperti peningkatan kontras, pembesaran teks, pengaturan jarak antar teks, highlight link, hingga opsi ramah disleksia. selain itu, pengguna juga dapat menghentikan animasi, menyembunyikan gambar, dan menyesuaikan tinggi baris tulisan sesuai kebutuhan. &quot;&quot;inovasi pengembangan sistem layanan informasi ini merupakan wujud komitmen pertamina terhadap prinsip environmental, social, and governance (esg) serta penerapan tata kelola perusahaan yang baik,&quot;&quot; tambahnya. selain menyediakan layanan informasi di website korporasi pertamina, kini pertamina juga tengah mempersiapkan layanan informasi berbasis aplikasi mobile apps untuk memastikan keterbukaan informasi publik. &quot;&quot;inovasi penyediaan kanal akses informasi merupakan fondasi penting dalam membangun hubungan yang transparan, akuntabel, dan berkelanjutan dengan masyarakat,&quot;&quot; ucap fadjar. sementara itu, pendamping disabilitas fungsi trading pertamina patra niaga, lina menambahkan layanan informasi yang ramah disabilitas merupakan bukti bahwa pertamina memberi kesempatan untuk mendapatkan informasi bagi semua orang. &quot;&quot;dengan adanya layanan informasi yang dapat diakses disabilitas pada sistem layanan informasi pertamina, membuktikan bahwa pertamina memberikan kesempatan kepada semua kalangan termasuk disabilitas memiliki hak yang sama untuk mendapatkan informasi seputar pertamina,&quot;&quot; ungkap lina.&quot;&#39;]
+
+Jumlah total node unik: 202
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="PageRankPTA.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Zalikna Ries Fentryca
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
