@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Load the dataset" href="Tugas_6.html" />
-    <link rel="prev" title="Prepocessing" href="Prepocessing_Berita_fiks.html" />
+    <link rel="prev" title="Prepocessing_Berita" href="Prepocessing_Berita_fiks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -181,16 +181,17 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Pengantar.html">Pengantar Web Mining</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Crawlling.html"><strong>Web Crawlling</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crawlling_Berita.html">Crawlling Berita dari detik.com</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Crawlling_PTA.html">Crawlling semua data PTA</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="Crawlling_PTA.html">Crawlling PTA Universitas Trunojoyo Madura</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Data%20Prepocessing.html">Data Prepocessing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Prepocesing_PTA.html"><strong>Prepocessing</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Prepocessing_Berita_fiks.html"><strong>Prepocessing</strong></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>TF-IDF dan Word Embeding</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocesing_PTA.html">Prepocessing PTA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepocessing_Berita_fiks.html">Prepocessing_Berita</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TF-IDF dan Word Embeding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas_6.html"><strong>Load the dataset</strong></a></li>
 
+<li class="toctree-l1"><a class="reference internal" href="UTS_analisa_clutering_.html">UTS soal 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Berita_UTS.html"><strong>UTS soal 1</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supervised%20Learning.html">Supervised Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Web%20Content%20Mining.html">Web Content Mining</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Web%20Usage%20Mining.html">Web Usage Mining</a></li>
@@ -296,7 +297,7 @@
       
       
       
-      <li><a href="_sources/TF_IDF_dan_Word_Embedding_Berita.ipynb" target="_blank"
+      <li><a href="_sources/TF_IDF_dan_Word_Embedding_Berita.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -393,80 +394,54 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="tf-idf-dan-word-embeding">
-<h1><strong>TF-IDF dan Word Embeding</strong><a class="headerlink" href="#tf-idf-dan-word-embeding" title="Link to this heading">#</a></h1>
+<h1>TF-IDF dan Word Embeding<a class="headerlink" href="#tf-idf-dan-word-embeding" title="Link to this heading">#</a></h1>
 <p><strong>TF-IDF</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>scikit-learn
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-learn in c:\users\ven\appdata\local\programs\python\python313\lib\site-packages (1.7.2)
-Requirement already satisfied: numpy&gt;=1.22.0 in c:\users\ven\appdata\local\programs\python\python313\lib\site-packages (from scikit-learn) (2.1.3)
-Requirement already satisfied: scipy&gt;=1.8.0 in c:\users\ven\appdata\local\programs\python\python313\lib\site-packages (from scikit-learn) (1.16.2)
-Requirement already satisfied: joblib&gt;=1.2.0 in c:\users\ven\appdata\local\programs\python\python313\lib\site-packages (from scikit-learn) (1.5.2)
-Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\local\programs\python\python313\lib\site-packages (from scikit-learn) (3.6.0)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scikit-learn in /usr/local/lib/python3.12/dist-packages (1.6.1)
+Requirement already satisfied: numpy&gt;=1.19.5 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (2.0.2)
+Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.16.2)
+Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.5.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (3.6.0)
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Mount Google Drive</span>
 <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Mount Google Drive</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;google.colab&#39;
 </pre></div>
 </div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Mounted at /content/drive
+</pre></div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/hasil_preprocessing_berita.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-1c859443-d57f-4ec6-ae34-94d94f010024" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -530,17 +505,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-1c859443-d57f-4ec6-ae34-94d94f010024')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -581,47 +553,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-1c859443-d57f-4ec6-ae34-94d94f010024 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-1c859443-d57f-4ec6-ae34-94d94f010024 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-1c859443-d57f-4ec6-ae34-94d94f010024&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-1c859443-d57f-4ec6-ae34-94d94f010024');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-a24d496b-9118-4edc-99d9-359af7f2ff43">
-      <button class="colab-df-quickchart" onclick="quickchart('df-a24d496b-9118-4edc-99d9-359af7f2ff43')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-a24d496b-9118-4edc-99d9-359af7f2ff43&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-a24d496b-9118-4edc-99d9-359af7f2ff43&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -711,52 +682,43 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-a24d496b-9118-4edc-99d9-359af7f2ff43 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-a24d496b-9118-4edc-99d9-359af7f2ff43 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt;
 [&#39;alfamart&#39;, &#39;kembali&#39;, &#39;gelar&#39;, &#39;aksi&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;serentak&#39;, &#39;kotakabupaten&#39;, &#39;lama&#39;, &#39;satu&#39;, &#39;minggu&#39;, &#39;september&#39;, &#39;dalam&#39;, &#39;program&#39;, &#39;sehat&#39;, &#39;tetes&#39;, &#39;darah&#39;, &#39;pertiwi&#39;, &#39;giat&#39;, &#39;sosial&#39;, &#39;ini&#39;, &#39;alfamart&#39;, &#39;target&#39;, &#39;kumpul&#39;, &#39;kantong&#39;, &#39;darah&#39;, &#39;bantu&#39;, &#39;penuh&#39;, &#39;stok&#39;, &#39;palang&#39;, &#39;merah&#39;, &#39;indonesia&#39;, &#39;pmi&#39;, &#39;ini&#39;, &#39;salah&#39;, &#39;satu&#39;, &#39;kontribusi&#39;, &#39;alfamart&#39;, &#39;bantu&#39;, &#39;pasien&#39;, &#39;butuh&#39;, &#39;transfusi&#39;, &#39;darah&#39;, &#39;gandeng&#39;, &#39;pmi&#39;, &#39;daerah&#39;, &#39;harap&#39;, &#39;ribu&#39;, &#39;kantong&#39;, &#39;darah&#39;, &#39;dapat&#39;, &#39;capai&#39;, &#39;salur&#39;, &#39;kepada&#39;, &#39;butuh&#39;, &#39;kata&#39;, &#39;corporate&#39;, &#39;affairs&#39;, &#39;director&#39;, &#39;alfamart&#39;, &#39;solihin&#39;, &#39;dalam&#39;, &#39;terang&#39;, &#39;tulis&#39;, &#39;rabu&#39;, &#39;scroll&#39;, &#39;continue&#39;, &#39;with&#39;, &#39;content&#39;, &#39;giat&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;kali&#39;, &#39;jadi&#39;, &#39;bagi&#39;, &#39;rangkai&#39;, &#39;semarak&#39;, &#39;ulang&#39;, &#39;tahun&#39;, &#39;alfamart&#39;, &#39;sua&#39;, &#39;ke&#39;, &#39;target&#39;, &#39;kantong&#39;, &#39;darah&#39;, &#39;pilih&#39;, &#39;bagai&#39;, &#39;refleksi&#39;, &#39;usia&#39;, &#39;alfamart&#39;, &#39;telah&#39;, &#39;tahun&#39;, &#39;layan&#39;, &#39;masyarakat&#39;, &#39;indonesia&#39;, &#39;solihin&#39;, &#39;tambah&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;telah&#39;, &#39;jadi&#39;, &#39;giat&#39;, &#39;rutin&#39;, &#39;alfamart&#39;, &#39;tahun&#39;, &#39;ini&#39;, &#39;program&#39;, &#39;dapat&#39;, &#39;dukung&#39;, &#39;jumlah&#39;, &#39;mitra&#39;, &#39;seperti&#39;, &#39;bear&#39;, &#39;brand&#39;, &#39;milo&#39;, &#39;aquviva&#39;, &#39;ichitan&#39;, &#39;paper&#39;, &#39;bag&#39;, &#39;program&#39;, &#39;jadi&#39;, &#39;bagi&#39;, &#39;tanggung&#39;, &#39;jawab&#39;, &#39;sosial&#39;, &#39;usaha&#39;, &#39;kumpul&#39;, &#39;darah&#39;, &#39;dalam&#39;, &#39;jumlah&#39;, &#39;besar&#39;, &#39;makin&#39;, &#39;banyak&#39;, &#39;pasien&#39;, &#39;bisa&#39;, &#39;bantu&#39;, &#39;ujar&#39;, &#39;solihin&#39;, &#39;selain&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;giat&#39;, &#39;turut&#39;, &#39;isi&#39;, &#39;talkshow&#39;, &#39;sehat&#39;, &#39;sama&#39;, &#39;direktur&#39;, &#39;rumah&#39;, &#39;sakit&#39;, &#39;islam&#39;, &#39;sari&#39;, &#39;asih&#39;, &#39;arrahmah&#39;, &#39;irhami&#39;, &#39;sempat&#39;, &#39;itu&#39;, &#39;irhami&#39;, &#39;tekan&#39;, &#39;penting&#39;, &#39;siap&#39;, &#39;belum&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;selain&#39;, &#39;pasti&#39;, &#39;kondisi&#39;, &#39;tubuh&#39;, &#39;sehat&#39;, &#39;calon&#39;, &#39;donor&#39;, &#39;perlu&#39;, &#39;jaga&#39;, &#39;pola&#39;, &#39;tidur&#39;, &#39;cukup&#39;, &#39;serta&#39;, &#39;pola&#39;, &#39;makan&#39;, &#39;atur&#39;, &#39;agar&#39;, &#39;proses&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;jalan&#39;, &#39;lancar&#39;, &#39;ujar&#39;, &#39;irhami&#39;, &#39;apresiasi&#39;, &#39;khusus&#39;, &#39;beri&#39;, &#39;lalu&#39;, &#39;blood&#39;, &#39;heroes&#39;, &#39;bagi&#39;, &#39;donor&#39;, &#39;telah&#39;, &#39;sumbang&#39;, &#39;darah&#39;, &#39;lebih&#39;, &#39;kali&#39;, &#39;harga&#39;, &#39;serah&#39;, &#39;langsung&#39;, &#39;oleh&#39;, &#39;solihin&#39;, &#39;sama&#39;, &#39;wakil&#39;, &#39;ketua&#39;, &#39;pmi&#39;, &#39;provinsi&#39;, &#39;banten&#39;, &#39;jaenudin&#39;, &#39;sementara&#39;, &#39;itu&#39;, &#39;jaenudin&#39;, &#39;sampai&#39;, &#39;apresiasi&#39;, &#39;hadap&#39;, &#39;program&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;jalan&#39;, &#39;alfamart&#39;, &#39;kumpul&#39;, &#39;kantong&#39;, &#39;darah&#39;, &#39;kumpul&#39;, &#39;lama&#39;, &#39;september&#39;, &#39;alfamart&#39;, &#39;dapat&#39;, &#39;jadi&#39;, &#39;contoh&#39;, &#39;bagi&#39;, &#39;usaha&#39;, &#39;lain&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;bukan&#39;, &#39;hanya&#39;, &#39;manfaat&#39;, &#39;bagi&#39;, &#39;sehat&#39;, &#39;tetapi&#39;, &#39;wujud&#39;, &#39;nyata&#39;, &#39;peduli&#39;, &#39;kepada&#39;, &#39;sama&#39;, &#39;ujar&#39;, &#39;jaenudin&#39;, &#39;kantong&#39;, &#39;darah&#39;, &#39;kumpul&#39;, &#39;akan&#39;, &#39;sangat&#39;, &#39;arti&#39;, &#39;bagi&#39;, &#39;hidup&#39;, &#39;orang&#39;, &#39;lain&#39;, &#39;gantung&#39;, &#39;kepada&#39;, &#39;stok&#39;, &#39;darah&#39;, &#39;pmi&#39;, &#39;sambung&#39;, &#39;para&#39;, &#39;serta&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;dapat&#39;, &#39;paket&#39;, &#39;makan&#39;, &#39;gizi&#39;, &#39;goodie&#39;, &#39;bag&#39;, &#39;bagai&#39;, &#39;tambah&#39;, &#39;nutrisi&#39;, &#39;seperti&#39;, &#39;susu&#39;, &#39;murni&#39;, &#39;bear&#39;, &#39;brand&#39;, &#39;susu&#39;, &#39;sapi&#39;, &#39;steril&#39;, &#39;murni&#39;, &#39;milo&#39;, &#39;biskuit&#39;, &#39;air&#39;, &#39;mineral&#39;, &#39;aquviva&#39;, &#39;telah&#39;, &#39;lalu&#39;, &#39;tahap&#39;, &#39;nano&#39;, &#39;purifikasi&#39;, &#39;pasti&#39;, &#39;murni&#39;, &#39;imbang&#39;, &#39;mineral&#39;, &#39;ichitan&#39;, &#39;serta&#39;, &#39;pelbagai&#39;, &#39;nutrisi&#39;, &#39;tambah&#39;, &#39;salah&#39;, &#39;orang&#39;, &#39;donor&#39;, &#39;baru&#39;, &#39;pertama&#39;, &#39;kali&#39;, &#39;laku&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;rico&#39;, &#39;aku&#39;, &#39;awal&#39;, &#39;sempat&#39;, &#39;takut&#39;, &#39;sedikit&#39;, &#39;takut&#39;, &#39;awal&#39;, &#39;jarum&#39;, &#39;tapi&#39;, &#39;rani&#39;, &#39;diri&#39;, &#39;harap&#39;, &#39;darah&#39;, &#39;bisa&#39;, &#39;manfaat&#39;, &#39;kata&#39;, &#39;rico&#39;, &#39;donor&#39;, &#39;lain&#39;, &#39;mas&#39;, &#39;justru&#39;, &#39;rutin&#39;, &#39;ikut&#39;, &#39;giat&#39;, &#39;ini&#39;, &#39;manfaat&#39;, &#39;rasa&#39;, &#39;langsung&#39;, &#39;apalagi&#39;, &#39;bantu&#39;, &#39;butuh&#39;, &#39;alfamart&#39;, &#39;konsisten&#39;, &#39;ada&#39;, &#39;ujar&#39;, &#39;mas&#39;, &#39;giat&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;alfamart&#39;, &#39;jadi&#39;, &#39;bagi&#39;, &#39;upaya&#39;, &#39;dukung&#39;, &#39;sedia&#39;, &#39;darah&#39;, &#39;pmi&#39;, &#39;sangat&#39;, &#39;butuh&#39;, &#39;pasien&#39;, &#39;masuk&#39;, &#39;idap&#39;, &#39;thalassemia&#39;, &#39;seperti&#39;, &#39;intan&#39;, &#39;turut&#39;, &#39;beri&#39;, &#39;cerita&#39;, &#39;acara&#39;, &#39;sebut&#39;, &#39;intan&#39;, &#39;harus&#39;, &#39;rutin&#39;, &#39;jalan&#39;, &#39;transfusi&#39;, &#39;darah&#39;, &#39;sejak&#39;, &#39;usia&#39;, &#39;tahun&#39;, &#39;bagi&#39;, &#39;intan&#39;, &#39;tiap&#39;, &#39;tetes&#39;, &#39;darah&#39;, &#39;sedia&#39;, &#39;pmi&#39;, &#39;topang&#39;, &#39;hidup&#39;, &#39;kalau&#39;, &#39;transfusi&#39;, &#39;badan&#39;, &#39;lemas&#39;, &#39;sekali&#39;, &#39;rasa&#39;, &#39;sanggup&#39;, &#39;diri&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;seperti&#39;, &#39;ini&#39;, &#39;bisa&#39;, &#39;tetap&#39;, &#39;lanjut&#39;, &#39;aktivitas&#39;, &#39;seharihari&#39;, &#39;tutur&#39;, &#39;intan&#39;, &#39;kisah&#39;, &#39;intan&#39;, &#39;jadi&#39;, &#39;bukti&#39;, &#39;nyata&#39;, &#39;bahwa&#39;, &#39;donor&#39;, &#39;darah&#39;, &#39;sekadar&#39;, &#39;angka&#39;, &#39;tetapi&#39;, &#39;tentang&#39;, &#39;harap&#39;, &#39;selamat&#39;, &#39;hidup&#39;]
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span>
 
@@ -764,23 +726,21 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
 <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">,</span> <span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-6b926698-97f1-4180-8035-1dbec035b35c" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -820,17 +780,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-6b926698-97f1-4180-8035-1dbec035b35c')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -871,47 +828,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-6b926698-97f1-4180-8035-1dbec035b35c button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-6b926698-97f1-4180-8035-1dbec035b35c button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-6b926698-97f1-4180-8035-1dbec035b35c&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-6b926698-97f1-4180-8035-1dbec035b35c');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-7853af1d-9a06-4731-b24b-09a6f90fcd61">
-      <button class="colab-df-quickchart" onclick="quickchart('df-7853af1d-9a06-4731-b24b-09a6f90fcd61')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-7853af1d-9a06-4731-b24b-09a6f90fcd61&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-7853af1d-9a06-4731-b24b-09a6f90fcd61&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -1001,38 +957,35 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-7853af1d-9a06-4731-b24b-09a6f90fcd61 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-7853af1d-9a06-4731-b24b-09a6f90fcd61 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># ambil 1000 fitur teratas</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># ambil 1000 fitur teratas</span>
 
 <span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir_joined&quot;</span><span class="p">])</span>
 
@@ -1044,23 +997,21 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
 <span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-b9513b2a-647a-485e-8005-f030b53f53f0" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1215,17 +1166,14 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
 <p>5 rows × 1000 columns</p>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-b9513b2a-647a-485e-8005-f030b53f53f0')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -1266,47 +1214,46 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-b9513b2a-647a-485e-8005-f030b53f53f0 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-b9513b2a-647a-485e-8005-f030b53f53f0 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-b9513b2a-647a-485e-8005-f030b53f53f0&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-b9513b2a-647a-485e-8005-f030b53f53f0');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d">
-      <button class="colab-df-quickchart" onclick="quickchart('df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -1396,60 +1343,55 @@ Requirement already satisfied: threadpoolctl&gt;=3.1.0 in c:\users\ven\appdata\l
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-fa01f519-292f-48d8-b9aa-ca92cbc24d1d button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
-</div>
-<p><strong>Word Embedding</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>gensim
+&lt;/div&gt;
 </pre></div>
 </div>
+  </div>
+<p><strong>Word Embedding</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">gensim</span>
+</pre></div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting gensim
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Collecting gensim
   Downloading gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.1 kB)
 Collecting numpy&lt;2.0,&gt;=1.18.5 (from gensim)
   Downloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">61.0/61.0 kB</span> <span class=" -Color -Color-Red">5.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hCollecting scipy&lt;1.14.0,&gt;=1.7.0 (from gensim)
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m61.0/61.0 kB[0m [31m5.5 MB/s[0m eta [36m0:00:00[0m
+[?25hCollecting scipy&lt;1.14.0,&gt;=1.7.0 (from gensim)
   Downloading scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">60.6/60.6 kB</span> <span class=" -Color -Color-Red">5.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hRequirement already satisfied: smart-open&gt;=1.8.1 in /usr/local/lib/python3.12/dist-packages (from gensim) (7.3.1)
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m60.6/60.6 kB[0m [31m5.5 MB/s[0m eta [36m0:00:00[0m
+[?25hRequirement already satisfied: smart-open&gt;=1.8.1 in /usr/local/lib/python3.12/dist-packages (from gensim) (7.3.1)
 Requirement already satisfied: wrapt in /usr/local/lib/python3.12/dist-packages (from smart-open&gt;=1.8.1-&gt;gensim) (1.17.3)
 Downloading gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">26.6/26.6 MB</span> <span class=" -Color -Color-Red">71.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hDownloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">18.0/18.0 MB</span> <span class=" -Color -Color-Red">103.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hDownloading scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.2 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">38.2/38.2 MB</span> <span class=" -Color -Color-Red">17.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hInstalling collected packages: numpy, scipy, gensim
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m26.6/26.6 MB[0m [31m71.2 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m18.0/18.0 MB[0m [31m103.0 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.2 MB)
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m38.2/38.2 MB[0m [31m17.3 MB/s[0m eta [36m0:00:00[0m
+[?25hInstalling collected packages: numpy, scipy, gensim
   Attempting uninstall: numpy
     Found existing installation: numpy 2.0.2
     Uninstalling numpy-2.0.2:
@@ -1458,126 +1400,105 @@ Downloading gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.
     Found existing installation: scipy 1.16.2
     Uninstalling scipy-1.16.2:
       Successfully uninstalled scipy-1.16.2
-<span class=" -Color -Color-Red">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.</span>
-<span class=" -Color -Color-Red">opencv-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">tsfresh 0.21.1 requires scipy&gt;=1.14.0; python_version &gt;= &quot;3.10&quot;, but you have scipy 1.13.1 which is incompatible.</span>
-<span class=" -Color -Color-Red">opencv-python-headless 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">opencv-contrib-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">thinc 8.3.6 requires numpy&lt;3.0.0,&gt;=2.0.0, but you have numpy 1.26.4 which is incompatible.</span>
-Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1
+[31mERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+opencv-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.
+tsfresh 0.21.1 requires scipy&gt;=1.14.0; python_version &gt;= &quot;3.10&quot;, but you have scipy 1.13.1 which is incompatible.
+opencv-python-headless 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.
+opencv-contrib-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.
+thinc 8.3.6 requires numpy&lt;3.0.0,&gt;=2.0.0, but you have numpy 1.26.4 which is incompatible.[0m[31m
+[0mSuccessfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>--force-reinstall<span class="w"> </span>numpy<span class="w"> </span>gensim
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="o">--</span><span class="n">force</span><span class="o">-</span><span class="n">reinstall</span> <span class="n">numpy</span> <span class="n">gensim</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting numpy
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Collecting numpy
   Downloading numpy-2.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
-?25l     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/62.1 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">62.1/62.1 kB</span> <span class=" -Color -Color-Red">3.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hCollecting gensim
-  Using cached gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.1 kB)
+[?25l     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m0.0/62.1 kB[0m [31m?[0m eta [36m-:--:--[0m
+</pre></div>
+</div>
+<p>[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m62.1/62.1 kB[0m [31m3.4 MB/s[0m eta [36m0:00:00[0m
+[?25hCollecting gensim
+Using cached gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.1 kB)
 Collecting numpy
-  Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
 Collecting scipy&lt;1.14.0,&gt;=1.7.0 (from gensim)
-  Using cached scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+Using cached scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
 Collecting smart-open&gt;=1.8.1 (from gensim)
-  Downloading smart_open-7.3.1-py3-none-any.whl.metadata (24 kB)
+Downloading smart_open-7.3.1-py3-none-any.whl.metadata (24 kB)
 Collecting wrapt (from smart-open&gt;=1.8.1-&gt;gensim)
-  Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
+Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
 Using cached gensim-4.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26.6 MB)
 Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
 Using cached scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.2 MB)
 Downloading smart_open-7.3.1-py3-none-any.whl (61 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">61.7/61.7 kB</span> <span class=" -Color -Color-Red">5.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hDownloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (88 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">88.0/88.0 kB</span> <span class=" -Color -Color-Red">7.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25hInstalling collected packages: wrapt, numpy, smart-open, scipy, gensim
-  Attempting uninstall: wrapt
-    Found existing installation: wrapt 1.17.3
-    Uninstalling wrapt-1.17.3:
-      Successfully uninstalled wrapt-1.17.3
-  Attempting uninstall: numpy
-    Found existing installation: numpy 1.26.4
-    Uninstalling numpy-1.26.4:
-      Successfully uninstalled numpy-1.26.4
-  Attempting uninstall: smart-open
-    Found existing installation: smart_open 7.3.1
-    Uninstalling smart_open-7.3.1:
-      Successfully uninstalled smart_open-7.3.1
-  Attempting uninstall: scipy
-    Found existing installation: scipy 1.13.1
-    Uninstalling scipy-1.13.1:
-      Successfully uninstalled scipy-1.13.1
-  Attempting uninstall: gensim
-    Found existing installation: gensim 4.3.3
-    Uninstalling gensim-4.3.3:
-      Successfully uninstalled gensim-4.3.3
-<span class=" -Color -Color-Red">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.</span>
-<span class=" -Color -Color-Red">opencv-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">tsfresh 0.21.1 requires scipy&gt;=1.14.0; python_version &gt;= &quot;3.10&quot;, but you have scipy 1.13.1 which is incompatible.</span>
-<span class=" -Color -Color-Red">opencv-python-headless 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">opencv-contrib-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.26.4 which is incompatible.</span>
-<span class=" -Color -Color-Red">thinc 8.3.6 requires numpy&lt;3.0.0,&gt;=2.0.0, but you have numpy 1.26.4 which is incompatible.</span>
-Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 wrapt-1.17.3
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m61.7/61.7 kB[0m [31m5.0 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (88 kB)
+[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m88.0/88.0 kB[0m [31m7.8 MB/s[0m eta [36m0:00:00[0m
+[?25hInstalling collected packages: wrapt, numpy, smart-open, scipy, gensim
+Attempting uninstall: wrapt
+Found existing installation: wrapt 1.17.3
+Uninstalling wrapt-1.17.3:
+Successfully uninstalled wrapt-1.17.3
+Attempting uninstall: numpy
+Found existing installation: numpy 1.26.4
+Uninstalling numpy-1.26.4:
+Successfully uninstalled numpy-1.26.4
+Attempting uninstall: smart-open
+Found existing installation: smart_open 7.3.1
+Uninstalling smart_open-7.3.1:
+Successfully uninstalled smart_open-7.3.1
+Attempting uninstall: scipy
+Found existing installation: scipy 1.13.1
+Uninstalling scipy-1.13.1:
+Successfully uninstalled scipy-1.13.1
+Attempting uninstall: gensim
+Found existing installation: gensim 4.3.3
+Uninstalling gensim-4.3.3:
+Successfully uninstalled gensim-4.3.3
+[31mERROR: pip’s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+opencv-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= “3.9”, but you have numpy 1.26.4 which is incompatible.
+tsfresh 0.21.1 requires scipy&gt;=1.14.0; python_version &gt;= “3.10”, but you have scipy 1.13.1 which is incompatible.
+opencv-python-headless 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= “3.9”, but you have numpy 1.26.4 which is incompatible.
+opencv-contrib-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= “3.9”, but you have numpy 1.26.4 which is incompatible.
+thinc 8.3.6 requires numpy&lt;3.0.0,&gt;=2.0.0, but you have numpy 1.26.4 which is incompatible.[0m[31m
+[0mSuccessfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 wrapt-1.17.3</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Mount Google Drive</span>
 <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&quot;/content/drive&quot;, force_remount=True).
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&quot;/content/drive&quot;, force_remount=True).
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca CSV dari path Drive</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/content/drive/MyDrive/Semester 7/PPW/hasil_preprocessing_berita.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html">
   <div id="df-90608a75-1f8c-450d-98fa-6ec33dd260ef" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -1641,17 +1562,14 @@ Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 w
 </table>
 </div>
     <div class="colab-df-buttons">
-
   <div class="colab-df-container">
     <button class="colab-df-convert" onclick="convertToInteractive('df-90608a75-1f8c-450d-98fa-6ec33dd260ef')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
-
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
   </svg>
     </button>
-
   <style>
     .colab-df-container {
       display:flex;
@@ -1692,47 +1610,46 @@ Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 w
       fill: #FFFFFF;
     }
   </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-90608a75-1f8c-450d-98fa-6ec33dd260ef button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
 
-    <script>
-      const buttonEl =
-        document.querySelector('#df-90608a75-1f8c-450d-98fa-6ec33dd260ef button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-90608a75-1f8c-450d-98fa-6ec33dd260ef&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
 
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-90608a75-1f8c-450d-98fa-6ec33dd260ef');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;
+</pre></div>
+</div>
   </div>
-
-
-    <div id="df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397">
-      <button class="colab-df-quickchart" onclick="quickchart('df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397')"
-                title="Suggest charts"
-                style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;div id=&quot;df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397&quot;&gt;
+  &lt;button class=&quot;colab-df-quickchart&quot; onclick=&quot;quickchart(&#39;df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397&#39;)&quot;
+            title=&quot;Suggest charts&quot;
+            style=&quot;display:none;&quot;&gt;
+</pre></div>
+</div>
+<p>&lt;svg xmlns=”<a class="reference external" href="http://www.w3.org/2000/svg">http://www.w3.org/2000/svg</a>” height=”24px”viewBox=”0 0 24 24”
+width=”24px”&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</g>
 </svg>
-      </button>
-
+</button></p>
 <style>
   .colab-df-quickchart {
       --bg-color: #E8F0FE;
@@ -1822,47 +1739,40 @@ Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 w
     }
   }
 </style>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &lt;script&gt;
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector(&#39;#&#39; + key + &#39; button&#39;);
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add(&#39;colab-df-spinner&#39;);
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            &#39;suggestCharts&#39;, [key], {});
+      } catch (error) {
+        console.error(&#39;Error during call to suggestCharts:&#39;, error);
+      }
+      quickchartButtonEl.classList.remove(&#39;colab-df-spinner&#39;);
+      quickchartButtonEl.classList.add(&#39;colab-df-quickchart-complete&#39;);
+    }
+    (() =&gt; {
+      let quickchartButtonEl =
+        document.querySelector(&#39;#df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397 button&#39;);
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
 
-      <script>
-        async function quickchart(key) {
-          const quickchartButtonEl =
-            document.querySelector('#' + key + ' button');
-          quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-          quickchartButtonEl.classList.add('colab-df-spinner');
-          try {
-            const charts = await google.colab.kernel.invokeFunction(
-                'suggestCharts', [key], {});
-          } catch (error) {
-            console.error('Error during call to suggestCharts:', error);
-          }
-          quickchartButtonEl.classList.remove('colab-df-spinner');
-          quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-        }
-        (() => {
-          let quickchartButtonEl =
-            document.querySelector('#df-b7cf64f3-c1db-4763-a8e2-ae5ac69fd397 button');
-          quickchartButtonEl.style.display =
-            google.colab.kernel.accessAllowed ? 'block' : 'none';
-        })();
-      </script>
-    </div>
-
-    </div>
-  </div>
-</div></div>
+&lt;/div&gt;
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+  </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tokenisasi Akhir&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
     <span class="n">sentences</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span>
     <span class="n">vector_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>   <span class="c1"># dimensi vektor</span>
     <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>          <span class="c1"># konteks window</span>
@@ -1872,18 +1782,10 @@ Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 w
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;word2vec_berita.model&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;word2vec_berita.model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Cek hasil ===</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># === Cek hasil ===</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Vektor untuk kata &#39;indonesia&#39;:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s1">&#39;indonesia&#39;</span><span class="p">][:</span><span class="mi">10</span><span class="p">])</span>
 
@@ -1891,17 +1793,13 @@ Successfully installed gensim-4.3.3 numpy-1.26.4 scipy-1.13.1 smart-open-7.3.1 w
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s2">&quot;indonesia&quot;</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vektor untuk kata &#39;indonesia&#39;:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Vektor untuk kata &#39;indonesia&#39;:
 [-0.11810647  0.17236815  0.00422871 -0.10403389  0.0705354  -0.35762382
   0.0828401   0.3290212  -0.1874316  -0.02492193]
 
 Kata yang mirip dengan &#39;indonesia&#39;:
 [(&#39;republik&#39;, 0.9742425084114075), (&#39;selamat&#39;, 0.9715856313705444), (&#39;prioritas&#39;, 0.9707692265510559), (&#39;segala&#39;, 0.9696119427680969), (&#39;atur&#39;, 0.9682633876800537)]
 </pre></div>
-</div>
-</div>
 </div>
 </section>
 
@@ -1941,7 +1839,7 @@ Kata yang mirip dengan &#39;indonesia&#39;:
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><strong>Prepocessing</strong></p>
+        <p class="prev-next-title">Prepocessing_Berita</p>
       </div>
     </a>
     <a class="right-next"
